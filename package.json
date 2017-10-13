@@ -1,0 +1,33 @@
+{
+  "name": "url-shortener",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Однажды на паре по языкам ассемблера несколько людей решили, что они хотят сделать что-то...",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "debug": "^3.0.0",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.8",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.3",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "supports-color": "^4.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taxnuke/url-shortener.git"
+  },
+  "author": "Semyon Fomin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taxnuke/url-shortener/issues"
+  },
+  "homepage": "https://github.com/taxnuke/url-shortener#readme"
+}
