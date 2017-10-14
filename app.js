@@ -45,7 +45,17 @@ let api = require('./api/routers'),
     gui = require('./gui/routers');
 
 app.use('/api/v1', api);
-app.use('/', gui);
+app.use('/gui/', gui);
+
+app.get('/', (req, res) => {
+    res.redirect('gui');
+    res.status(301);
+});
+
+app.get('/:link', (req, res) => {
+    res.redirect('http://' + req.params.link);
+    res.status(302);
+});
 
 // Раздаем из публичной директории GUI статику
 app.use(express.static(path.join(__dirname, 'gui/public')));

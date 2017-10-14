@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "DEBUG=url-short:* node app",
-    "start-watch": "nodemon app",
+    "start-watch": "DEBUG=url-short:* nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
