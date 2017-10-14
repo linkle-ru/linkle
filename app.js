@@ -1,16 +1,27 @@
 // Подключаем зависимости
 let express = require('express'),
     path = require('path'),
-    bodyParser = require('body-parser');
-
-// И логгер
-let debug = require('debug')('url-short:main');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose'),
+    bluebird = require('bluebird'),
+    debug = require('debug')('url-short:main');
 
 // Настраиваем переменные окружения
 process.env.PORT = 8080;
 let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
+
+// Настраиваем Mongoose
+mongoose.Promise = bluebird;
+mongoose.connect('mongodb://localhost:27017/url-shortener', {
+        useMongoClient: true,
+        promiseLibrary: bluebird
+    })
+    .then(
+        () => { debug('Succesfully connected to MongoBD!'); },
+        (err) => { debug('MongoDB connection error:', err); }
+    );
 
 // Создаем экземпляр приложения на Express
 let app = express();

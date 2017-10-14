@@ -5,6 +5,8 @@
   "description": "Однажды на паре по языкам ассемблера несколько людей решили, что они хотят сделать что-то...",
   "main": "app.js",
   "scripts": {
+    "start": "DEBUG=url-short:* node app",
+    "start-watch": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
