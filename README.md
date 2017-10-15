@@ -23,7 +23,7 @@ npm start;
 
 #### Перейти по имени алиаса
 
-##### GET [https://links.taxnuke.ru/api/v1/goto/<имя>](#)
+##### GET [https://links.taxnuke.ru/<имя>](#) или GET [https://links.taxnuke.ru/api/v1/goto/<имя>](#)
 
 #### Создать новый алиас
 
