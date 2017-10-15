@@ -53,8 +53,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:link', (req, res) => {
-    res.redirect('http://' + req.params.link);
-    res.status(302);
+    res.redirect('/api/v1/goto/' + req.params.link);
+    res.status(301);
 });
 
 // Раздаем из публичной директории GUI статику
