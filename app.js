@@ -52,8 +52,8 @@ app.get('/', (req, res) => {
     res.status(301);
 });
 
-app.get('/:link', (req, res) => {
-    res.redirect('/api/v1/goto/' + req.params.link);
+app.get('/:alias', (req, res) => {
+    res.redirect('/api/v1/goto/' + req.params.alias);
     res.status(301);
 });
 

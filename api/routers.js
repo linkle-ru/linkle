@@ -4,6 +4,7 @@ let router = require('express').Router(),
 /**
  * Главный маршрут
  */
-router.get('/goto/:link', controllers.goto);
+router.get('/goto/:alias', controllers.goto);
+
 
 module.exports = router;

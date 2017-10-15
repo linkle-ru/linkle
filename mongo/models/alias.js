@@ -2,10 +2,10 @@ let mongoose = require('mongoose'),
     BPromise = require('bluebird').Promise;
 
 /**
- * Схема данных для модели Link
+ * Схема данных для модели Alias
  */
 let Schema = mongoose.Schema,
-    linkSchema = new Schema({
+    aliasSchema = new Schema({
         // Короткая ссылка
         name: {
             type: String,
@@ -26,9 +26,9 @@ let Schema = mongoose.Schema,
  *
  * @return {Promise}
  */
-linkSchema.statics.findByName = function(name) {
+aliasSchema.statics.findByName = function(name) {
     return new BPromise(function(resolve, reject) {
-        Link.findOne({ 'name': name }, function(err, link) {
+        Alias.findOne({ 'name': name }, function(err, alias) {
             if (err) {
                 reject({
                     status: 500,
@@ -36,18 +36,18 @@ linkSchema.statics.findByName = function(name) {
                 });
             }
 
-            if (!link) {
+            if (!alias) {
                 reject({
                     status: 401,
-                    reason: 'Link not found'
+                    reason: 'Alias not found'
                 });
             } else {
-                resolve(link);
+                resolve(alias);
             }
         });
     });
 };
 
-let Link = mongoose.model('Link', linkSchema);
+let Alias = mongoose.model('Alias', aliasSchema);
 
-module.exports = Link;
+module.exports = Alias;

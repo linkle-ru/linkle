@@ -1,9 +1,9 @@
-let Link = require('../mongo/models/link');
+let Alias = require('../mongo/models/alias');
 
 function goto(req, res, next) {
-    Link.findByName(req.params.link)
-        .then((link) => {
-            res.redirect(link.href);
+    Alias.findByName(req.params.alias)
+        .then((alias) => {
+            res.redirect(alias.href);
             res.status(301);
         })
         .catch((error) => {
