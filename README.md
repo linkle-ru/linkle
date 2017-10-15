@@ -21,6 +21,26 @@ npm start;
 
 ### Алиасы
 
-#### Перейти по алиасу
+#### Перейти по имени алиаса
 
-##### GET _https://links.taxnuke.ru/api/v1/goto/<алиас>_
+##### GET [https://links.taxnuke.ru/api/v1/goto/<имя>](#)
+
+#### Создать новый алиас
+
+##### POST [https://links.taxnuke.ru/api/v1/aliases](#)
+> Тело запроса:
+```json
+{
+    "name": "гугл",
+    "href": "google.com"
+}
+```
+> Тело ответа:
+```json
+{
+    "__v": 0,
+    "name": "test",
+    "href": "taxnuke.ru",
+    "_id": "59e3a0b180fdc20b50a7877a"
+}
+```
