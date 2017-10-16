@@ -12,9 +12,22 @@ let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
 
+let mongoUri = 'mongodb://localhost:27017/',
+    dbName = 'url-shortener';
+
+switch (env) {
+    case 'development':
+    case 'testing':
+        dbName += '-' + env;
+
+        break;
+}
+
+process.env.DB_URI = mongoUri + dbName;
+
 // Настраиваем Mongoose
 mongoose.Promise = bluebird;
-mongoose.connect('mongodb://localhost:27017/url-shortener', {
+mongoose.connect(process.env.DB_URI, {
         useMongoClient: true,
         promiseLibrary: bluebird
     })
