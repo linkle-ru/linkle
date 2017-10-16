@@ -7,14 +7,14 @@ let yank = require('supertest'),
 
 let app = rewire('../app');
 
-before(function(ready) {
-    mongoose.connection.dropDatabase(function() {
+before((ready) => {
+    mongoose.connection.dropDatabase(() => {
         ready();
     });
 });
 
-describe('Добавление новой ссылки', function() {
-    it('выполняется, если это первая ссылка в базе', function(done) {
+describe('Добавление новой ссылки', () => {
+    it('выполняется, если это первая ссылка в базе', (done) => {
         yank(app)
             .post('/api/v1/aliases')
             .send({
@@ -22,7 +22,7 @@ describe('Добавление новой ссылки', function() {
                 'href': 'google.com'
             })
             .expect(200)
-            .expect(function(res) {
+            .expect((res) => {
                 expect(res.body).to.have.property('name', 'first');
                 expect(res.body).to.have.property('href', 'google.com');
             })
