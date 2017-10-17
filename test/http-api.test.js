@@ -51,10 +51,49 @@ describe('Добавление новой ссылки', () => {
             .end(done);
     });
 
-    it('не выполняется, если алиас содержит странные символы');
-    it('не выполняется, если сжимаемая ссылка слишком длинная');
-    it('не выполняется, если сжимаемая ссылка пустая');
-    it('не выполняется, если алиас не передан');
+    it('не выполняется, если алиас содержит странные символы', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .send({
+                'name': '@asasd',
+                'href': 'google.com'
+            })
+            .expect(400)
+            .end(done);
+    });
+
+    it('не выполняется, если сжимаемая ссылка слишком длинная', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .send({
+                'name': chance.word({ length: 5 }),
+                'href': chance.word({ length: 3000 })
+            })
+            .expect(400)
+            .end(done);
+    });
+
+    it('не выполняется, если сжимаемая ссылка пустая', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .send({
+                'name': chance.word({ length: 5 }),
+                'href': ''
+            })
+            .expect(400)
+            .end(done);
+    });
+
+    it('не выполняется, если алиас не передан', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .send({
+                'name': '',
+                'href': chance.word({ length: 40 })
+            })
+            .expect(400)
+            .end(done);
+    });
 });
 
 describe('Редактирование ссылки', () => {
