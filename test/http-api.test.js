@@ -20,12 +20,12 @@ describe('Добавление новой ссылки', () => {
                 .post('/api/v1/aliases')
                 .send({
                     'name': 'first',
-                    'href': 'google.com'
+                    'href': 'ya.ru'
                 })
                 .expect(200)
                 .expect((res) => {
                     expect(res.body).to.have.property('name', 'first');
-                    expect(res.body).to.have.property('href', 'http://google.com');
+                    expect(res.body).to.have.property('href', 'http://ya.ru');
                 })
                 .end(done);
         });
@@ -111,11 +111,28 @@ describe('Добавление новой ссылки', () => {
             yank(app)
                 .post('/api/v1/aliases')
                 .send({
-                    'href': chance.word({ length: 3000 })
+                    'href': chance.word({ length: 2400 })
                 })
                 .expect(400)
                 .end(done);
         });
+    });
+});
+
+describe('Переход по короткой ссылке', () => {
+    it('выполняется', (done) => {
+        yank(app)
+            .get('/first')
+            .expect(302)
+            .end((err, res) => {
+                yank(app)
+                    .get(res.header.location)
+                    .expect(301)
+                    .end((err, res) => {
+                        expect(res.header.location).to.equal('http://ya.ru');
+                        done();
+                    });
+            });
     });
 });
 
