@@ -1,12 +1,12 @@
 let yank = require('supertest'),
     expect = require('chai').expect,
     mongoose = require('mongoose'),
-    rewire = require('rewire');
-
-// let chance = new require('chance')();
+    rewire = require('rewire'),
+    chance = new require('chance')();
 
 let app = rewire('../app');
 
+// Первым делом роняем базу
 before((ready) => {
     mongoose.connection.dropDatabase(() => {
         ready();
@@ -29,7 +29,17 @@ describe('Добавление новой ссылки', () => {
             .end(done);
     });
 
-    it('не выполняется, если это дубль');
+    it('не выполняется, если это дубль', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .send({
+                'name': 'first',
+                'href': 'google.com'
+            })
+            .expect(400)
+            .end(done);
+    });
+
     it('не выполняется, если алиас уже занят');
     it('не выполняется, если алиас содержит странные символы');
     it('не выполняется, если сжимаемая ссылка слишком длинная');
