@@ -88,7 +88,7 @@ app.use((err, req, res, next) => {
 });
 
 // Ловим 404 и передаем обработчику ошибок и передаем дальше
-app.use((req, res, next) => {
+app.get('*', (req, res, next) => {
     let err = new Error('Not Found');
     err.status = 404;
 
@@ -96,7 +96,7 @@ app.use((req, res, next) => {
 });
 
 // Обработчик ошибок
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     // Кидаем ошибку только в окружении development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
