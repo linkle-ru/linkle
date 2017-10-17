@@ -44,7 +44,6 @@ aliasSchema.methods.toJSON = function() {
  * Хук, который срабатывает перед сохранением документа в базу
  */
 aliasSchema.pre('save', function(done) {
-    // Для новых документов генерить хэш
     if (this.isNew) {
         if (!/^http/.test(this.href)) {
             this.href = 'http://' + this.href;
