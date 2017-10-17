@@ -6,11 +6,10 @@ let mongoose = require('mongoose'),
  */
 let Schema = mongoose.Schema,
     aliasSchema = new Schema({
-        // Короткая ссылка
-        name: {
+        // Идентификатор
+        _id: {
             type: String,
             required: true,
-            unique: true,
             trim: true
         },
         // Полная ссылка
@@ -22,31 +21,44 @@ let Schema = mongoose.Schema,
     });
 
 /**
- * Поиск ссылки по имени
+ * Переопределение метода сериализации объекта
  *
- * @return {Promise}
+ * @return {string} JSON
  */
-aliasSchema.statics.findByName = function(name) {
-    return new BPromise(function(resolve, reject) {
-        Alias.findOne({ 'name': name }, function(err, alias) {
-            if (err) {
-                reject({
-                    status: 500,
-                    reason: 'Database error'
-                });
-            }
-
-            if (!alias) {
-                reject({
-                    status: 401,
-                    reason: 'Alias not found'
-                });
-            } else {
-                resolve(alias);
-            }
-        });
-    });
+aliasSchema.methods.toJSON = function() {
+    // Формирует объект из полей текущего юзера, исключая пустые
+    return {
+        name: this._id,
+        href: this.href
+    };
 };
+
+// /**
+//  * Поиск ссылки по имени
+//  *
+//  * @return {Promise}
+//  */
+// aliasSchema.statics.findByName = (name) => {
+//     return new BPromise((resolve, reject) => {
+//         Alias.findOne({ 'name': name }, (err, alias) => {
+//             if (err) {
+//                 reject({
+//                     status: 500,
+//                     reason: 'Database error'
+//                 });
+//             }
+
+//             if (!alias) {
+//                 reject({
+//                     status: 401,
+//                     reason: 'Alias not found'
+//                 });
+//             } else {
+//                 resolve(alias);
+//             }
+//         });
+//     });
+// };
 
 let Alias = mongoose.model('Alias', aliasSchema);
 

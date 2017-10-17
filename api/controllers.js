@@ -1,10 +1,11 @@
 let Alias = require('../mongo/models/alias');
 
 let goto = (req, res, next) => {
-    Alias.findByName(req.params.alias)
+    Alias.findById(req.params.alias)
         .then((alias) => {
             let href = alias.href;
 
+            // Это лучше делать заранее, чтобы в базе хранилось готовое
             if (!/^http/.test(href)) {
                 href = 'http://' + href;
             }
@@ -13,27 +14,27 @@ let goto = (req, res, next) => {
             res.status(301);
         })
         .catch((error) => {
-            let err = new Error(error.reason);
-            err.status = error.status;
-
-            next(err);
+            next(error);
         });
 };
 
 let newAlias = (req, res, next) => {
-    const name = req.body.name,
-        href = req.body.href;
-
-    Alias.create({ 'name': name, 'href': href })
+    Alias.create({
+            '_id': req.body.name,
+            'href': req.body.href
+        })
         .then((alias) => {
-            res.json(alias);
-            res.status(200);
+            res.send(alias);
         })
         .catch((error) => {
-            let err = new Error(error.reason);
-            err.status = error.status;
+            if (error.code === 11000) {
+                let err = new Error('Alias exists');
+                err.status = 400;
 
-            next(err);
+                next(err);
+            } else {
+                next(err);
+            }
         });
 };
 
