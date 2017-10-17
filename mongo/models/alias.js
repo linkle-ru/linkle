@@ -10,7 +10,7 @@ let Schema = mongoose.Schema,
         _id: {
             type: String,
             required: true,
-            maxlength: 50,
+            maxlength: [50, 'Alias name is too long'],
             trim: true
         },
         // Полная ссылка

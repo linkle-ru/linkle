@@ -27,8 +27,19 @@ let newAlias = (req, res, next) => {
                 err.status = 400;
 
                 next(err);
-            } else {
+            } else if ('errors' in error) {
+                let reasons = '';
+
+                for (let e in error.errors) {
+                    reasons += error.errors[e].message + '\n';
+                }
+
+                let err = new Error(reasons);
+                err.status = 400;
+
                 next(err);
+            } else {
+                next(error);
             }
         });
 };
