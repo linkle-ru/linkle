@@ -6,7 +6,7 @@ let mongoose = require('mongoose'),
  */
 let Schema = mongoose.Schema,
     aliasSchema = new Schema({
-        // Идентификатор
+        // Короткая ссылка
         _id: {
             type: String,
             default: shortid.generate,
@@ -29,7 +29,7 @@ let Schema = mongoose.Schema,
     });
 
 /**
- * Переопределение метода сериализации объекта
+ * Переопределение метода сериализации объекта в JSON
  *
  * @return {obj} JSON
  */

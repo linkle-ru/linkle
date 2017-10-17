@@ -1,6 +1,9 @@
 let Alias = require('../mongo/models/alias'),
     _ = require('underscore');
 
+/**
+ * Редирект по короткой ссылке
+ */
 let goto = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
@@ -14,11 +17,17 @@ let goto = (req, res, next) => {
         });
 };
 
+/**
+ * Создание новой короткой ссылки
+ */
 let newAlias = (req, res, next) => {
-    Alias.create(_.omit({
-            '_id': req.body.name,
-            'href': req.body.href
-        }, (value) => _.isUndefined(value)))
+    Alias.create(
+            // На лету формируем объект и отметаем пустые свойства
+            _.omit({
+                '_id': req.body.name,
+                'href': req.body.href
+            }, (value) => _.isUndefined(value))
+        )
         .then((alias) => {
             res.send(alias);
         })
