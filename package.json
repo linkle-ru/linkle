@@ -5,8 +5,7 @@
   "description": "Веб-приложение для сжатия ссылок",
   "main": "app.js",
   "scripts": {
-    "checkDB" : "pgrep mongod > /dev/null || echo 'mongod process is not running!'",
-
+    "checkDB": "pgrep mongod > /dev/null || echo 'mongod process is not running!'",
     "start": "DEBUG=url-short:* node app",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon app",
     "pretest": "npm run checkDB",
@@ -22,6 +21,7 @@
     "mongoose": "^4.11.8",
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.3",
+    "shortid": "^2.2.8",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
-let Alias = require('../mongo/models/alias');
+let Alias = require('../mongo/models/alias'),
+    _ = require('underscore');
 
 let goto = (req, res, next) => {
     Alias.findById(req.params.alias)
@@ -14,10 +15,10 @@ let goto = (req, res, next) => {
 };
 
 let newAlias = (req, res, next) => {
-    Alias.create({
+    Alias.create(_.omit({
             '_id': req.body.name,
             'href': req.body.href
-        })
+        }, (value) => _.isUndefined(value)))
         .then((alias) => {
             res.send(alias);
         })

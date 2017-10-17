@@ -1,5 +1,5 @@
 let mongoose = require('mongoose'),
-    BPromise = require('bluebird').Promise;
+    shortid = require('shortid');
 
 /**
  * Схема данных для модели Alias
@@ -9,11 +9,11 @@ let Schema = mongoose.Schema,
         // Идентификатор
         _id: {
             type: String,
-            required: true,
+            default: shortid.generate,
             maxlength: [50, 'Alias name is too long'],
             validate: {
                 validator: function(v) {
-                    return /^[a-zA-zа-яА-Я\d]+$/.test(v);
+                    return /^[a-zA-zа-яА-Я\d_-]+$/.test(v);
                 },
                 message: 'Alias contains weird characters'
             },
