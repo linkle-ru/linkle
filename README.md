@@ -32,7 +32,7 @@ npm start;
 ```json
 {
     "name": "гугл",
-    "href": "google.com"
+    "href": "http://google.com"
 }
 ```
 > Тело ответа должно совпасть с телом запроса

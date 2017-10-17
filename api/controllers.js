@@ -5,11 +5,6 @@ let goto = (req, res, next) => {
         .then((alias) => {
             let href = alias.href;
 
-            // Это лучше делать заранее, чтобы в базе хранилось готовое
-            if (!/^http/.test(href)) {
-                href = 'http://' + href;
-            }
-
             res.redirect(href);
             res.status(301);
         })

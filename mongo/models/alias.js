@@ -10,11 +10,13 @@ let Schema = mongoose.Schema,
         _id: {
             type: String,
             required: true,
+            maxlength: 50,
             trim: true
         },
         // Полная ссылка
         href: {
             type: String,
+            maxlength: 2000,
             required: true,
             trim: true
         }
@@ -23,42 +25,28 @@ let Schema = mongoose.Schema,
 /**
  * Переопределение метода сериализации объекта
  *
- * @return {string} JSON
+ * @return {obj} JSON
  */
 aliasSchema.methods.toJSON = function() {
-    // Формирует объект из полей текущего юзера, исключая пустые
     return {
         name: this._id,
         href: this.href
     };
 };
 
-// /**
-//  * Поиск ссылки по имени
-//  *
-//  * @return {Promise}
-//  */
-// aliasSchema.statics.findByName = (name) => {
-//     return new BPromise((resolve, reject) => {
-//         Alias.findOne({ 'name': name }, (err, alias) => {
-//             if (err) {
-//                 reject({
-//                     status: 500,
-//                     reason: 'Database error'
-//                 });
-//             }
+/**
+ * Хук, который срабатывает перед сохранением документа в базу
+ */
+aliasSchema.pre('save', function(done) {
+    // Для новых документов генерить хэш
+    if (this.isNew) {
+        if (!/^http/.test(this.href)) {
+            this.href = 'http://' + this.href;
+        }
+    }
 
-//             if (!alias) {
-//                 reject({
-//                     status: 401,
-//                     reason: 'Alias not found'
-//                 });
-//             } else {
-//                 resolve(alias);
-//             }
-//         });
-//     });
-// };
+    done();
+});
 
 let Alias = mongoose.model('Alias', aliasSchema);
 
