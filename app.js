@@ -7,7 +7,7 @@ let express = require('express'),
     debug = require('debug')('url-short:main');
 
 // Настраиваем переменные окружения
-process.env.PORT = 8080;
+process.env.PORT = 3001;
 let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
@@ -15,13 +15,7 @@ debug(`Node environment is set to "${env}"`);
 let mongoUri = 'mongodb://localhost:27017/',
     dbName = 'url-shortener';
 
-switch (env) {
-    case 'development':
-    case 'testing':
-        dbName += '-' + env;
-
-        break;
-}
+dbName += '-' + env;
 
 process.env.DB_URI = mongoUri + dbName;
 
