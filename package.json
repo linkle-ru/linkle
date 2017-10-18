@@ -7,6 +7,7 @@
   "scripts": {
     "checkDB": "pgrep mongod > /dev/null || echo 'mongod process is not running!'",
     "start": "DEBUG=url-short:* node app",
+    "deploy": "mina -f deploy.rb deploy",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon app",
     "pretest": "npm run checkDB",
     "test": "export NODE_ENV=testing && mocha test/*.test.js",
