@@ -31,6 +31,13 @@ let Schema = mongoose.Schema,
                 message: 'A linked list, huh?'
             },
             trim: true
+        },
+        // Аналитика
+        analytics: {
+            type: {},
+            default: {
+                followed: 0
+            }
         }
     });
 
