@@ -81,7 +81,7 @@ app.use((err, req, res, next) => {
     next(err);
 });
 
-// Ловим 404 и передаем обработчику ошибок и передаем дальше
+// Генерим 404 и передаем обработчику ошибок и передаем дальше
 app.get('*', (req, res, next) => {
     let err = new Error('Not Found');
     err.status = 404;
@@ -97,7 +97,7 @@ app.use((err, req, res, next) => {
 
     // Рендерим страницу с ошибкой
     res.status(err.status || 500);
-    res.render('error');
+    res.send('error');
 });
 
 // Получаем порт
