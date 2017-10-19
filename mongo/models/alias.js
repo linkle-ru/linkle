@@ -12,7 +12,7 @@ let Schema = mongoose.Schema,
             default: shortid.generate,
             maxlength: [50, 'Alias name is too long'],
             validate: {
-                validator: function(v) {
+                validator: (v) => {
                     return /^[a-zA-zа-яА-Я\d_-]+$/.test(v);
                 },
                 message: 'Alias contains weird characters'
@@ -24,6 +24,12 @@ let Schema = mongoose.Schema,
             type: String,
             maxlength: 2000,
             required: true,
+            validate: {
+                validator: (v) => {
+                    return !(/short\.taxnuke\.ru/.test(v));
+                },
+                message: 'A linked list, huh?'
+            },
             trim: true
         }
     });
