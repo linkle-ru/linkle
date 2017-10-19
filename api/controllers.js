@@ -7,16 +7,22 @@ let Alias = require('../mongo/models/alias'),
 let goto = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
-            if (alias) {
-                let href = alias.href;
-
-                res.redirect(href);
-                res.status(301);
-            } else {
+            if (!alias) {
                 let err = new Error('Alias not found');
                 err.status = 400;
 
                 next(err);
+            } else {
+                let href = alias.href;
+
+                res.redirect(href);
+                res.status(301);
+
+                alias.analytics.followed++;
+                alias.markModified('analytics');
+                alias.save();
+
+                return null;
             }
         })
         .catch((error) => {
