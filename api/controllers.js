@@ -13,14 +13,12 @@ let goto = (req, res, next) => {
 
                 next(err);
             } else {
-                let href = alias.href;
-
-                res.redirect(href);
-                res.status(301);
-
                 alias.analytics.followed++;
                 alias.markModified('analytics');
                 alias.save();
+
+                res.redirect(alias.href);
+                res.status(301);
 
                 return null;
             }
