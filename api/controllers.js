@@ -70,13 +70,9 @@ let newAlias = (req, res, next) => {
 
                 next(err);
             } else if ('errors' in error) {
-                let reasons = '';
+                let reason = error.errors[Object.keys(error.errors)[0]].message;
 
-                for (let e in error.errors) {
-                    reasons += error.errors[e].message + '\n';
-                }
-
-                let err = new Error(reasons);
+                let err = new Error(reason);
                 err.status = 400;
 
                 next(err);
