@@ -8,7 +8,7 @@
     "start": "DEBUG=url-short:* node app",
     "deploy": "mina -f deploy.rb deploy",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon app",
-    "test": "export NODE_ENV=testing && mocha test/*.test.js",
+    "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha"
   },
   "dependencies": {
