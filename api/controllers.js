@@ -2,6 +2,27 @@ let Alias = require('../mongo/models/alias'),
     _ = require('underscore');
 
 /**
+ * Получить href сжатой ссылки
+ */
+let href = (req, res, next) => {
+    Alias.findById(req.params.alias)
+        .then((alias) => {
+            if (!alias) {
+                let err = new Error('Alias not found');
+                err.status = 400;
+
+                next(err);
+            } else {
+                res.send(alias);
+                res.status(200);
+            }
+        })
+        .catch((error) => {
+            next(error);
+        });
+};
+
+/**
  * Редирект по короткой ссылке
  */
 let goto = (req, res, next) => {
@@ -67,5 +88,6 @@ let newAlias = (req, res, next) => {
 
 module.exports = {
     goto,
+    href,
     newAlias
 };

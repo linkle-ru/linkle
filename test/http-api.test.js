@@ -155,6 +155,30 @@ describe('Переход по короткой ссылке', () => {
     });
 });
 
+describe('Получение оригинальной ссылки по алиасу', () => {
+    describe('из базы', () => {
+        it('выполняется', (done) => {
+            yank(app)
+                .get('/api/v1/href/first')
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body).to.have.property('name', 'first');
+                    expect(res.body).to.have.property('href', 'http://ya.ru');
+                })
+                .end(done);
+        });
+    });
+
+    describe('не из базы', () => {
+        it('не выполняется', (done) => {
+            yank(app)
+                .get('/api/v1/href/lasd')
+                .expect(400)
+                .end(done);
+        });
+    });
+});
+
 // describe('Редактирование ссылки', () => {
 //     it('запрещено, если ссылки с таким именем нет');
 //     it('запрещено, если пользователь не авторизован');

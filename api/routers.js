@@ -7,6 +7,8 @@ let router = require('express').Router(),
 
 router.get('/goto/:alias', controllers.goto);
 
+router.get('/href/:alias', controllers.href);
+
 router.route('/aliases')
     .post(controllers.newAlias);
 
