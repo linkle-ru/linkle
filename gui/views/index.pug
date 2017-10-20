@@ -3,3 +3,8 @@ extends partial/layout
 block content
   h1= title
   p #{greeting}
+
+  form(method='POST', action='/api/v1/aliases')
+    input(type='text', name='name', value='Сюда короткую ссылку')
+    input(type='text', name='href', value='А сюда большую ссылку')
+    input(type='submit', value='Сжать')
