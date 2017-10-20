@@ -25,7 +25,6 @@
   "devDependencies": {
     "chai": "^4.1.1",
     "chance": "^1.0.11",
-    "mocha": "^4.0.1",
     "mockgoose": "^7.3.3",
     "rewire": "^2.5.2",
     "supertest": "^3.0.0",
