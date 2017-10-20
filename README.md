@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/taxnuke/url-shortener.svg?branch=master)](https://travis-ci.org/taxnuke/url-shortener)
+---
+
 # REST-API
 
 <p align="center">
