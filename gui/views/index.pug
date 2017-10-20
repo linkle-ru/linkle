@@ -1,10 +1,29 @@
-extends partial/layout
-
-block content
-  h1= title
-  p #{greeting}
-
-  form(method='POST', action='/api/v1/aliases')
-    input(type='text', name='name', placeholder="Сюда пиши алиас")
-    input(type='text', name='href', placeholder="А сюда ссылку")
-    input(type='submit', value='Сжать')
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb', crossorigin='anonymous')
+    title Сокращалка ссылок
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          header.masthead.clearfix
+            .inner
+              h3.masthead-brand Сокращатель ссылок
+          main.inner.cover(role='main')
+            h1.cover-heading Сократи свою ссылку.
+            p.lead На свой страх и риск.
+            form(method='POST', action='/api/v1/aliases')
+              .form-group
+                label(for='full-link') Ссылка
+                input#full-link.form-control(type='text', name='href', aria-describedby='textHelp', placeholder='website.com/super/long/link/that/is/so/annoying/to/remember?use=true&this=true')
+              .form-group
+                label(for='link-alias') Псевдоним
+                input#link-alias.form-control(type='text', name='name', aria-describedby='textHelp', placeholder='my_link')
+                small#emailHelp.form-text.text-muted после сжатия ваша ссылка будет доступна по адресу short.taxnuke.ru/my_link
+              input.btn.btn-primary(type='submit', value='Сжать')
