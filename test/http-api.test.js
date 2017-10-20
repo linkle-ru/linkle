@@ -1,17 +1,9 @@
 let yank = require('supertest'),
     expect = require('chai').expect,
-    mongoose = require('mongoose'),
     rewire = require('rewire'),
     chance = new require('chance')();
 
 let app = rewire('../app');
-
-// Первым делом роняем базу
-before((ready) => {
-    mongoose.connection.dropDatabase(() => {
-        ready();
-    });
-});
 
 describe('Добавление новой ссылки', () => {
     describe('с кастомным именем', () => {
