@@ -94,7 +94,7 @@ describe('Добавление новой ссылки', () => {
             yank(app)
                 .post('/api/v1/aliases')
                 .send({
-                    'href': chance.word({ length: 40 })
+                    'href': 'knife.media'
                 })
                 .expect(200)
                 .end(done);
