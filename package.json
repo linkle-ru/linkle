@@ -5,13 +5,10 @@
   "description": "Веб-приложение для сжатия ссылок",
   "main": "app.js",
   "scripts": {
-    "checkDB": "pgrep mongod > /dev/null || echo 'mongod process is not running!'",
     "start": "DEBUG=url-short:* node app",
     "deploy": "mina -f deploy.rb deploy",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon app",
-    "pretest": "npm run checkDB",
     "test": "export NODE_ENV=testing && mocha test/*.test.js",
-    "precoverage": "npm run checkDB",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha"
   },
   "dependencies": {
@@ -28,6 +25,7 @@
   "devDependencies": {
     "chai": "^4.1.1",
     "chance": "^1.0.11",
+    "mockgoose": "^7.3.3",
     "rewire": "^2.5.2",
     "supertest": "^3.0.0",
     "supports-color": "^4.2.1"

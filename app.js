@@ -21,14 +21,26 @@ process.env.DB_URI = mongoUri + dbName;
 
 // Настраиваем Mongoose
 mongoose.Promise = bluebird;
-mongoose.connect(process.env.DB_URI, {
-        useMongoClient: true,
-        promiseLibrary: bluebird
-    })
-    .then(
-        () => { debug('Succesfully connected to MongoBD!'); },
-        (err) => { debug('MongoDB connection error:', err); }
-    );
+const mongooseOptions = {
+    useMongoClient: true,
+    promiseLibrary: bluebird
+};
+
+if (env === 'testing') {
+    const Mockgoose = require('mockgoose').Mockgoose;
+    const mockgoose = new Mockgoose(mongoose);
+
+    mockgoose.prepareStorage()
+        .then(() => {
+            mongoose.connect(process.env.DB_URI, mongooseOptions);
+        });
+} else {
+    mongoose.connect(process.env.DB_URI, mongooseOptions)
+        .then(
+            () => { debug('Succesfully connected to MongoBD!'); },
+            (err) => { debug('MongoDB connection error:', err); }
+        );
+}
 
 // Создаем экземпляр приложения на Express
 let app = express();
