@@ -24,12 +24,17 @@ let Schema = mongoose.Schema,
             type: String,
             maxlength: 2000,
             required: true,
-            validate: {
+            validate: [{
                 validator: (v) => {
                     return !(/short\.taxnuke\.ru/.test(v));
                 },
                 message: 'A linked list, huh?'
-            },
+            }, {
+                validator: (v) => {
+                    return /\.\w+/.test(v);
+                },
+                message: 'Doesn\'t look like a link!'
+            }],
             trim: true
         },
         // Аналитика
