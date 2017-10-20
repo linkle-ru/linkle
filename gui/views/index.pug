@@ -5,6 +5,6 @@ block content
   p #{greeting}
 
   form(method='POST', action='/api/v1/aliases')
-    input(type='text', name='name', value='Сюда короткую ссылку')
-    input(type='text', name='href', value='А сюда большую ссылку')
+    input(type='text', name='name', placeholder="Сюда пиши алиас")
+    input(type='text', name='href', placeholder="А сюда ссылку")
     input(type='submit', value='Сжать')
