@@ -13,7 +13,7 @@ let Schema = mongoose.Schema,
             maxlength: [50, 'Alias name is too long'],
             validate: {
                 validator: (v) => {
-                    return /^[a-zA-zа-яА-Я\d_-]+$/.test(v);
+                    return /^[a-zA-zа-яА-Я\d\._-]+$/.test(v);
                 },
                 message: 'Alias contains weird characters'
             },
