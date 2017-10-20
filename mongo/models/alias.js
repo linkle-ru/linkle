@@ -23,7 +23,7 @@ let Schema = mongoose.Schema,
         href: {
             type: String,
             maxlength: 2000,
-            required: true,
+            required: [true, 'ssilka gde blet'],
             validate: [{
                 validator: (v) => {
                     return !(/short\.taxnuke\.ru/.test(v));
