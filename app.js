@@ -144,11 +144,10 @@ app.use((err, req, res, next) => {
 
     err.status = err.status || 500;
 
-    let messageText = '**Ошибка провалилась до конечного обработчика**:\n`' +
+    let messageText = 'Ошибка провалилась до конечного обработчика:\n`' +
         JSON.stringify(err.status) + '`\n' +
         '`method:' + req.method + '`\n' +
-        '`url:' + req.url + '`\n' +
-        '`ip:' + req._remoteAddress + '`';
+        '`route:' + req.url + '`\n';
 
     if (env === 'production') {
         switch (err.status) {
