@@ -4,7 +4,12 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     bluebird = require('bluebird'),
+    request = require('request'),
+    morgan = require('morgan'),
     debug = require('debug')('url-short:main');
+
+// Создаем экземпляр приложения на Express
+let app = express();
 
 // Настраиваем переменные окружения
 process.env.PORT = 3001;
@@ -30,20 +35,44 @@ if (env === 'testing') {
     const Mockgoose = require('mockgoose').Mockgoose;
     const mockgoose = new Mockgoose(mongoose);
 
+    var credentials = {
+        'telegramCO': {
+            'botToken': null,
+            'chatId': null
+        }
+    };
+
     mockgoose.prepareStorage()
         .then(() => {
             mongoose.connect(process.env.DB_URI, mongooseOptions);
         });
 } else {
+    var credentials = require('./credentials.json');
     mongoose.connect(process.env.DB_URI, mongooseOptions)
         .then(
             () => { debug('Succesfully connected to MongoBD!'); },
             (err) => { debug('MongoDB connection error:', err); }
         );
-}
 
-// Создаем экземпляр приложения на Express
-let app = express();
+    // Конфигурируем и подключаем логгер запросов/ответов
+    const morganConfig = JSON.stringify({
+        request: {
+            date: ':date[clf]',
+            ip: ':remote-addr',
+            agent: ':user-agent',
+            referrer: ':referrer',
+            httpV: ':http-version',
+            method: ':method',
+            url: ':url',
+            remoteUser: ':remote-user'
+        },
+        response: {
+            status: ':status',
+            responseTime: ':response-time'
+        }
+    });
+    app.use(morgan(morganConfig));
+}
 
 // Конфигурируем парсеры
 app.use(bodyParser.json());
@@ -93,7 +122,7 @@ app.use((err, req, res, next) => {
     next(err);
 });
 
-// Генерим 404 и передаем обработчику ошибок и передаем дальше
+// Генерим 404 и передаем обработчику ошибок
 app.get('*', (req, res, next) => {
     let err = new Error('Not Found');
     err.status = 404;
@@ -101,14 +130,48 @@ app.get('*', (req, res, next) => {
     next(err);
 });
 
-// Обработчик ошибок
+// Конечный обработчик ошибок
 app.use((err, req, res, next) => {
-    // Кидаем ошибку только в окружении development
+    /* jshint unused:vars */
+    // Вываливаем стэк только в окружении development или testing
     res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.error = env === ('development' || 'testing') ? err : {};
+
+    err.status = err.status || 500;
+
+    let messageText = '**Ошибка провалилась до конечного обработчика**:\n`' +
+        JSON.stringify(err.status) + '`\n' +
+        '`method:' + req.method + '`\n' +
+        '`url:' + req.url + '`\n' +
+        '`ip:' + req._remoteAddress + '`';
+
+    if (env === 'production') {
+        switch (err.status) {
+            case 404:
+            case 400:
+            case 500:
+                request.post({
+                    url: credentials.telegramCO.botToken,
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'chat_id': credentials.telegramCO.chatId,
+                        'parse_mode': 'Markdown',
+                        'text': messageText
+                    })
+                }, (error, response, body) => {
+                    console.log(body);
+                });
+
+                console.log(req);
+
+                break;
+        }
+    }
 
     // Рендерим страницу с ошибкой
-    res.status(err.status || 500);
+    res.status(err.status);
     res.send('error');
 });
 
