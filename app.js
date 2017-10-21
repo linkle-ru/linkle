@@ -74,6 +74,8 @@ if (env === 'testing') {
 
     if (env === 'production') {
         app.use(morgan(morganConfig));
+    } else {
+        app.use(morgan('tiny'));
     }
 }
 
