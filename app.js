@@ -166,10 +166,10 @@ app.use((err, req, res, next) => {
                         'text': messageText
                     })
                 }, (error, response, body) => {
-                    console.log(body);
+                    if (error) {
+                        debug(response);
+                    }
                 });
-
-                console.log(req);
 
                 break;
         }
