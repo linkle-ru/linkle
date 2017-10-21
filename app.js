@@ -71,7 +71,10 @@ if (env === 'testing') {
             responseTime: ':response-time'
         }
     });
-    app.use(morgan(morganConfig));
+
+    if (env === 'production') {
+        app.use(morgan(morganConfig));
+    }
 }
 
 // Конфигурируем парсеры
