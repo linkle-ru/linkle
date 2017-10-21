@@ -1,7 +1,5 @@
 var home = (req, res) => {
-    res.render('index', {
-        greeting: 'Здарова'
-    });
+    res.render('index');
 };
 
 module.exports = {home};
