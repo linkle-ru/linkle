@@ -10,6 +10,7 @@ let Schema = mongoose.Schema,
         _id: {
             type: String,
             default: shortid.generate,
+            minlength: [1, 'v5'],
             maxlength: [50, 'v0'],
             validate: {
                 validator: (v) => {
