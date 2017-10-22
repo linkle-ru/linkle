@@ -1,12 +1,9 @@
-let router = require('express').Router(),
+const router = require('express').Router(),
     controllers = require('./controllers');
 
-router.get('/goto/:alias', controllers.goto);
-
-router.get('/href/:alias', controllers.href);
-
-router.route('/aliases')
-    .post(controllers.newAlias);
+router.get('/follow/:alias', controllers.follow);
+router.get('/aliases/:alias', controllers.getAlias);
+router.post('/aliases', controllers.newAlias);
 
 // мидлвэр, отправляющий положительный ответ
 router.use((req, res, next) => {

@@ -114,7 +114,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:alias', (req, res) => {
-    res.redirect('/api/v1/goto/' + req.params.alias);
+    res.redirect('/api/v1/follow/' + req.params.alias);
     res.status(301);
 });
 

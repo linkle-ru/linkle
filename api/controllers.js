@@ -1,10 +1,7 @@
 let Alias = require('../mongo/models/alias'),
     _ = require('underscore');
 
-/**
- * Получить href сжатой ссылки
- */
-let href = (req, res, next) => {
+let getAlias = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
@@ -13,8 +10,9 @@ let href = (req, res, next) => {
 
                 next(err);
             } else {
-                res.send(alias);
-                res.status(200);
+                res.locals.payload = alias;
+
+                next();
             }
         })
         .catch((error) => {
@@ -25,7 +23,7 @@ let href = (req, res, next) => {
 /**
  * Редирект по короткой ссылке
  */
-let goto = (req, res, next) => {
+let follow = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
@@ -89,7 +87,7 @@ let newAlias = (req, res, next) => {
 };
 
 module.exports = {
-    goto,
-    href,
-    newAlias
+    follow,
+    newAlias,
+    getAlias
 };
