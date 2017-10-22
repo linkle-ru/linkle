@@ -8,7 +8,8 @@ let href = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
-                let err = new Error('Alias not found');
+                let err = new Error();
+                err.code = 'd0';
                 err.status = 400;
 
                 next(err);
@@ -29,7 +30,8 @@ let goto = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
-                let err = new Error('Alias not found');
+                let err = new Error();
+                err.code = 'd0';
                 err.status = 400;
 
                 next(err);
@@ -70,15 +72,15 @@ let newAlias = (req, res, next) => {
         })
         .catch((error) => {
             if (error.code === 11000) {
-                let err = new Error('Alias exists');
+                let err = new Error('v1');
                 err.status = 400;
-                err.code = 'v2';
 
                 next(err);
             } else if ('errors' in error) {
                 let reason = error.errors[Object.keys(error.errors)[0]].message;
 
                 let err = new Error(reason);
+                err.code = reason;
                 err.status = 400;
 
                 next(err);

@@ -8,6 +8,11 @@ let express = require('express'),
     morgan = require('morgan'),
     debug = require('debug')('url-short:main');
 
+const locales = {
+    en: require('./i18n/en'),
+    ru: require('./i18n/ru')
+};
+
 // Создаем экземпляр приложения на Express
 let app = express();
 
@@ -89,6 +94,13 @@ app.use((req, res, next) => {
         'Access-Control-Allow-Origin': '*',
         'X-Powered-By': 'PHP/5.1.6'
     });
+
+    next();
+});
+
+// Настраиваем локаль пользователя
+app.use((req, res, next) => {
+    res.locals.locale = locales.en;
 
     next();
 });
@@ -176,7 +188,7 @@ app.use((err, req, res, next) => {
 
     // Рендерим страницу с ошибкой
     res.status(err.status);
-    res.send('error');
+    res.send(err);
 });
 
 // Получаем порт

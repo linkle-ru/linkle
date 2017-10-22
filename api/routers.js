@@ -20,11 +20,14 @@ router.use((req, res, next) => {
 
 // мидлвэр-обработчик ошибок, отправляющий отрицательный ответ
 router.use((err, req, res, next) => {
-    const resBody = {
-        status: 'error',
-        code: err.code,
-        reason: err.message
-    };
+    const
+        errorCode = err.message,
+        resBody = {
+            status: 'error',
+            code: errorCode,
+            // Временное решение
+            reason: res.locals.locale.errors[errorCode[0]][errorCode.substr(1)]
+        };
 
     res.status(err.status || 500).json(resBody);
 });

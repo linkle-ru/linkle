@@ -10,30 +10,30 @@ let Schema = mongoose.Schema,
         _id: {
             type: String,
             default: shortid.generate,
-            maxlength: [50, 'Alias name is too long'],
+            maxlength: [50, 'v0'],
             validate: {
                 validator: (v) => {
                     return /^[a-zA-zа-яА-Я\d\._-]+$/.test(v);
                 },
-                message: 'Alias contains weird characters'
+                message: 'v2'
             },
             trim: true
         },
         // Полная ссылка
         href: {
             type: String,
-            maxlength: 2000,
-            required: [true, 'ssilka gde blet'],
+            maxlength: [2000, 'v3'],
+            required: [true, 'v4'],
             validate: [{
                 validator: (v) => {
                     return !(/short\.taxnuke\.ru/.test(v));
                 },
-                message: 'A linked list, huh?'
+                message: 'v8'
             }, {
                 validator: (v) => {
                     return /\.\w+/.test(v);
                 },
-                message: 'Doesn\'t look like a link!'
+                message: 'v7'
             }],
             trim: true
         },
