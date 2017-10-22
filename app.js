@@ -87,7 +87,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     res.set({
         'Access-Control-Allow-Origin': '*',
-        'X-Powered-By': 'None of your business'
+        'X-Powered-By': 'PHP/5.1.6'
     });
 
     next();
