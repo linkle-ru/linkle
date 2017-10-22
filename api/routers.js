@@ -1,10 +1,6 @@
 let router = require('express').Router(),
     controllers = require('./controllers');
 
-////////////////////////
-// Публичные маршруты //
-////////////////////////
-
 router.get('/goto/:alias', controllers.goto);
 
 router.get('/href/:alias', controllers.href);
@@ -12,15 +8,25 @@ router.get('/href/:alias', controllers.href);
 router.route('/aliases')
     .post(controllers.newAlias);
 
-// Обработчик ошибок API
-router.use((err, req, res, next) => {
-    // Кидаем ошибку только в окружении development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+// мидлвэр, отправляющий положительный ответ
+router.use((req, res, next) => {
+    const resBody = {
+        status: 'ok',
+        payload: res.locals.payload
+    };
 
-    // Рендерим страницу с ошибкой
-    res.status(err.status || 500);
-    res.json(err.message);
+    res.status(200).json(resBody);
+});
+
+// мидлвэр-обработчик ошибок, отправляющий отрицательный ответ
+router.use((err, req, res, next) => {
+    const resBody = {
+        status: 'error',
+        code: err.code,
+        reason: err.message
+    };
+
+    res.status(err.status || 500).json(resBody);
 });
 
 module.exports = router;

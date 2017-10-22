@@ -61,12 +61,18 @@ let newAlias = (req, res, next) => {
             }, (value) => _.isUndefined(value))
         )
         .then((alias) => {
-            res.send(alias);
+            res.locals.payload = {
+                name: alias._id,
+                href: alias.href
+            };
+
+            next();
         })
         .catch((error) => {
             if (error.code === 11000) {
                 let err = new Error('Alias exists');
                 err.status = 400;
+                err.code = 'v2';
 
                 next(err);
             } else if ('errors' in error) {

@@ -44,6 +44,9 @@ let Schema = mongoose.Schema,
                 followed: 0
             }
         }
+    }, {
+        // Конфиг схемы
+        versionKey: false
     });
 
 /**
@@ -54,7 +57,10 @@ let Schema = mongoose.Schema,
 aliasSchema.methods.toJSON = function() {
     return {
         name: this._id,
-        href: this.href
+        href: this.href,
+        analytics: {
+            followed: this.analytics.followed
+        }
     };
 };
 
