@@ -8,10 +8,14 @@ let express = require('express'),
     morgan = require('morgan'),
     debug = require('debug')('url-short:main');
 
-const locales = {
-    en: require('./i18n/en'),
-    ru: require('./i18n/ru')
-};
+let requireDir = require('require-dir');
+
+let locales = requireDir('./i18n', {recurse: true});
+
+// const locales = {
+//     en: require('./i18n/en'),
+//     ru: require('./i18n/ru')
+// };
 
 // Создаем экземпляр приложения на Express
 let app = express();

@@ -21,6 +21,7 @@
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.3",
     "request": "^2.83.0",
+    "require-dir": "^0.3.2",
     "shortid": "^2.2.8",
     "underscore": "^1.8.3"
   },
