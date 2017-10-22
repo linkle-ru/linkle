@@ -104,7 +104,7 @@ app.use((req, res, next) => {
 
 // Настраиваем локаль пользователя
 app.use((req, res, next) => {
-    res.locals.locale = locales.en;
+    res.locals.locale = (locales[req.query.lang] || locales.en);
 
     next();
 });
