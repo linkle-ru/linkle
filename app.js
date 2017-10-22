@@ -1,21 +1,15 @@
 // Подключаем зависимости
-let express = require('express'),
+const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     bluebird = require('bluebird'),
     request = require('request'),
     morgan = require('morgan'),
-    debug = require('debug')('url-short:main');
+    debug = require('debug')('url-short:main'),
+    requireDir = require('require-dir');
 
-let requireDir = require('require-dir');
-
-let locales = requireDir('./i18n', {recurse: true});
-
-// const locales = {
-//     en: require('./i18n/en'),
-//     ru: require('./i18n/ru')
-// };
+const locales = requireDir('./i18n', {recurse: true});
 
 // Создаем экземпляр приложения на Express
 let app = express();
@@ -26,10 +20,8 @@ let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
 
-let mongoUri = 'mongodb://localhost:27017/',
-    dbName = 'url-shortener';
-
-dbName += '-' + env;
+const mongoUri = 'mongodb://localhost:27017/',
+    dbName = 'url-shortener' + '-' + env;
 
 process.env.DB_URI = mongoUri + dbName;
 

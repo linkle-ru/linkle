@@ -16,8 +16,8 @@ describe('Добавление новой ссылки', () => {
                 })
                 .expect(200)
                 .expect((res) => {
-                    expect(res.body.payload).to.have.property('name', 'first');
-                    expect(res.body.payload).to.have.property('href', 'http://ya.ru');
+                    expect(res.body.payload.name === 'first');
+                    expect(res.body.payload.href === 'http://ya.ru');
                 })
                 .end(done);
         });
