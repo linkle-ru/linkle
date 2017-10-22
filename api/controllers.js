@@ -8,8 +8,7 @@ let href = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
-                let err = new Error();
-                err.code = 'd0';
+                let err = new Error('d0');
                 err.status = 400;
 
                 next(err);
@@ -30,8 +29,7 @@ let goto = (req, res, next) => {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
-                let err = new Error();
-                err.code = 'd0';
+                let err = new Error('d0');
                 err.status = 400;
 
                 next(err);
