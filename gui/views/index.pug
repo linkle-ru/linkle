@@ -21,7 +21,6 @@ html(lang='ru')
             .inner
               h3.masthead-brand short.taxnuke.ru
               h4.masthead-brand (alpha)
-              p.masthead-brand Находится в начальной стадии разработки
           main.inner.cover(role='main')
             h1.cover-heading Сократить ссылку
             form#main-form(data-toggle='validator', role='form')
@@ -35,10 +34,11 @@ html(lang='ru')
                   span.input-group-addon short.taxnuke.ru/
                   input#short-link.form-control(type='text', pattern='^[a-zA-zа-яА-Я\d\._-]+$', maxlength='15', placeholder='тестовая', data-error='Только латинский и кириллический алфавиты, арабские цифры, - и _')
                 .help-block.with-errors Если не заполнять, будет рандомная
-              input.btn.btn-primary(type='submit', value='Сжать')
+              input.btn.btn-warning(type='submit', value='Сжать')
             br
             #result-group.form-group
               label.control-label(for='shortened-link') Сжатая ссылка
               .input-group
                 input#shortened-link.form-control(type='text', readonly='')
+            input.btn.btn-info#read-docs(type='submit', value='Документация к API на Github')
 

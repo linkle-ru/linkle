@@ -1,10 +1,26 @@
 $(document).ready(function() {
+    // Открывает ссылку с README
+    $('#read-docs').click(function(e) {
+        e.preventDefault();
+        window.open(
+            'https://github.com/taxnuke/url-shortener/blob/master/README.md',
+            '_blank'
+        );
+    });
+
     $('#main-form').submit(function(e) {
         e.preventDefault();
 
+        $('#result-group').slideUp({duration: 100});
+
         const
-            alias = $('#short-link').val(),
-            href = $('#long-link').val();
+            aliasInput = $('#short-link'),
+            hrefInput = $('#long-link'),
+            resultInput = $('#shortened-link');
+
+        const
+            alias = aliasInput.val(),
+            href = hrefInput.val();
 
         if (!href) {
             return;
@@ -18,24 +34,20 @@ $(document).ready(function() {
             data.name = alias;
         }
 
-        console.log(data);
-
         $.ajax({
-            'url': '/api/v1/aliases/',
+            'url': '/api/v1/aliases?lang=ru',
             'dataType': 'json',
             'method': 'POST',
             'data': data,
             'cache': false,
             'success': function(data) {
-                console.log(data);
-                $('#result-group input').val('short.taxnuke.ru/' + data.name);
+                resultInput.val('short.taxnuke.ru/' + data.payload.name);
                 $('#result-group').slideDown();
             },
             'error': function(data) {
-                // $('#result-group').slideDown();
-                console.log(data.responseJSON);
+                resultInput.val(data.responseJSON.reason);
+                $('#result-group').slideDown();
             }
         });
-
     });
 });
