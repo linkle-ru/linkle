@@ -2,9 +2,6 @@ language: node_js
 node_js:
   - "8.4.0"
 
-env:
-  CODECLIMATE_REPO_TOKEN: 177550be8cff0b3b29b5237435646731950a5d43041f772d39293a56f8045559
-
 after_success:
   - npm run coverage
   - codeclimate-test-reporter < ./coverage/lcov.info
