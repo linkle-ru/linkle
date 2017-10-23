@@ -7,9 +7,8 @@ const express = require('express'),
     request = require('request'),
     morgan = require('morgan'),
     debug = require('debug')('url-short:main'),
-    requireDir = require('require-dir');
-
-const locales = requireDir('./i18n', {recurse: true});
+    requireDir = require('require-dir'),
+    locales = requireDir('./i18n', {recurse: true});
 
 // Создаем экземпляр приложения на Express
 let app = express();
@@ -159,7 +158,6 @@ app.use((err, req, res, next) => {
 
     if (env === 'production') {
         switch (err.status) {
-            case 404:
             case 400:
             case 500:
                 request.post({
