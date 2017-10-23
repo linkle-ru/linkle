@@ -2,11 +2,6 @@ language: node_js
 node_js:
   - "8.4.0"
 
-before_script:
-- npm install -g istanbul
-- npm install -g mocha@3.5.0
-- npm install -g codeclimate-test-reporter
-
 after_success:
   - npm run coverage
   - codeclimate-test-reporter < ./coverage/lcov.info
