@@ -105,12 +105,7 @@ let api = require('./api/routers'),
     gui = require('./gui/routers');
 
 app.use('/api/v1', api);
-app.use('/gui/', gui);
-
-app.get('/', (req, res) => {
-    res.redirect('gui');
-    res.status(301);
-});
+app.use('/', gui);
 
 app.get('/:alias', (req, res) => {
     res.redirect('/api/v1/follow/' + req.params.alias);
