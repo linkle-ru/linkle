@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/taxnuke/url-shortener.svg?branch=master)](https://travis-ci.org/taxnuke/url-shortener)
 [![Maintainability](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/maintainability)](https://codeclimate.com/github/taxnuke/url-shortener/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/test_coverage)](https://codeclimate.com/github/taxnuke/url-shortener/test_coverage)
 ---
 
 # REST-API
