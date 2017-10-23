@@ -23,21 +23,21 @@ html(lang='ru')
               h4.masthead-brand (alpha)
           main.inner.cover(role='main')
             h1.cover-heading Сократить ссылку
-            form#main-form(data-toggle='validator', role='form')
+            form#main-form(role='form')
               .form-group.has-feedback
                 .input-group
-                  input#long-link.form-control(type='text', pattern='^.*\.[a-zA-zа-яА-Я\d]+.*$', placeholder='website.com/super/long/link/that/is/too/annoying?use_this_tool=true', data-error='Чет не похоже на ссылку', required='')
+                  input#long-link.form-control(type='text', data-href, required, placeholder='website.com/super/long/link/that/is/too/annoying?use_this_tool=true')
                 .help-block.with-errors
               .form-group
                 label.control-label(for='short-link') Псевдоним
                 .input-group
                   span.input-group-addon short.taxnuke.ru/
-                  input#short-link.form-control(type='text', pattern='^[a-zA-zа-яА-Я\d\._-]+$', maxlength='15', placeholder='тестовая', data-error='Только латинский и кириллический алфавиты, арабские цифры, - и _')
+                  input#short-link.form-control(type='text', data-alias, placeholder='коротко')
                 .help-block.with-errors Если не заполнять, будет рандомная
-              input.btn.btn-warning(type='submit', value='Сжать')
+              input.btn.btn-warning(type='submit', value='Сократить')
             br
             #result-group.form-group
-              label.control-label(for='shortened-link') Сжатая ссылка
+              label.control-label(for='shortened-link') Сокращенная ссылка
               .input-group
                 input#shortened-link.form-control(type='text', readonly='')
             input.btn.btn-info#read-docs(type='submit', value='Документация к API на Github')

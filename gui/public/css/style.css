@@ -10,6 +10,9 @@
     display: none;
 }
 
+input.btn {
+    cursor: pointer;
+}
 
 /* Links */
 

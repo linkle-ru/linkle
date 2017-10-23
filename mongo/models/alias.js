@@ -32,7 +32,7 @@ let Schema = mongoose.Schema,
                 message: 'v8'
             }, {
                 validator: (v) => {
-                    return /\.\w+/.test(v);
+                    return /\w+\.\w+/.test(v);
                 },
                 message: 'v7'
             }],
