@@ -2,9 +2,10 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/maintainability)](https://codeclimate.com/github/taxnuke/url-shortener/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/test_coverage)](https://codeclimate.com/github/taxnuke/url-shortener/test_coverage)
 [![GitHub issues](https://img.shields.io/github/issues/taxnuke/url-shortener.svg)](https://github.com/taxnuke/url-shortener/issues)
+
 [![GitHub license](https://img.shields.io/github/license/taxnuke/url-shortener.svg)](https://github.com/taxnuke/url-shortener/blob/master/LICENSE)
 [![Contact](https://img.shields.io/badge/contact-vk.com-blue.svg)](https://vk.com/taxnuke)
-[![Objective](https://img.shields.io/badge/objective-training-brightgreen.svg)]()
+![Objective](https://img.shields.io/badge/objective-training-blue.svg)
 ---
 
 # REST-API
