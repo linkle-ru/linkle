@@ -3,13 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "description": "Веб-приложение для сжатия ссылок",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "DEBUG=url-short:* node app",
+    "start": "DEBUG=url-short:* node src/app",
     "deploy": "mina -f deploy.rb deploy",
-    "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon app",
+    "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon src/app",
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
-    "coverage": "export NODE_ENV=testing && istanbul cover _mocha"
+    "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; fi",
+    "coverage": "export NODE_ENV=testing && istanbul cover _mocha",
+    "postcoverage": "mv ./coverage ./reports/coverage",
+    "mutate": "export NODE_ENV=testing && stryker run"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -33,6 +36,11 @@
     "mocha": "^3.5.0",
     "mockgoose": "^7.3.3",
     "rewire": "^2.5.2",
+    "stryker": "^0.13.0",
+    "stryker-api": "^0.11.0",
+    "stryker-html-reporter": "^0.10.1",
+    "stryker-mocha-framework": "^0.6.1",
+    "stryker-mocha-runner": "^0.9.1",
     "supertest": "^3.0.0",
     "supports-color": "^4.2.1"
   },

@@ -7,7 +7,12 @@ let credentials;
 try {
     credentials = require('../credentials.json');
 } catch (e) {
-    credentials = {};
+    credentials = {
+        telegramCO: {
+            botToken: 'https://api.telegram.org/123456789:AAAAA/sendMessage',
+            chatId: '-1000987654321'
+        }
+    };
 }
 
 const notify = function(message) {

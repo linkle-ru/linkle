@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html><head><title>app.js
+ - Stryker report</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="__resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="__resources/highlightjs/styles/default.css">
+<link rel="stylesheet" href="__resources/stryker.css"></head>
+<body><img class="stryker-image" alt="Stryker" src="__resources/stryker-80x80.png">
+<div class="container-fluid"><div class="row"><div class="col-lg-12"><h1 class="display-4">app.js
+ 
+<small class="text-muted">- Stryker report</small></h1></div></div>
+<ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">All files</a></li>
+<li class="breadcrumb-item active">app.js</li></ol>
+<div class="row"><div class="col-lg-12"><div class="row"><div class="col-sm-11"><table class="table table-sm table-hover table-bordered table-no-top"><thead><tr><th style="width: 20%"><div><span>File / Directory</span></div></th>
+<th colspan="2"><div><span>Mutation score</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Killed</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Survived</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Timeout</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># No coverage</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Runtime errors</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Transpile errors</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total detected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total undetected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total mutants</span></div></th></tr></thead>
+<tbody><tr><td>app.js</td>
+<td><div class="progress"><div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0.00" aria-valuemin="0" aria-valuemax="100" style="width: 0.00%;">0.00
+%</div></div></td>
+<th class="text-center text-danger" style="width: 10%">0.00</th>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">7</td>
+<td class="text-center">32</td>
+<td class="text-center">0</td>
+<th class="text-center">0</th>
+<th class="text-center">7</th>
+<th class="text-center">39</th></tr>
+</tbody></table></div></div>
+<div class="row"><div class="col-lg-7"><div class="row legend"><form class="col-md-12" novalidate="novalidate"><div class="form-check form-check-inline"><label class="form-check-label"><input class="form-check-input stryker-display" checked value="0" type="checkbox">
+NoCoverage
+ 
+(7)</label></div>
+
+
+
+<div class="form-check form-check-inline"><label class="form-check-label"><input class="form-check-input stryker-display" value="4" type="checkbox">
+RuntimeError
+ 
+(32)</label></div>
+
+<a href="#" class="stryker-collapse-expand-all">Expand all</a></form></div>
+<pre><code class="lang-javascript"><span class="bg-null">// Подключаем зависимости
+const express = require(&#039;express&#039;),
+    path = require(&#039;path&#039;),
+    chatops = require(&#039;./helpers/chatops&#039;),
+    mongoose = require(&#039;mongoose&#039;),
+    bluebird = require(&#039;bluebird&#039;),
+    morgan = require(&#039;morgan&#039;),
+    debug = require(&#039;debug&#039;)(&#039;url-short:main&#039;),
+    requireDir = require(&#039;require-dir&#039;),
+    locales = requireDir(&#039;./i18n&#039;, { recurse: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="0"><span class="badge badge-secondary">0</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="0">false</span><span class="stryker-original-code" data-mutant="0"><span class="bg-null">true</span></span><span class="bg-null"> });
+
+// Создаем экземпляр приложения на Express
+let app = express();
+
+// Настраиваем переменные окружения
+process.env.PORT = 3001;
+let env = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="LogicalOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="1"><span class="badge badge-secondary">1</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="1">process.env.NODE_ENV &amp;&amp; &#039;production&#039;</span><span class="stryker-original-code" data-mutant="1"><span class="bg-null">process.env.NODE_ENV || &#039;production&#039;</span></span><span class="bg-null">;
+
+debug(`Node environment is set to &quot;${env}&quot;`);
+
+const mongoUri = &#039;mongodb://localhost:27017/&#039;,
+    dbName = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="2"><span class="badge badge-secondary">2</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="2">&#039;url-shortener&#039; + &#039;-&#039; - env</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="3"><span class="badge badge-secondary">3</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="3">&#039;url-shortener&#039; - &#039;-&#039;</span><span class="stryker-original-code" data-mutant="2"><span class="stryker-original-code" data-mutant="3"><span class="bg-null">&#039;url-shortener&#039; + &#039;-&#039;</span></span><span class="bg-null"> + env</span></span><span class="bg-null">;
+
+process.env.DB_URI = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="4"><span class="badge badge-secondary">4</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="4">mongoUri - dbName</span><span class="stryker-original-code" data-mutant="4"><span class="bg-null">mongoUri + dbName</span></span><span class="bg-null">;
+
+// Настраиваем Mongoose
+mongoose.Promise = bluebird;
+const mongooseOptions = {
+    useMongoClient: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="5"><span class="badge badge-secondary">5</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="5">false</span><span class="stryker-original-code" data-mutant="5"><span class="bg-null">true</span></span><span class="bg-null">,
+    promiseLibrary: bluebird
+};
+
+if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="6"><span class="badge badge-secondary">6</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="6">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="7"><span class="badge badge-secondary">7</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="7">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="8"><span class="badge badge-secondary">8</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="8">env !== &#039;testing&#039;</span><span class="stryker-original-code" data-mutant="6"><span class="stryker-original-code" data-mutant="7"><span class="stryker-original-code" data-mutant="8"><span class="bg-null">env === &#039;testing&#039;</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="9"><span class="badge badge-secondary">9</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="9">{
+}</span><span class="stryker-original-code" data-mutant="9"><span class="bg-null">{
+    const Mockgoose = require(&#039;mockgoose&#039;).Mockgoose;
+    const mockgoose = new Mockgoose(mongoose);
+
+    mockgoose.prepareStorage()
+        .then(() =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="10"><span class="badge badge-secondary">10</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="10">{
+}</span><span class="stryker-original-code" data-mutant="10"><span class="bg-null">{
+            mongoose.connect(process.env.DB_URI, mongooseOptions);
+        }</span></span><span class="bg-null">);
+}</span></span><span class="bg-null"> else </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="11"><span class="badge badge-secondary">11</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="11">{
+}</span><span class="stryker-original-code" data-mutant="11"><span class="bg-null">{
+    mongoose.connect(process.env.DB_URI, mongooseOptions)
+        .then(
+            () =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="12"><span class="badge badge-danger">12</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="12">{
+}</span><span class="stryker-original-code" data-mutant="12"><span class="bg-danger-light">{ debug(&#039;Succesfully connected to MongoBD!&#039;); }</span></span><span class="bg-null">,
+            (err) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="13"><span class="badge badge-danger">13</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="13">{
+}</span><span class="stryker-original-code" data-mutant="13"><span class="bg-danger-light">{ debug(&#039;MongoDB connection error:&#039;, err); }</span></span><span class="bg-null">
+        );
+
+    // Конфигурируем и подключаем логгер запросов/ответов
+    const morganConfig = JSON.stringify({
+        request: {
+            date: &#039;:date[clf]&#039;,
+            ip: &#039;:remote-addr&#039;,
+            agent: &#039;:user-agent&#039;,
+            referrer: &#039;:referrer&#039;,
+            httpV: &#039;:http-version&#039;,
+            method: &#039;:method&#039;,
+            url: &#039;:url&#039;,
+            remoteUser: &#039;:remote-user&#039;
+        },
+        response: {
+            status: &#039;:status&#039;,
+            responseTime: &#039;:response-time&#039;
+        }
+    });
+
+    if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="14"><span class="badge badge-danger">14</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="14">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="15"><span class="badge badge-danger">15</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="15">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="16"><span class="badge badge-danger">16</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="16">env !== &#039;production&#039;</span><span class="stryker-original-code" data-mutant="14"><span class="stryker-original-code" data-mutant="15"><span class="stryker-original-code" data-mutant="16"><span class="bg-danger-light">env === &#039;production&#039;</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="17"><span class="badge badge-danger">17</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="17">{
+}</span><span class="stryker-original-code" data-mutant="17"><span class="bg-danger-light">{
+        app.use(morgan(morganConfig));
+    }</span></span><span class="bg-null"> else </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: NoCoverage" data-mutant-status-annotation="danger" data-mutant-status="0" data-mutant="18"><span class="badge badge-danger">18</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="18">{
+}</span><span class="stryker-original-code" data-mutant="18"><span class="bg-danger-light">{
+        app.use(morgan(&#039;tiny&#039;));
+    }</span></span><span class="bg-null">
+}</span></span><span class="bg-null">
+
+// Прописываем заголовки для ответа
+app.use((req, res, next) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="19"><span class="badge badge-secondary">19</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="19">{
+}</span><span class="stryker-original-code" data-mutant="19"><span class="bg-null">{
+    res.set({
+        &#039;Access-Control-Allow-Origin&#039;: &#039;*&#039;,
+        &#039;X-Powered-By&#039;: &#039;PHP/5.1.6&#039;
+    });
+
+    next();
+}</span></span><span class="bg-null">);
+
+// Раздаем из публичной директории GUI статику
+app.use(express.static(path.join(__dirname, &#039;gui/public&#039;)));
+
+// Указываем движок Pug для рендеринга вьюх и место, где их брать
+app.set(&#039;view engine&#039;, &#039;pug&#039;);
+app.set(&#039;views&#039;, path.join(__dirname, &#039;gui/views&#039;));
+
+// Настраиваем локаль пользователя
+app.use((req, res, next) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="20"><span class="badge badge-secondary">20</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="20">{
+}</span><span class="stryker-original-code" data-mutant="20"><span class="bg-null">{
+    res.locals.locale = (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="LogicalOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="21"><span class="badge badge-secondary">21</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="21">locales[req.query.lang] &amp;&amp; locales.en</span><span class="stryker-original-code" data-mutant="21"><span class="bg-null">locales[req.query.lang] || locales.en</span></span><span class="bg-null">);
+
+    next();
+}</span></span><span class="bg-null">);
+
+// Настраиваем роутинг
+let api = require(&#039;./api/routers&#039;),
+    gui = require(&#039;./gui/routers&#039;);
+
+app.use(&#039;/api/v1&#039;, api);
+app.use(&#039;/&#039;, gui);
+
+app.get(&#039;/:alias&#039;, (req, res) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="22"><span class="badge badge-secondary">22</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="22">{
+}</span><span class="stryker-original-code" data-mutant="22"><span class="bg-null">{
+    res.redirect(</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="23"><span class="badge badge-secondary">23</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="23">&#039;/api/v1/follow/&#039; - req.params.alias</span><span class="stryker-original-code" data-mutant="23"><span class="bg-null">&#039;/api/v1/follow/&#039; + req.params.alias</span></span><span class="bg-null">);
+    res.status(301);
+}</span></span><span class="bg-null">);
+
+// Генерим 404 и передаем обработчику ошибок
+app.get(&#039;*&#039;, (req, res, next) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="24"><span class="badge badge-secondary">24</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="24">{
+}</span><span class="stryker-original-code" data-mutant="24"><span class="bg-null">{
+    let err = new Error(&#039;Not Found&#039;);
+    err.status = 404;
+
+    next(err);
+}</span></span><span class="bg-null">);
+
+// Конечный обработчик ошибок
+app.use((err, req, res, next) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="25"><span class="badge badge-secondary">25</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="25">{
+}</span><span class="stryker-original-code" data-mutant="25"><span class="bg-null">{
+    /* jshint unused:vars */
+    // Вываливаем стэк только в окружении development
+    res.locals.message = err.message;
+    res.locals.error = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="26"><span class="badge badge-secondary">26</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="26">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="27"><span class="badge badge-secondary">27</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="27">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="28"><span class="badge badge-secondary">28</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="28">env !== &#039;development&#039;</span><span class="stryker-original-code" data-mutant="26"><span class="stryker-original-code" data-mutant="27"><span class="stryker-original-code" data-mutant="28"><span class="bg-null">env === (&#039;development&#039;)</span></span></span></span><span class="bg-null"> ? err : {};
+
+    err.status = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="LogicalOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="29"><span class="badge badge-secondary">29</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="29">err.status &amp;&amp; 500</span><span class="stryker-original-code" data-mutant="29"><span class="bg-null">err.status || 500</span></span><span class="bg-null">;
+
+    if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="30"><span class="badge badge-secondary">30</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="30">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="31"><span class="badge badge-secondary">31</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="31">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="32"><span class="badge badge-secondary">32</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="32">env !== &#039;production&#039;</span><span class="stryker-original-code" data-mutant="30"><span class="stryker-original-code" data-mutant="31"><span class="stryker-original-code" data-mutant="32"><span class="bg-null">env === &#039;production&#039;</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="33"><span class="badge badge-secondary">33</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="33">{
+}</span><span class="stryker-original-code" data-mutant="33"><span class="bg-null">{
+        switch (err.status) {
+            case 400:
+            case 404:
+            case 500:
+                const message = `\`${err.status}\n
+                                method:${req.method}\n
+                                route:${req.url}\``;
+                chatops.notify(message);
+
+                break;
+        }
+    }</span></span><span class="bg-null">
+
+    // Рендерим страницу с ошибкой
+    res.status(err.status);
+    res.send(err);
+}</span></span><span class="bg-null">);
+
+// Получаем порт
+let port = process.env.PORT;
+
+// Слушаем на порт &#039;port&#039;
+if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="34"><span class="badge badge-secondary">34</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="34">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="35"><span class="badge badge-secondary">35</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="35">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="36"><span class="badge badge-secondary">36</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="36">module.parent</span><span class="stryker-original-code" data-mutant="34"><span class="stryker-original-code" data-mutant="35"><span class="stryker-original-code" data-mutant="36"><span class="bg-null">!module.parent</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="37"><span class="badge badge-secondary">37</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="37">{
+}</span><span class="stryker-original-code" data-mutant="37"><span class="bg-null">{
+    app.listen(port);
+}</span></span><span class="bg-null">
+
+debug(</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="38"><span class="badge badge-secondary">38</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="38">&#039;Listening on port &#039; - port</span><span class="stryker-original-code" data-mutant="38"><span class="bg-null">&#039;Listening on port &#039; + port</span></span><span class="bg-null">);
+
+module.exports = app;</span>
+</code></pre></div>
+<div class="col-lg-5"><table class="table table-sm table-hover"><thead><tr><th>#</th>
+<th>Mutator</th>
+<th>State</th>
+<th>Location</th>
+<th>Original</th>
+<th>Replacement</th></tr></thead>
+<tbody><tr><th>0</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>9
+:
+46</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>1</th>
+<td>LogicalOperator</td>
+<td>RuntimeError</td>
+<td>16
+:
+10</td>
+<td><code>.   ....    '</code></td>
+<td><code>.   ....    '</code></td></tr>
+<tr><th>2</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>21
+:
+13</td>
+<td><code>'   -...'-' +</code></td>
+<td><code>'   -...'-' -</code></td></tr>
+<tr><th>3</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>21
+:
+13</td>
+<td><code>'   -...+ '-'</code></td>
+<td><code>'   -...- '-'</code></td></tr>
+<tr><th>4</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>23
+:
+21</td>
+<td><code>+</code></td>
+<td><code>-</code></td></tr>
+<tr><th>5</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>32
+:
+4</td>
+<td><code>=== '       '</code></td>
+<td><code></code></td></tr>
+<tr><th>6</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>28
+:
+20</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>7</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>32
+:
+4</td>
+<td><code>=== '       '</code></td>
+<td><code></code></td></tr>
+<tr><th>8</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>32
+:
+4</td>
+<td><code>=== '       '</code></td>
+<td><code>!== '       '</code></td></tr>
+<tr><th>9</th>
+<td>BlockStatement</td>
+<td>NoCoverage</td>
+<td>43
+:
+18</td>
+<td><code>{    ...'); }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>10</th>
+<td>BlockStatement</td>
+<td>NoCoverage</td>
+<td>44
+:
+21</td>
+<td><code>{    ... ); }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>11</th>
+<td>RemoveConditionals</td>
+<td>NoCoverage</td>
+<td>65
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code></code></td></tr>
+<tr><th>12</th>
+<td>RemoveConditionals</td>
+<td>NoCoverage</td>
+<td>65
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code></code></td></tr>
+<tr><th>13</th>
+<td>BinaryOperator</td>
+<td>NoCoverage</td>
+<td>65
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code>!== '...    '</code></td></tr>
+<tr><th>14</th>
+<td>BlockStatement</td>
+<td>NoCoverage</td>
+<td>65
+:
+30</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>15</th>
+<td>BlockStatement</td>
+<td>NoCoverage</td>
+<td>67
+:
+11</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>16</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>32
+:
+23</td>
+<td><code>{
+   ...});
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>17</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>37
+:
+20</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>18</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>73
+:
+28</td>
+<td><code>{
+   ...();
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>19</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>40
+:
+7</td>
+<td><code>{
+   ...  }
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>20</th>
+<td>LogicalOperator</td>
+<td>RuntimeError</td>
+<td>91
+:
+25</td>
+<td><code>[   ....    .</code></td>
+<td><code>[   ....    .</code></td></tr>
+<tr><th>21</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>90
+:
+28</td>
+<td><code>{
+   ...();
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>22</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>104
+:
+17</td>
+<td><code>'/   ...    .</code></td>
+<td><code>'/   ...    .</code></td></tr>
+<tr><th>23</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>103
+:
+33</td>
+<td><code>{
+   ... );
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>24</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>109
+:
+33</td>
+<td><code>{
+   ... );
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>25</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>117
+:
+33</td>
+<td><code>{
+   ... );
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>26</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>121
+:
+23</td>
+<td><code>=== (...   ')</code></td>
+<td><code></code></td></tr>
+<tr><th>27</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>121
+:
+23</td>
+<td><code>=== (...   ')</code></td>
+<td><code></code></td></tr>
+<tr><th>28</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>121
+:
+23</td>
+<td><code>=== (...   ')</code></td>
+<td><code>!== '...    '</code></td></tr>
+<tr><th>29</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>125
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code></code></td></tr>
+<tr><th>30</th>
+<td>LogicalOperator</td>
+<td>RuntimeError</td>
+<td>123
+:
+17</td>
+<td><code>.       ||</code></td>
+<td><code>.       &&</code></td></tr>
+<tr><th>31</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>125
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code></code></td></tr>
+<tr><th>32</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>125
+:
+8</td>
+<td><code>=== '...    '</code></td>
+<td><code>!== '...    '</code></td></tr>
+<tr><th>33</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>125
+:
+30</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>34</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>148
+:
+4</td>
+<td><code>!      .</code></td>
+<td><code></code></td></tr>
+<tr><th>35</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>148
+:
+4</td>
+<td><code>!      .</code></td>
+<td><code></code></td></tr>
+<tr><th>36</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>148
+:
+4</td>
+<td><code>!      .</code></td>
+<td><code>.</code></td></tr>
+<tr><th>37</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>148
+:
+20</td>
+<td><code>{
+   ... );
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>38</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>152
+:
+6</td>
+<td><code>'    ...  ' +</code></td>
+<td><code>'    ...  ' -</code></td></tr></tbody></table></div></div></div></div>
+<footer>Generated with stryker-html-reporter generator. Visit the 
+<a href="http://stryker-mutator.github.io" target="_blank">Stryker website</a></footer></div>
+<script src="__resources/popper.js/dist/umd/popper.min.js" defer="defer"></script>
+<script src="__resources/jquery/dist/jquery.slim.min.js" defer="defer"></script>
+<script src="__resources/bootstrap/js/bootstrap.min.js" defer="defer"></script>
+<script src="__resources/stryker.js" defer="defer"></script></body></html>

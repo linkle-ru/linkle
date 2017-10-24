@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html><head><title>controllers.js
+ - Stryker report</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="../__resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../__resources/highlightjs/styles/default.css">
+<link rel="stylesheet" href="../__resources/stryker.css"></head>
+<body><img class="stryker-image" alt="Stryker" src="../__resources/stryker-80x80.png">
+<div class="container-fluid"><div class="row"><div class="col-lg-12"><h1 class="display-4">controllers.js
+ 
+<small class="text-muted">- Stryker report</small></h1></div></div>
+<ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">All files</a></li><li class="breadcrumb-item"><a href="index.html">api</a></li>
+<li class="breadcrumb-item active">controllers.js</li></ol>
+<div class="row"><div class="col-lg-12"><div class="row"><div class="col-sm-11"><table class="table table-sm table-hover table-bordered table-no-top"><thead><tr><th style="width: 20%"><div><span>File / Directory</span></div></th>
+<th colspan="2"><div><span>Mutation score</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Killed</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Survived</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Timeout</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># No coverage</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Runtime errors</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Transpile errors</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total detected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total undetected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total mutants</span></div></th></tr></thead>
+<tbody><tr><td>controllers.js</td>
+<td><div class="progress"><div class="progress-bar bg-success" role="progressbar" aria-valuenow="100.00" aria-valuemin="0" aria-valuemax="100" style="width: 100.00%;">100.00
+%</div></div></td>
+<th class="text-center text-success" style="width: 10%">100.00</th>
+<td class="text-center">4</td>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">23</td>
+<td class="text-center">0</td>
+<th class="text-center">4</th>
+<th class="text-center">0</th>
+<th class="text-center">27</th></tr>
+</tbody></table></div></div>
+<div class="row"><div class="col-lg-7"><div class="row legend"><form class="col-md-12" novalidate="novalidate">
+
+<div class="form-check form-check-inline"><label class="form-check-label"><input class="form-check-input stryker-display" value="1" type="checkbox">
+Killed
+ 
+(4)</label></div>
+
+<div class="form-check form-check-inline"><label class="form-check-label"><input class="form-check-input stryker-display" value="4" type="checkbox">
+RuntimeError
+ 
+(23)</label></div>
+
+<a href="#" class="stryker-collapse-expand-all">Expand all</a></form></div>
+<pre><code class="lang-javascript"><span class="bg-null">let Alias = require(&#039;../mongo/models/alias&#039;),
+    _ = require(&#039;underscore&#039;);
+
+let getAlias = function(req, res, next) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: Killed" data-mutant-status-annotation="success" data-mutant-status="1" data-mutant="0"><span class="badge badge-success">0</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="0">{
+}</span><span class="stryker-original-code" data-mutant="0"><span class="bg-success-light">{
+    Alias.findById(req.params.alias)
+        .then((alias) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: Killed" data-mutant-status-annotation="success" data-mutant-status="1" data-mutant="1"><span class="badge badge-success">1</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="1">{
+}</span><span class="stryker-original-code" data-mutant="1"><span class="bg-success-light">{
+            if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="2"><span class="badge badge-secondary">2</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="2">alias</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: Killed" data-mutant-status-annotation="success" data-mutant-status="1" data-mutant="3"><span class="badge badge-success">3</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="3">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: Killed" data-mutant-status-annotation="success" data-mutant-status="1" data-mutant="4"><span class="badge badge-success">4</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="4">true</span><span class="stryker-original-code" data-mutant="2"><span class="stryker-original-code" data-mutant="3"><span class="stryker-original-code" data-mutant="4"><span class="bg-success-light">!alias</span></span></span></span><span class="bg-success-light">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="5"><span class="badge badge-secondary">5</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="5">{
+}</span><span class="stryker-original-code" data-mutant="5"><span class="bg-success-light">{
+                let err = new Error(&#039;d0&#039;);
+                err.status = 400;
+
+                next(err);
+            }</span></span><span class="bg-success-light"> else </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="6"><span class="badge badge-secondary">6</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="6">{
+}</span><span class="stryker-original-code" data-mutant="6"><span class="bg-success-light">{
+                res.locals.payload = alias;
+
+                next();
+            }</span></span><span class="bg-success-light">
+        }</span></span><span class="bg-success-light">)
+        .catch((error) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="7"><span class="badge badge-secondary">7</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="7">{
+}</span><span class="stryker-original-code" data-mutant="7"><span class="bg-success-light">{
+            next(error);
+        }</span></span><span class="bg-success-light">);
+}</span></span><span class="bg-null">;
+
+/**
+ * Редирект по короткой ссылке
+ */
+let follow = function(req, res, next) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="8"><span class="badge badge-secondary">8</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="8">{
+}</span><span class="stryker-original-code" data-mutant="8"><span class="bg-null">{
+    Alias.findById(req.params.alias)
+        .then((alias) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="9"><span class="badge badge-secondary">9</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="9">{
+}</span><span class="stryker-original-code" data-mutant="9"><span class="bg-null">{
+            if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="10"><span class="badge badge-secondary">10</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="10">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="11"><span class="badge badge-secondary">11</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="11">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="12"><span class="badge badge-secondary">12</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="12">alias</span><span class="stryker-original-code" data-mutant="10"><span class="stryker-original-code" data-mutant="11"><span class="stryker-original-code" data-mutant="12"><span class="bg-null">!alias</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="13"><span class="badge badge-secondary">13</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="13">{
+}</span><span class="stryker-original-code" data-mutant="13"><span class="bg-null">{
+                let err = new Error(&#039;d0&#039;);
+                err.status = 400;
+
+                next(err);
+            }</span></span><span class="bg-null"> else </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="14"><span class="badge badge-secondary">14</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="14">{
+}</span><span class="stryker-original-code" data-mutant="14"><span class="bg-null">{
+                </span><a href="#" class="stryker-mutant-button" tabindex="0" title="UpdateOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="15"><span class="badge badge-secondary">15</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="15">alias.analytics.followed--</span><span class="stryker-original-code" data-mutant="15"><span class="bg-null">alias.analytics.followed++</span></span><span class="bg-null">;
+                alias.markModified(&#039;analytics&#039;);
+                alias.save();
+
+                res.redirect(alias.href);
+                res.status(301);
+
+                return null;
+            }</span></span><span class="bg-null">
+        }</span></span><span class="bg-null">)
+        .catch((error) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="16"><span class="badge badge-secondary">16</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="16">{
+}</span><span class="stryker-original-code" data-mutant="16"><span class="bg-null">{
+            next(error);
+        }</span></span><span class="bg-null">);
+}</span></span><span class="bg-null">;
+
+/**
+ * Создание новой короткой ссылки
+ */
+let newAlias = function(req, res, next) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="17"><span class="badge badge-secondary">17</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="17">{
+}</span><span class="stryker-original-code" data-mutant="17"><span class="bg-null">{
+    Alias.create(
+            // На лету формируем объект и отметаем пустые свойства
+            _.omit({
+                &#039;_id&#039;: req.body.name,
+                &#039;href&#039;: req.body.href
+            }, (value) =&gt; _.isUndefined(value))
+        )
+        .then((alias) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="18"><span class="badge badge-secondary">18</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="18">{
+}</span><span class="stryker-original-code" data-mutant="18"><span class="bg-null">{
+            res.locals.payload = {
+                name: alias._id,
+                href: alias.href
+            };
+
+            next();
+        }</span></span><span class="bg-null">)
+        .catch((err) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="19"><span class="badge badge-secondary">19</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="19">{
+}</span><span class="stryker-original-code" data-mutant="19"><span class="bg-null">{
+            if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="20"><span class="badge badge-secondary">20</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="20">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="21"><span class="badge badge-secondary">21</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="21">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="22"><span class="badge badge-secondary">22</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="22">err.code !== 11000</span><span class="stryker-original-code" data-mutant="20"><span class="stryker-original-code" data-mutant="21"><span class="stryker-original-code" data-mutant="22"><span class="bg-null">err.code === 11000</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="23"><span class="badge badge-secondary">23</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="23">{
+}</span><span class="stryker-original-code" data-mutant="23"><span class="bg-null">{
+                err = new Error(&#039;v1&#039;);
+                err.status = 400;
+            }</span></span><span class="bg-null"> else if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="24"><span class="badge badge-secondary">24</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="24">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="25"><span class="badge badge-secondary">25</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="25">true</span><span class="stryker-original-code" data-mutant="24"><span class="stryker-original-code" data-mutant="25"><span class="bg-null">&#039;errors&#039; in err</span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="26"><span class="badge badge-secondary">26</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="26">{
+}</span><span class="stryker-original-code" data-mutant="26"><span class="bg-null">{
+                const reason = err.errors[Object.keys(err.errors)[0]].message;
+                err = new Error(reason);
+                err.status = 400;
+            }</span></span><span class="bg-null">
+
+            next(err);
+        }</span></span><span class="bg-null">);
+}</span></span><span class="bg-null">;
+
+module.exports = {
+    follow,
+    newAlias,
+    getAlias
+};</span>
+</code></pre></div>
+<div class="col-lg-5"><table class="table table-sm table-hover"><thead><tr><th>#</th>
+<th>Mutator</th>
+<th>State</th>
+<th>Location</th>
+<th>Original</th>
+<th>Replacement</th></tr></thead>
+<tbody><tr><th>0</th>
+<td>BlockStatement</td>
+<td>Killed</td>
+<td>5
+:
+25</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>1</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>6
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>2</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>6
+:
+24</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>3</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>11
+:
+19</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>4</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>17
+:
+26</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>5</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>25
+:
+38</td>
+<td><code>{
+   ...});
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>6</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>27
+:
+25</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>7</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>28
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>8</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>28
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>9</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>28
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>10</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>28
+:
+24</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>11</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>33
+:
+19</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>12</th>
+<td>UpdateOperator</td>
+<td>RuntimeError</td>
+<td>34
+:
+16</td>
+<td><code>.    ...   ++</code></td>
+<td><code>.    ...   --</code></td></tr>
+<tr><th>13</th>
+<td>RemoveConditionals</td>
+<td>Killed</td>
+<td>6
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>14</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>44
+:
+26</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>15</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>52
+:
+40</td>
+<td><code>{
+   ...});
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>16</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>60
+:
+25</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>17</th>
+<td>RemoveConditionals</td>
+<td>Killed</td>
+<td>6
+:
+16</td>
+<td><code>!</code></td>
+<td><code></code></td></tr>
+<tr><th>18</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>68
+:
+24</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>19</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>69
+:
+16</td>
+<td><code>.     ===</code></td>
+<td><code></code></td></tr>
+<tr><th>20</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>69
+:
+16</td>
+<td><code>.     ===</code></td>
+<td><code></code></td></tr>
+<tr><th>21</th>
+<td>BlockStatement</td>
+<td>Killed</td>
+<td>3
+:
+40</td>
+<td><code>{
+   ...});
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>22</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>69
+:
+16</td>
+<td><code>.     ===</code></td>
+<td><code>.     !==</code></td></tr>
+<tr><th>23</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>69
+:
+36</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>24</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>72
+:
+23</td>
+<td><code>'      '</code></td>
+<td><code></code></td></tr>
+<tr><th>25</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>72
+:
+40</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>26</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>72
+:
+23</td>
+<td><code>'      '</code></td>
+<td><code></code></td></tr></tbody></table></div></div></div></div>
+<footer>Generated with stryker-html-reporter generator. Visit the 
+<a href="http://stryker-mutator.github.io" target="_blank">Stryker website</a></footer></div>
+<script src="../__resources/popper.js/dist/umd/popper.min.js" defer="defer"></script>
+<script src="../__resources/jquery/dist/jquery.slim.min.js" defer="defer"></script>
+<script src="../__resources/bootstrap/js/bootstrap.min.js" defer="defer"></script>
+<script src="../__resources/stryker.js" defer="defer"></script></body></html>

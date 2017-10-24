@@ -146,7 +146,9 @@ app.use((err, req, res, next) => {
 let port = process.env.PORT;
 
 // Слушаем на порт 'port'
-app.listen(port);
+if (!module.parent) {
+    app.listen(port);
+}
 
 debug('Listening on port ' + port);
 

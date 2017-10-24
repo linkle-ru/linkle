@@ -3,7 +3,7 @@ let yank = require('supertest'),
     rewire = require('rewire'),
     chance = new require('chance')();
 
-let app = rewire('../app');
+let app = rewire('../src/app');
 
 describe('Добавление новой ссылки', () => {
     describe('с кастомным именем', () => {

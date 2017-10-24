@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html><head><title>mongo/models/alias.js
+ - Stryker report</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="../../__resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../__resources/highlightjs/styles/default.css">
+<link rel="stylesheet" href="../../__resources/stryker.css"></head>
+<body><img class="stryker-image" alt="Stryker" src="../../__resources/stryker-80x80.png">
+<div class="container-fluid"><div class="row"><div class="col-lg-12"><h1 class="display-4">mongo/models/alias.js
+ 
+<small class="text-muted">- Stryker report</small></h1></div></div>
+<ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../index.html">All files</a></li>
+<li class="breadcrumb-item active">mongo/models/alias.js</li></ol>
+<div class="row"><div class="col-lg-12"><div class="row"><div class="col-sm-11"><table class="table table-sm table-hover table-bordered table-no-top"><thead><tr><th style="width: 20%"><div><span>File / Directory</span></div></th>
+<th colspan="2"><div><span>Mutation score</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Killed</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Survived</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Timeout</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># No coverage</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Runtime errors</span></div></th>
+<th class="rotate text-center" style="width: 50px"><div><span># Transpile errors</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total detected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total undetected</span></div></th>
+<th class="rotate rotate-width-70 text-center" style="width: 70px"><div><span>Total mutants</span></div></th></tr></thead>
+<tbody><tr><td>mongo/models/alias.js</td>
+<td><div class="progress"><div class="progress-bar bg-success" role="progressbar" aria-valuenow="100.00" aria-valuemin="0" aria-valuemax="100" style="width: 100.00%;">100.00
+%</div></div></td>
+<th class="text-center text-success" style="width: 10%">100.00</th>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">0</td>
+<td class="text-center">23</td>
+<td class="text-center">0</td>
+<th class="text-center">0</th>
+<th class="text-center">0</th>
+<th class="text-center">23</th></tr>
+</tbody></table></div></div>
+<div class="row"><div class="col-lg-7"><div class="row legend"><form class="col-md-12" novalidate="novalidate">
+
+
+
+<div class="form-check form-check-inline"><label class="form-check-label"><input class="form-check-input stryker-display" value="4" type="checkbox">
+RuntimeError
+ 
+(23)</label></div>
+
+<a href="#" class="stryker-collapse-expand-all">Expand all</a></form></div>
+<pre><code class="lang-javascript"><span class="bg-null">let mongoose = require(&#039;mongoose&#039;),
+    shortid = require(&#039;shortid&#039;);
+
+/**
+ * Схема данных для модели Alias
+ */
+let Schema = mongoose.Schema,
+    aliasSchema = new Schema({
+        // Короткая ссылка
+        _id: {
+            type: String,
+            default: shortid.generate,
+            minlength: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="ArrayDeclarator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="0"><span class="badge badge-secondary">0</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="0">[]</span><span class="stryker-original-code" data-mutant="0"><span class="bg-null">[1, &#039;v5&#039;]</span></span><span class="bg-null">,
+            maxlength: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="ArrayDeclarator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="1"><span class="badge badge-secondary">1</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="1">[]</span><span class="stryker-original-code" data-mutant="1"><span class="bg-null">[50, &#039;v0&#039;]</span></span><span class="bg-null">,
+            validate: {
+                validator: (v) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="2"><span class="badge badge-secondary">2</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="2">{
+}</span><span class="stryker-original-code" data-mutant="2"><span class="bg-null">{
+                    return /^[a-zA-zа-яА-Я\d\._-]+$/.test(v);
+                }</span></span><span class="bg-null">,
+                message: &#039;v2&#039;
+            },
+            trim: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="3"><span class="badge badge-secondary">3</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="3">false</span><span class="stryker-original-code" data-mutant="3"><span class="bg-null">true</span></span><span class="bg-null">
+        },
+        // Полная ссылка
+        href: {
+            type: String,
+            maxlength: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="ArrayDeclarator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="4"><span class="badge badge-secondary">4</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="4">[]</span><span class="stryker-original-code" data-mutant="4"><span class="bg-null">[2000, &#039;v3&#039;]</span></span><span class="bg-null">,
+            required: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="ArrayDeclarator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="5"><span class="badge badge-secondary">5</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="5">[]</span><span class="stryker-original-code" data-mutant="5"><span class="bg-null">[</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="6"><span class="badge badge-secondary">6</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="6">false</span><span class="stryker-original-code" data-mutant="6"><span class="bg-null">true</span></span><span class="bg-null">, &#039;v4&#039;]</span></span><span class="bg-null">,
+            validate: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="ArrayDeclarator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="7"><span class="badge badge-secondary">7</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="7">[]</span><span class="stryker-original-code" data-mutant="7"><span class="bg-null">[{
+                validator: (v) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="8"><span class="badge badge-secondary">8</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="8">{
+}</span><span class="stryker-original-code" data-mutant="8"><span class="bg-null">{
+                    return </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="9"><span class="badge badge-secondary">9</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="9">/short\.taxnuke\.ru/.test(v)</span><span class="stryker-original-code" data-mutant="9"><span class="bg-null">!(/short\.taxnuke\.ru/.test(v))</span></span><span class="bg-null">;
+                }</span></span><span class="bg-null">,
+                message: &#039;v8&#039;
+            }, {
+                validator: (v) =&gt; </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="10"><span class="badge badge-secondary">10</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="10">{
+}</span><span class="stryker-original-code" data-mutant="10"><span class="bg-null">{
+                    return /\w+\.\w+/.test(v);
+                }</span></span><span class="bg-null">,
+                message: &#039;v7&#039;
+            }]</span></span><span class="bg-null">,
+            trim: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="11"><span class="badge badge-secondary">11</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="11">false</span><span class="stryker-original-code" data-mutant="11"><span class="bg-null">true</span></span><span class="bg-null">
+        },
+        // Аналитика
+        analytics: {
+            type: {},
+            default: {
+                followed: 0
+            }
+        }
+    }, {
+        // Конфиг схемы
+        versionKey: </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="12"><span class="badge badge-secondary">12</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="12">true</span><span class="stryker-original-code" data-mutant="12"><span class="bg-null">false</span></span><span class="bg-null">
+    });
+
+/**
+ * Переопределение метода сериализации объекта в JSON
+ *
+ * @return {obj} JSON
+ */
+aliasSchema.methods.toJSON = function() </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="13"><span class="badge badge-secondary">13</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="13">{
+}</span><span class="stryker-original-code" data-mutant="13"><span class="bg-null">{
+    return {
+        name: this._id,
+        href: this.href,
+        analytics: {
+            followed: this.analytics.followed
+        }
+    };
+}</span></span><span class="bg-null">;
+
+/**
+ * Хук, который срабатывает перед сохранением документа в базу
+ */
+aliasSchema.pre(&#039;save&#039;, function(done) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="14"><span class="badge badge-secondary">14</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="14">{
+}</span><span class="stryker-original-code" data-mutant="14"><span class="bg-null">{
+    if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="15"><span class="badge badge-secondary">15</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="15">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="16"><span class="badge badge-secondary">16</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="16">true</span><span class="stryker-original-code" data-mutant="15"><span class="stryker-original-code" data-mutant="16"><span class="bg-null">this.isNew</span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="17"><span class="badge badge-secondary">17</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="17">{
+}</span><span class="stryker-original-code" data-mutant="17"><span class="bg-null">{
+        if (</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="18"><span class="badge badge-secondary">18</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="18">false</span><a href="#" class="stryker-mutant-button" tabindex="0" title="RemoveConditionals" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="19"><span class="badge badge-secondary">19</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="19">true</span><a href="#" class="stryker-mutant-button" tabindex="0" title="BooleanSubstitution" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="20"><span class="badge badge-secondary">20</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="20">/^http/.test(this.href)</span><span class="stryker-original-code" data-mutant="18"><span class="stryker-original-code" data-mutant="19"><span class="stryker-original-code" data-mutant="20"><span class="bg-null">!/^http/.test(this.href)</span></span></span></span><span class="bg-null">) </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BlockStatement" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="21"><span class="badge badge-secondary">21</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="21">{
+}</span><span class="stryker-original-code" data-mutant="21"><span class="bg-null">{
+            this.href = </span><a href="#" class="stryker-mutant-button" tabindex="0" title="BinaryOperator" data-content="status: RuntimeError" data-mutant-status-annotation="secondary" data-mutant-status="4" data-mutant="22"><span class="badge badge-secondary">22</span></a><span class="badge badge-info stryker-mutant-replacement" hidden="hidden" data-mutant="22">&#039;http://&#039; - this.href</span><span class="stryker-original-code" data-mutant="22"><span class="bg-null">&#039;http://&#039; + this.href</span></span><span class="bg-null">;
+        }</span></span><span class="bg-null">
+    }</span></span><span class="bg-null">
+
+    done();
+}</span></span><span class="bg-null">);
+
+let Alias = mongoose.model(&#039;Alias&#039;, aliasSchema);
+
+module.exports = Alias;</span>
+</code></pre></div>
+<div class="col-lg-5"><table class="table table-sm table-hover"><thead><tr><th>#</th>
+<th>Mutator</th>
+<th>State</th>
+<th>Location</th>
+<th>Original</th>
+<th>Replacement</th></tr></thead>
+<tbody><tr><th>0</th>
+<td>ArrayDeclarator</td>
+<td>RuntimeError</td>
+<td>12
+:
+23</td>
+<td><code>[ , '  ']</code></td>
+<td><code>[]</code></td></tr>
+<tr><th>1</th>
+<td>ArrayDeclarator</td>
+<td>RuntimeError</td>
+<td>13
+:
+23</td>
+<td><code>[  , '  ']</code></td>
+<td><code>[]</code></td></tr>
+<tr><th>2</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>15
+:
+34</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>3</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>20
+:
+18</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>4</th>
+<td>ArrayDeclarator</td>
+<td>RuntimeError</td>
+<td>25
+:
+23</td>
+<td><code>[    , '  ']</code></td>
+<td><code>[]</code></td></tr>
+<tr><th>5</th>
+<td>ArrayDeclarator</td>
+<td>RuntimeError</td>
+<td>26
+:
+22</td>
+<td><code>[    , '  ']</code></td>
+<td><code>[]</code></td></tr>
+<tr><th>6</th>
+<td>ArrayDeclarator</td>
+<td>RuntimeError</td>
+<td>27
+:
+22</td>
+<td><code>[{
+  ...   }]</code></td>
+<td><code>[]</code></td></tr>
+<tr><th>7</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>26
+:
+23</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>8</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>29
+:
+27</td>
+<td><code>!(/  ... ( ))</code></td>
+<td><code>/    ...  ( )</code></td></tr>
+<tr><th>9</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>28
+:
+34</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>10</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>33
+:
+34</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>11</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>38
+:
+18</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>12</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>57
+:
+40</td>
+<td><code>{
+   ... };
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>13</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>49
+:
+20</td>
+<td><code></code></td>
+<td><code></code></td></tr>
+<tr><th>14</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>70
+:
+39</td>
+<td><code>{
+   ...();
+}</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>15</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>71
+:
+8</td>
+<td><code>.</code></td>
+<td><code></code></td></tr>
+<tr><th>16</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>71
+:
+8</td>
+<td><code>.</code></td>
+<td><code></code></td></tr>
+<tr><th>17</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>71
+:
+20</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>18</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>72
+:
+12</td>
+<td><code>!/^  ...    )</code></td>
+<td><code></code></td></tr>
+<tr><th>19</th>
+<td>RemoveConditionals</td>
+<td>RuntimeError</td>
+<td>72
+:
+12</td>
+<td><code>!/^  ...    )</code></td>
+<td><code></code></td></tr>
+<tr><th>20</th>
+<td>BooleanSubstitution</td>
+<td>RuntimeError</td>
+<td>72
+:
+12</td>
+<td><code>!/^  ...    )</code></td>
+<td><code>/^   ...    )</code></td></tr>
+<tr><th>21</th>
+<td>BlockStatement</td>
+<td>RuntimeError</td>
+<td>72
+:
+38</td>
+<td><code>{
+   ...    }</code></td>
+<td><code>{
+}</code></td></tr>
+<tr><th>22</th>
+<td>BinaryOperator</td>
+<td>RuntimeError</td>
+<td>73
+:
+24</td>
+<td><code>'    ...    .</code></td>
+<td><code>'    ...    .</code></td></tr></tbody></table></div></div></div></div>
+<footer>Generated with stryker-html-reporter generator. Visit the 
+<a href="http://stryker-mutator.github.io" target="_blank">Stryker website</a></footer></div>
+<script src="../../__resources/popper.js/dist/umd/popper.min.js" defer="defer"></script>
+<script src="../../__resources/jquery/dist/jquery.slim.min.js" defer="defer"></script>
+<script src="../../__resources/bootstrap/js/bootstrap.min.js" defer="defer"></script>
+<script src="../../__resources/stryker.js" defer="defer"></script></body></html>
