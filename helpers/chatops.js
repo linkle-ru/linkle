@@ -11,7 +11,6 @@ try {
 }
 
 const notify = function(message) {
-    console.log('2');
     request.post({
         url: credentials.telegramCO.botToken,
         headers: {
@@ -23,8 +22,6 @@ const notify = function(message) {
             'text': message
         })
     }, (error, response, body) => {
-        console.log(response);
-        console.log(body);
         if (error) {
             debug(response);
         }
