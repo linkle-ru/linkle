@@ -179,3 +179,36 @@ describe('Получение алиаса по имени', () => {
         });
     });
 });
+
+describe('Главная страница', () => {
+    it('открывается', (done) => {
+        yank(app)
+            .get('/')
+            .expect(200)
+            .end(done);
+    });
+});
+
+describe('Несуществующая страница ', () => {
+    it('не открывается, брошена ошибка 404', (done) => {
+        yank(app)
+            .get('/gui/deprecated')
+            .expect(404)
+            .end(done);
+    });
+});
+
+describe('Некорректный json ', () => {
+    it('вызывает ошибку', (done) => {
+        yank(app)
+            .post('/api/v1/aliases')
+            .set('Content-Type', 'application/json')
+            .send('{"a"="b"}')
+            .expect(400)
+            .expect(res => {
+                expect(res.body.status === 'error');
+                expect(res.body.code === 'd1');
+            })
+            .end(done);
+    });
+});

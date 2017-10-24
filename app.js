@@ -1,7 +1,6 @@
 // Подключаем зависимости
 const express = require('express'),
     path = require('path'),
-    bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     bluebird = require('bluebird'),
     request = require('request'),
@@ -79,10 +78,6 @@ if (env === 'testing') {
     }
 }
 
-// Конфигурируем парсеры
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 // Прописываем заголовки для ответа
 app.use((req, res, next) => {
     res.set({
@@ -112,23 +107,6 @@ app.get('/:alias', (req, res) => {
     res.status(301);
 });
 
-// Раздаем из публичной директории GUI статику
-app.use(express.static(path.join(__dirname, 'gui/public')));
-
-// Указываем движок Pug для рендеринга вьюх и место, где их брать
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'gui/views'));
-
-// Ловим ошибку формата JSON и передаем дальше
-app.use((err, req, res, next) => {
-    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-        let err = new Error('Bad JSON');
-        err.status = 400;
-    }
-
-    next(err);
-});
-
 // Генерим 404 и передаем обработчику ошибок
 app.get('*', (req, res, next) => {
     let err = new Error('Not Found');
@@ -136,6 +114,13 @@ app.get('*', (req, res, next) => {
 
     next(err);
 });
+
+// Раздаем из публичной директории GUI статику
+app.use(express.static(path.join(__dirname, 'gui/public')));
+
+// Указываем движок Pug для рендеринга вьюх и место, где их брать
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'gui/views'));
 
 // Конечный обработчик ошибок
 app.use((err, req, res, next) => {

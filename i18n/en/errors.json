@@ -12,6 +12,7 @@
     },
     "d":
     {
-        "0": "Alias is not in database"
+        "0": "Alias is not in database",
+        "1": "Could not parse JSON"
     }
 }
