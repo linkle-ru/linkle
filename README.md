@@ -34,8 +34,11 @@
 > Тело ответа:
 ```json
 {
-    "name": "гугл",
-    "href": "http://google.com"
+    "status":"ok",
+    "payload": {
+        "name": "гугл",
+        "href": "http://google.com"
+    }
 }
 ```
 
