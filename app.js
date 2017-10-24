@@ -1,13 +1,13 @@
 // Подключаем зависимости
 const express = require('express'),
     path = require('path'),
+    chatops = require('./helpers/chatops'),
     mongoose = require('mongoose'),
     bluebird = require('bluebird'),
-    request = require('request'),
     morgan = require('morgan'),
     debug = require('debug')('url-short:main'),
     requireDir = require('require-dir'),
-    locales = requireDir('./i18n', {recurse: true});
+    locales = requireDir('./i18n', { recurse: true });
 
 // Создаем экземпляр приложения на Express
 let app = express();
@@ -34,19 +34,11 @@ if (env === 'testing') {
     const Mockgoose = require('mockgoose').Mockgoose;
     const mockgoose = new Mockgoose(mongoose);
 
-    var credentials = {
-        'telegramCO': {
-            'botToken': null,
-            'chatId': null
-        }
-    };
-
     mockgoose.prepareStorage()
         .then(() => {
             mongoose.connect(process.env.DB_URI, mongooseOptions);
         });
 } else {
-    var credentials = require('./credentials.json');
     mongoose.connect(process.env.DB_URI, mongooseOptions)
         .then(
             () => { debug('Succesfully connected to MongoBD!'); },
@@ -88,6 +80,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// Раздаем из публичной директории GUI статику
+app.use(express.static(path.join(__dirname, 'gui/public')));
+
+// Указываем движок Pug для рендеринга вьюх и место, где их брать
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'gui/views'));
+
 // Настраиваем локаль пользователя
 app.use((req, res, next) => {
     res.locals.locale = (locales[req.query.lang] || locales.en);
@@ -115,46 +114,24 @@ app.get('*', (req, res, next) => {
     next(err);
 });
 
-// Раздаем из публичной директории GUI статику
-app.use(express.static(path.join(__dirname, 'gui/public')));
-
-// Указываем движок Pug для рендеринга вьюх и место, где их брать
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'gui/views'));
-
 // Конечный обработчик ошибок
 app.use((err, req, res, next) => {
     /* jshint unused:vars */
-    // Вываливаем стэк только в окружении development или testing
+    // Вываливаем стэк только в окружении development
     res.locals.message = err.message;
-    res.locals.error = env === ('development' || 'testing') ? err : {};
+    res.locals.error = env === ('development') ? err : {};
 
     err.status = err.status || 500;
-
-    let messageText = 'Ошибка провалилась до конечного обработчика:\n`' +
-        JSON.stringify(err.status) + '`\n' +
-        '`method:' + req.method + '`\n' +
-        '`route:' + req.url + '`\n';
 
     if (env === 'production') {
         switch (err.status) {
             case 400:
+            case 404:
             case 500:
-                request.post({
-                    url: credentials.telegramCO.botToken,
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'chat_id': credentials.telegramCO.chatId,
-                        'parse_mode': 'Markdown',
-                        'text': messageText
-                    })
-                }, (error, response, body) => {
-                    if (error) {
-                        debug(response);
-                    }
-                });
+                const message = `\`${err.status}\n
+                                method:${req.method}\n
+                                route:${req.url}\``;
+                chatops.notify(message);
 
                 break;
         }
