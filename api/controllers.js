@@ -1,7 +1,7 @@
 let Alias = require('../mongo/models/alias'),
     _ = require('underscore');
 
-let getAlias = (req, res, next) => {
+let getAlias = function(req, res, next) {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
@@ -23,7 +23,7 @@ let getAlias = (req, res, next) => {
 /**
  * Редирект по короткой ссылке
  */
-let follow = (req, res, next) => {
+let follow = function(req, res, next) {
     Alias.findById(req.params.alias)
         .then((alias) => {
             if (!alias) {
@@ -50,7 +50,7 @@ let follow = (req, res, next) => {
 /**
  * Создание новой короткой ссылки
  */
-let newAlias = (req, res, next) => {
+let newAlias = function(req, res, next) {
     Alias.create(
             // На лету формируем объект и отметаем пустые свойства
             _.omit({
@@ -66,23 +66,17 @@ let newAlias = (req, res, next) => {
 
             next();
         })
-        .catch((error) => {
-            if (error.code === 11000) {
-                let err = new Error('v1');
+        .catch((err) => {
+            if (err.code === 11000) {
+                err = new Error('v1');
                 err.status = 400;
-
-                next(err);
-            } else if ('errors' in error) {
-                let reason = error.errors[Object.keys(error.errors)[0]].message;
-
-                let err = new Error(reason);
-                err.code = reason;
+            } else if ('errors' in err) {
+                const reason = err.errors[Object.keys(err.errors)[0]].message;
+                err = new Error(reason);
                 err.status = 400;
-
-                next(err);
-            } else {
-                next(error);
             }
+
+            next(err);
         });
 };
 
