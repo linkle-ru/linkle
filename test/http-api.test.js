@@ -3,11 +3,7 @@ let yank = require('supertest'),
     rewire = require('rewire'),
     chance = new require('chance')();
 
-let chatops = rewire('../helpers/chatops'),
-    app = rewire('../app');
-
-chatops.__set__('credentials', {});
-app.__set__('chatops', chatops);
+let app = rewire('../app');
 
 describe('Добавление новой ссылки', () => {
     describe('с кастомным именем', () => {

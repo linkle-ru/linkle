@@ -1,7 +1,14 @@
 const
     request = require('request'),
-    credentials = require('../credentials.json'),
     debug = require('debug')('url-short:chatops');
+
+let credentials;
+
+try {
+    credentials = require('../credentials.json');
+} catch (e) {
+    credentials = {};
+}
 
 const notify = function(message) {
     console.log('2');
