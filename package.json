@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "description": "Веб-приложение для сжатия ссылок",
-  "main": "src/app.js",
+  "main": "source/app.js",
   "scripts": {
-    "start": "DEBUG=url-short:* node src/app",
+    "start": "DEBUG=url-short:* node source/app",
     "deploy": "mina -f deploy.rb deploy",
-    "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon src/app",
+    "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon source/app",
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
-    "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; fi",
+    "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha",
     "postcoverage": "mv ./coverage ./reports/coverage",
     "mutate": "export NODE_ENV=testing && stryker run"
