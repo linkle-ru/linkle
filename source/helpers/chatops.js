@@ -26,7 +26,7 @@ const notify = function(message) {
             'parse_mode': 'Markdown',
             'text': message
         })
-    }, (error, response, body) => {
+    }, (error, response, body) => { /* jshint unused:vars */
         if (error) {
             debug(response);
         }
