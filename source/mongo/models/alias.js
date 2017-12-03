@@ -27,7 +27,7 @@ let Schema = mongoose.Schema,
             required: [true, 'v4'],
             validate: [{
                 validator: (v) => {
-                    return !(/^short\.taxnuke\.ru\//.test(v));
+                    return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v));
                 },
                 message: 'v8'
             }, {
