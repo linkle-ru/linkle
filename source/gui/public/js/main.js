@@ -85,4 +85,9 @@ $(document).ready(function() {
             });
         }
     });
+
+    snowStorm.followMouse = false;
+    snowStorm.animationInterval = 40;
+    snowStorm.vMaxX = 4;
+    snowStorm.vMaxY = 3;
 });
