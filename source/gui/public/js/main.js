@@ -20,7 +20,7 @@ $(document).ready(function() {
                     return 'Оставлен пробельный символ';
                 }
 
-                if (/short\.taxnuke\.ru/.test(href)) {
+                if (/^short\.taxnuke\.ru\//.test(href)) {
                     return 'Это может привести к зацикливанию';
                 }
             },
