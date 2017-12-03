@@ -1,8 +1,4 @@
 exclude_paths:
-- "gui/public"
-- "gui/views"
-- "test"
-- "**.md"
-- "**.json"
-- "i18n"
-- "LICENSE"
+- "source/gui/public"
+- "source/gui/views"
+- "source/test"
