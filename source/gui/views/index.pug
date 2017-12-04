@@ -4,17 +4,12 @@ html(lang='ru')
     meta(charset='utf-8')
     title Сокращалка ссылок
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    link(rel='stylesheet', href='/css/lib/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css')
     link(href='/css/style.css', rel='stylesheet')
-    script(src='/js/lib/jquery.js')
-    script(src='/js/lib/snow.js')
-    script(src='/js/main.js')
-    script(src='/js/lib/validator.js')
-    script(src='/js/lib/analytics.js')
   body
     noscript
       div
-        img(src='https://mc.yandex.ru/watch/46361133', style='position:absolute; left:-9999px;', alt='')
+        img(src='https://mc.yandex.ru/watch/46361133', style='position:absolute; left:-9999px;')
     .site-wrapper
       .site-wrapper-inner
         .cover-container
@@ -39,4 +34,8 @@ html(lang='ru')
               .input-group
                 input#shortened-link.form-control(type='text', readonly='')
             input.btn.btn-info#read-docs(type='submit', value='Документация к API на Github')
-
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+    script(src='/js/lib/snow.js')
+    script(src='/js/main.js')
+    script(src='/js/lib/validator.js')
+    script(src='/js/lib/analytics.js')
