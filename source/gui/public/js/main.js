@@ -79,8 +79,15 @@ $(document).ready(function() {
                     $('#result-group').slideDown();
                 },
                 'error': function(data) {
-                    resultInput.val(data.responseJSON.reason);
-                    $('#result-group').slideDown();
+                    if (data.status !== 404) {
+                        var responseJSON = data.responseJSON;
+                        resultInput.val(responseJSON.reason);
+                        $('#result-group').slideDown();
+                    } else {
+                        console.error(
+                            'Что-то пошло очень не так, сервер не ответил'
+                        );
+                    }
                 }
             });
         }

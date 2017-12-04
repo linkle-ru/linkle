@@ -4,3 +4,4 @@ node_modules
 deploy.rb
 credentials.json
 reports
+prepros-6.config
