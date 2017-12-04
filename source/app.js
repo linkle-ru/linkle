@@ -83,10 +83,6 @@ app.use((req, res, next) => {
 // Раздаем из публичной директории GUI статику
 app.use(express.static(path.join(__dirname, 'gui/public')));
 
-// Указываем движок Pug для рендеринга вьюх и место, где их брать
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'gui/views'));
-
 // Настраиваем локаль пользователя
 app.use((req, res, next) => {
     res.locals.locale = (locales[req.query.lang] || locales.en);
@@ -95,11 +91,9 @@ app.use((req, res, next) => {
 });
 
 // Настраиваем роутинг
-let api = require('./api/routers'),
-    gui = require('./gui/routers');
+let api = require('./api/routers');
 
 app.use('/api/v1', api);
-app.use('/', gui);
 
 app.get('/:alias', (req, res) => {
     res.redirect('/api/v1/follow/' + req.params.alias);

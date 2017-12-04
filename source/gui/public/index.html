@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Сокращалка ссылок</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <header class="masthead clearfix"><br></header>
+          <main role="main" class="inner cover">
+            <h1 class="cover-heading">Сократить ссылку</h1>
+            <form id="main-form" role="form">
+              <div class="form-group has-feedback">
+                <div class="input-group">
+                  <input id="long-link" type="text" data-href required placeholder="website.com/super/long/link/that/is/too/annoying?use_this_tool=true" class="form-control">
+                </div>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group">
+                <div class="input-group"><span class="input-group-addon">short.taxnuke.ru/</span>
+                  <input id="short-link" type="text" data-alias placeholder="коротко" class="form-control">
+                </div>
+                <div class="help-block with-errors">Если не заполнять, будет рандомная</div>
+              </div>
+              <input type="submit" value="Сократить" class="btn btn-primary">
+            </form><br>
+            <div id="result-group" class="form-group">
+              <label for="shortened-link" class="control-label">Сокращенная ссылка</label>
+              <div class="input-group">
+                <input id="shortened-link" type="text" readonly="" class="form-control">
+              </div>
+            </div>
+            <input id="read-docs" type="submit" value="Документация к API на Github" class="btn btn-info">
+          </main>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script src="/js/lib/analytics.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
