@@ -5,7 +5,7 @@ const
 let credentials;
 
 try {
-    credentials = require('../credentials.json');
+    credentials = require('../../credentials.json');
 } catch (e) {
     credentials = {
         telegramCO: {
