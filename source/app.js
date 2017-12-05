@@ -122,9 +122,10 @@ app.use((err, req, res, next) => {
             case 400:
             case 404:
             case 500:
-                const message = `\`${err.status}\n
-                                method:${req.method}\n
-                                route:${req.url}\``;
+                const message =
+                    `\`${err.status}
+                    method:${req.method}
+                    route:${req.url}\``;
                 chatops.notify(message);
 
                 break;
