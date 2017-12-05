@@ -41,7 +41,15 @@ router.use((err, req, res, next) => { /* jshint unused:vars */
             reason: res.locals.locale.errors[errorCode[0]][errorCode.substr(1)]
         };
 
-    res.status(err.status || 500).json(resBody);
+    let resStatus;
+
+    if (err.status) {
+        resStatus = err.status;
+    } else if (errorCode) {
+        resStatus = 200;
+    }
+
+    res.status(resStatus || 500).json(resBody);
 });
 
 module.exports = router;

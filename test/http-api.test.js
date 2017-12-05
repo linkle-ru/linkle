@@ -16,6 +16,7 @@ describe('Добавление новой ссылки', () => {
                 })
                 .expect(200)
                 .expect((res) => {
+                    expect(res.body.status === 'ok');
                     expect(res.body.payload.name === 'first');
                     expect(res.body.payload.href === 'http://ya.ru');
                 })
@@ -29,7 +30,15 @@ describe('Добавление новой ссылки', () => {
                     'name': 'first',
                     'href': 'google.com'
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    /**
+                     * Странно себя ведет, будто игнорируется, хотя
+                     * может я просто хочу спать
+                     */
+                    expect(res.body.code === 'v1');
+                })
                 .end(done);
         });
 
@@ -40,7 +49,11 @@ describe('Добавление новой ссылки', () => {
                     'name': 'loop',
                     'href': 'https://short.taxnuke.ru/loop'
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v8');
+                })
                 .end(done);
         });
 
@@ -51,7 +64,11 @@ describe('Добавление новой ссылки', () => {
                     'name': chance.word({ length: 300 }),
                     'href': 'google.com'
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v0');
+                })
                 .end(done);
         });
 
@@ -62,7 +79,11 @@ describe('Добавление новой ссылки', () => {
                     'name': '@asasd',
                     'href': 'google.com'
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v2');
+                })
                 .end(done);
         });
 
@@ -73,7 +94,11 @@ describe('Добавление новой ссылки', () => {
                     'name': chance.word({ length: 5 }),
                     'href': chance.word({ length: 3000 })
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v3');
+                })
                 .end(done);
         });
 
@@ -84,7 +109,11 @@ describe('Добавление новой ссылки', () => {
                     'name': chance.word({ length: 5 }),
                     'href': ''
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v4');
+                })
                 .end(done);
         });
     });
@@ -97,6 +126,9 @@ describe('Добавление новой ссылки', () => {
                     'href': 'knife.media'
                 })
                 .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'ok');
+                })
                 .end(done);
         });
 
@@ -106,7 +138,11 @@ describe('Добавление новой ссылки', () => {
                 .send({
                     'href': ''
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v4');
+                })
                 .end(done);
         });
 
@@ -116,7 +152,11 @@ describe('Добавление новой ссылки', () => {
                 .send({
                     'href': chance.word({ length: 2400 })
                 })
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'v3');
+                })
                 .end(done);
         });
     });
@@ -148,7 +188,11 @@ describe('Переход по короткой ссылке', () => {
                 .end((err, res) => {
                     yank(app)
                         .get(res.header.location)
-                        .expect(400)
+                        .expect(200)
+                        .expect((res) => {
+                            expect(res.body.status === 'error');
+                            expect(res.body.code === 'd0');
+                        })
                         .end(done);
                 });
         });
@@ -174,7 +218,11 @@ describe('Получение алиаса по имени', () => {
         it('не выполняется', (done) => {
             yank(app)
                 .get('/api/v1/aliases/lasd')
-                .expect(400)
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.status === 'error');
+                    expect(res.body.code === 'd0');
+                })
                 .end(done);
         });
     });
@@ -185,6 +233,7 @@ describe('Главная страница', () => {
         yank(app)
             .get('/')
             .expect(200)
+            // Надо еще поискать текст со страницы
             .end(done);
     });
 });

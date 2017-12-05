@@ -1,9 +1,9 @@
 $(document).ready(function() {
     const
-        aliasInput = $('#short-link'),
-        hrefInput = $('#long-link'),
-        resultInput = $('#shortened-link'),
-        mainForm = $('#main-form');
+        mainForm = $('#main-form'),
+        shortLink = $('#short-link'),
+        longLink = $('#long-link'),
+        shortenedLink = $('#shortened-link');
 
     // Навешиваем валидаторы на форму
     mainForm.validator({
@@ -12,23 +12,20 @@ $(document).ready(function() {
             href: function($el) {
                 let href = $el.val().trim();
 
-                if (!(/\w+\.\w+/.test(href))) {
-                    return 'Не похоже на ссылку!';
-                }
-
-                if (/\s/.test(href)) {
-                    return 'Оставлен пробельный символ';
-                }
-
-                if (/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(href)) {
-                    return 'Это может привести к зацикливанию';
+                switch (true) {
+                    case !(/\w+\.\w+/.test(href)):
+                        return 'Не похоже на ссылку!';
+                    case /\s/.test(href):
+                        return 'Оставлен пробельный символ';
+                    case /^(https?:\/\/)?short\.taxnuke\.ru\/./.test(href):
+                        return 'Это может привести к зацикливанию';
                 }
             },
             alias: function($el) {
                 let alias = $el.val();
 
                 if (!(/^[a-zA-zа-яА-Я\d\._-]+$/.test(alias))) {
-                    return 'Только латинский и кириллический алфавиты, цифры, - и _';
+                    return 'Английские и русские буквы, арабские цифры, - и _';
                 }
             }
         }
@@ -51,10 +48,11 @@ $(document).ready(function() {
             e.preventDefault();
 
             $('#result-group').slideUp({ duration: 100 });
+            $('#validation-err').fadeOut();
 
             const
-                alias = aliasInput.val(),
-                href = hrefInput.val();
+                alias = shortLink.val(),
+                href = longLink.val();
 
             if (!href) {
                 return;
@@ -75,14 +73,19 @@ $(document).ready(function() {
                 'data': data,
                 'cache': false,
                 'success': function(data) {
-                    resultInput.val('short.taxnuke.ru/' + data.payload.name);
-                    $('#result-group').slideDown();
+                    if (data.status === 'ok') {
+                        shortenedLink.val('short.taxnuke.ru/' + data.payload.name);
+                        $('#result-group').slideDown();
+                    } else {
+                        let failReason = data.reason;
+                        $('#validation-err>span').html(failReason);
+                        $('#validation-err').fadeIn();
+                    }
                 },
                 'error': function(data) {
                     if (data.status !== 404) {
                         var responseJSON = data.responseJSON;
-                        resultInput.val(responseJSON.reason);
-                        $('#result-group').slideDown();
+                        console.error(responseJSON);
                     } else {
                         console.error(
                             'Что-то пошло очень не так, сервер не ответил'

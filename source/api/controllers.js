@@ -6,7 +6,6 @@ let getAlias = function(req, res, next) {
         .then((alias) => {
             if (!alias) {
                 let err = new Error('d0');
-                err.status = 400;
 
                 next(err);
             } else {
@@ -28,7 +27,6 @@ let follow = function(req, res, next) {
         .then((alias) => {
             if (!alias) {
                 let err = new Error('d0');
-                err.status = 400;
 
                 next(err);
             } else {
@@ -69,11 +67,9 @@ let newAlias = function(req, res, next) {
         .catch((err) => {
             if (err.code === 11000) {
                 err = new Error('v1');
-                err.status = 400;
             } else if ('errors' in err) {
                 const reason = err.errors[Object.keys(err.errors)[0]].message;
                 err = new Error(reason);
-                err.status = 400;
             }
 
             next(err);
