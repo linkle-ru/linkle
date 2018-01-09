@@ -18,8 +18,20 @@ let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
 
-const mongoUri = 'mongodb://localhost:27017/',
+let mongoUri, dbName;
+
+if (env === 'production') {
+    const
+        mLabUser = process.env.MLAB_USER;
+        mLabPassword = process.env.MLAB_PASS;
+
+    mongoUri = 'mongodb://ds247327.mlab.com:47327/';
+    dbName = 'url-shortener-production -u ' + mLabUser +' -p ' + mLabPassword;
+} else {
+    mongoUri = 'mongodb://localhost:27017/';
     dbName = 'url-shortener' + '-' + env;
+}
+
 
 process.env.DB_URI = mongoUri + dbName;
 
