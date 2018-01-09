@@ -13,7 +13,6 @@ const express = require('express'),
 let app = express();
 
 // Настраиваем переменные окружения
-process.env.PORT = 8080;
 let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
@@ -151,7 +150,7 @@ app.use((err, req, res, next) => {
 });
 
 // Получаем порт
-let port = process.env.PORT;
+let port = process.env.PORT || 8080;
 
 // Слушаем на порт 'port'
 if (!module.parent) {
