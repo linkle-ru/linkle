@@ -13,7 +13,7 @@ const express = require('express'),
 let app = express();
 
 // Настраиваем переменные окружения
-process.env.PORT = 3001;
+process.env.PORT = 8080;
 let env = process.env.NODE_ENV || 'production';
 
 debug(`Node environment is set to "${env}"`);
