@@ -11,7 +11,8 @@
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha",
-    "postcoverage": "mv ./coverage ./reports/coverage"
+    "postcoverage": "mv ./coverage ./reports/coverage",
+    "mutate": "export NODE_ENV=testing && stryker run"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -35,6 +36,11 @@
     "mocha": "^3.5.0",
     "mockgoose": "^7.3.3",
     "rewire": "^2.5.2",
+    "stryker": "^0.13.0",
+    "stryker-api": "^0.11.0",
+    "stryker-html-reporter": "^0.10.1",
+    "stryker-mocha-framework": "^0.6.1",
+    "stryker-mocha-runner": "^0.9.1",
     "supertest": "^3.0.0",
     "supports-color": "^4.2.1"
   },
