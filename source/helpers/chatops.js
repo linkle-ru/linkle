@@ -2,18 +2,12 @@ const
     request = require('request'),
     debug = require('debug')('url-short:chatops');
 
-let credentials;
-
-try {
-    credentials = require('../../credentials.json');
-} catch (e) {
-    credentials = {
-        telegramCO: {
-            botToken: 'https://api.telegram.org/123456789:AAAAA/sendMessage',
-            chatId: '-1000987654321'
-        }
-    };
-}
+let credentials = {
+    telegramCO: {
+        botToken: process.env.TELEGRAM_TOKEN,
+        chatId: process.env.TELEGRAM_CHAT
+    }
+};
 
 const notify = function(message) {
     request.post({
