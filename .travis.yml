@@ -5,6 +5,7 @@ after_success:
 - npm run coverage
 - codeclimate-test-reporter < ./reports/coverage/lcov.info
 deploy:
+  provider: heroku
   api_key:
     secure: i3fCPOVZ+NJhFQQxQjE9lyvFbobK2kUf+gFC5740ORjyZutQZBmfMhKf+TyXZMYYllyyQnxm7DjZG5dbuicytCBZ/bK1tIhxYjIr3l+J+XxTE2XC7+4QTNbxb1uhvqAtoFlVlyvrrdCOMtumdZIXSrbdzmEO111vHj9xFcusG5RipV7+vvIvh+0kY30py7Jm1hpaAUGOU8LXLgTVVTAzXgvhy3yEb3zV0snJsNdaQq+l1bJqHHAgmSiyJNFnkdKVFu/j7xNIUqLIXUe454MjqB0Rw6lKNp1JjokT/5lkmXZRgRVi5R/tZID5fFVq0QcA2VhyJzo5UtXN0rMRhZofoXVryCqit73ZMAOflUOIY9un9jSB+d9AwzLz4cez0GYy2IRRqYCm7CJ02BQZOpJ9+tZZEN57/45ePY4P8RZZTfN9TFBEXKTQ41OPhcqfKKJJZMSsvxLX/eR9+Zhp9rSrI2nFziuytgwJ6uganMpAYCrvKxmSmGgn7QMbwS3TOhcuqelp8h+Si28sPimXG0GUnaoZglI+ImZnLHAzmrhK4Vr7NTFJtRDAWs4iAA4TXgDqDEmwBhMkKLFxxuB1Fek6yaa/5o7t5dJa2GmzFRrcBk4olxRWEuoLiEeUfSw5Mh1I1RbFuuKXAV89pvvvW7Z5KQ2cMxA/wnrcFOoHKhWG2gI=
     app: taxnuke-url-shortener
