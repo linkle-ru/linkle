@@ -6,7 +6,7 @@
   "main": "source/app.js",
   "scripts": {
     "start": "DEBUG=url-short:* node source/app",
-    "deploy": "mina -f deploy.rb deploy",
+    "deploy": "git push heroku master",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* nodemon source/app",
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
