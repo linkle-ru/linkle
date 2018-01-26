@@ -14,10 +14,10 @@
     <div class="page-header">
       <h1>Сократить ссылку</h1>
     </div>
-    <form class="form-horizontal" data-toggle="validator">
+    <form id="mainForm" class="form-horizontal" data-toggle="validator">
       <div class="form-group">
         <div class="col-sm-12">
-          <input type="url" required class="form-control" data-required-error="Ну а ссылку-то, ссылку забыли&hellip;" placeholder="website.com/super/long/link/that/is/too/annoying?use_this_tool=true">
+          <input id="href" value="http://test.com" type="url" required class="form-control" data-required-error="Ну а ссылку-то, ссылку забыли&hellip;" data-error="Не похоже на ссылку" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
           <div class="help-block with-errors"></div>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <div class="col-sm-12">
           <div class="input-group">
             <span class="input-group-addon">short.taxnuke.ru/</span>
-            <input id="short-link" pattern="Reg(ular )?Exp(ression)?" data-error="Неверный формат, справа есть подсказка" type="text" placeholder="коротко (необязательное поле)" class="form-control">
+            <input id="alias" pattern="Reg(ular )?Exp(ression)?" data-error="Неверный формат, справа есть подсказка" type="text" placeholder="коротко (необязательное поле)" class="form-control">
             <span class="input-group-btn">
               <button id="nigger" class="btn btn-default" type="button">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
@@ -36,22 +36,22 @@
         </div>
       </div>
       <div class="form-group text-center">
-        <button type="button" class="btn btn-primary disabled">
+        <button id="submit-button" type="submit" class="btn btn-primary">
           <span class="glyphicon glyphicon-compressed"></span>
           Сократить
         </button>
       </div>
     </form>
-    <div class="alert alert-success" role="alert">
-      <div class="progress">
+    <div id="result-area" class="alert alert-success" role="alert">
+      <div id="result-progress" class="progress">
         <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
           <span class="sr-only">40% Complete (success)</span>
         </div>
       </div>
-      <div class="input-group">
-        <input id="short-link" readonly value="https://short.taxnuke.ru/jOi5nd3" type="text" placeholder="коротко" class="form-control">
+      <div id="result-block" class="input-group">
+        <input id="result-link" readonly value="https://short.taxnuke.ru/jOi5nd3" type="text" placeholder="коротко" class="form-control">
         <span class="input-group-btn">
-          <button class="btn btn-default">
+          <button id="copyToClipboard" class="btn btn-default">
             <span class="glyphicon glyphicon-copy"></span>
             Копировать
           </button>
@@ -77,7 +77,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ</h4>
         </div>
         <div class="modal-body">
