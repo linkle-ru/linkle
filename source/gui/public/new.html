@@ -12,27 +12,27 @@
 <body>
   <div class="container">
     <div class="page-header">
-      <h1>Сокращатель ссылок
-        <small>beta</small>
-      </h1>
+      <h1>Сократить ссылку</h1>
     </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" data-toggle="validator">
       <div class="form-group">
         <div class="col-sm-12">
-          <input type="text" class="form-control" placeholder="website.com/super/long/link/that/is/too/annoying?use_this_tool=true">
+          <input type="url" required class="form-control" data-required-error="Ну а ссылку-то, ссылку забыли&hellip;" placeholder="website.com/super/long/link/that/is/too/annoying?use_this_tool=true">
+          <div class="help-block with-errors"></div>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-12">
           <div class="input-group">
             <span class="input-group-addon">short.taxnuke.ru/</span>
-            <input id="short-link" type="text" placeholder="коротко" class="form-control">
+            <input id="short-link" pattern="Reg(ular )?Exp(ression)?" data-error="Неверный формат, справа есть подсказка" type="text" placeholder="коротко (необязательное поле)" class="form-control">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">
+              <button id="nigger" class="btn btn-default" type="button">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
               </button>
             </span>
           </div>
+          <div class="help-block with-errors"></div>
         </div>
       </div>
       <div class="form-group text-center">
@@ -42,28 +42,69 @@
         </button>
       </div>
     </form>
-    <div class="progress">
-      <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-        <span class="sr-only">40% Complete (success)</span>
+    <div class="alert alert-success" role="alert">
+      <div class="progress">
+        <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+          <span class="sr-only">40% Complete (success)</span>
+        </div>
       </div>
-    </div>
-    <div class="well well-sm">
-      Результат
+      <div class="input-group">
+        <input id="short-link" readonly value="https://short.taxnuke.ru/jOi5nd3" type="text" placeholder="коротко" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default">
+            <span class="glyphicon glyphicon-copy"></span>
+            Копировать
+          </button>
+        </span>
+      </div>
     </div>
     <div class="row text-center">
       <div class="btn-group-vertical" role="group">
-        <button type="button" class="btn btn-info">
+        <a href="https://github.com/taxnuke/url-shortener/blob/master/README.md" target="_blank"  class="btn btn-info">
           <span class="glyphicon glyphicon-wrench"></span>
           Документация к API
-        </button>
-        <button type="button" class="btn btn-danger">
+        </a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
           <span class="glyphicon glyphicon-check"></span>
           Пользовательское соглашение
         </button>
       </div>
     </div>
   </div>
-  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+  <!-- Модалка -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ</h4>
+        </div>
+        <div class="modal-body">
+          <ol>
+            <li>Пользуясь этим ресурсом, я соглашаюсь с тем, что не буду использовать его для рассылки спама, вредноносного программного обеспечения, распространения и приобретения запрещенных законодательством РФ материалов в любой форме.</li>
+            <li>Автор данного ресурса оставляет за собой право распоряжаться моими сокращенными ссылками (удалять, подменять содержимое, удалять), в случае, если они не удовлетворяют требованиям настоящего пользовательского соглашения.</li>
+            <li>Взаимодействие с данным ресурсом я произвожу на свой страх и риск, автор не несёт никакой ответственности за прямой или косвенный ущерб, причененный путём использованием данного ресурса мной или кем-либо.</li>
+            <li>При обнаружении вредноносной ссылки я обязаюсь сообщить о ней автору ресурса по электронному адресу
+              <a href="mailto:bad-link@taxnuke.ru">
+                bad-link@taxnuke.ru
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script defer src="/bower_components/bootstrap/js/tooltip.js"></script>
+  <script defer src="/bower_components/bootstrap/js/popover.js"></script>
+  <script defer src="/bower_components/bootstrap/js/modal.js"></script>
+  <script defer src="/bower_components/bootstrap-validator/dist/validator.min.js"></script>
+  <script defer src="/js/script.js"></script>
 </body>
 
 </html>
