@@ -5,3 +5,4 @@ deploy.rb
 reports
 prepros-6.config
 bower_components
+logs
