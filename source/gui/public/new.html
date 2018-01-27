@@ -7,55 +7,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>NEW</title>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
 </head>
 
 <body>
   <div class="container">
     <div class="page-header">
-      <h1>Сократить ссылку</h1>
+      <h1>Сокращалка ссылок
+        <small>beta</small>
+      </h1>
     </div>
-    <form id="mainForm" class="form-horizontal" data-toggle="validator">
+    <form id="mainForm" class="form">
       <div class="form-group">
-        <div class="col-sm-12">
-          <input id="href" value="http://test.com" type="url" required class="form-control" data-required-error="Ну а ссылку-то, ссылку забыли&hellip;" data-error="Не похоже на ссылку" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
-          <div class="help-block with-errors"></div>
-        </div>
+        <label for="href">Исходная ссылка</label>
+        <input id="href" value="test.com" data-href required data-required-error="Ссылку забыли!" type="text" required class="form-control" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
+        <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
-        <div class="col-sm-12">
-          <div class="input-group">
-            <span class="input-group-addon">short.taxnuke.ru/</span>
-            <input id="alias" pattern="Reg(ular )?Exp(ression)?" data-error="Неверный формат, справа есть подсказка" type="text" placeholder="коротко (необязательное поле)" class="form-control">
-            <span class="input-group-btn">
-              <button id="nigger" class="btn btn-default" type="button">
-                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
-              </button>
-            </span>
-          </div>
-          <div class="help-block with-errors"></div>
+        <label for="alias">Сокращенная ссылка</label>
+        <div class="input-group">
+          <span class="input-group-addon">short.taxnuke.ru/</span>
+          <input id="alias" data-alias type="text" placeholder="(случайная)" class="form-control">
+          <span class="input-group-btn">
+            <button id="alias-helper" class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+            </button>
+          </span>
         </div>
+        <div class="help-block with-errors"></div>
       </div>
-      <div class="form-group text-center">
-        <button id="submit-button" type="submit" class="btn btn-primary">
-          <span class="glyphicon glyphicon-compressed"></span>
-          Сократить
-        </button>
+      <div class="form-group">
+        <input id="submit-button" type="button" class="btn btn-primary center-block" value="Сократить">
       </div>
     </form>
-    <div id="result-area" class="alert alert-success" role="alert">
-      <div id="result-progress" class="progress">
-        <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-          <span class="sr-only">40% Complete (success)</span>
-        </div>
+    <div id="result-block" style="display: none" class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Сокращенная ссылка</h3>
       </div>
-      <div id="result-block" class="input-group">
-        <input id="result-link" readonly value="https://short.taxnuke.ru/jOi5nd3" type="text" placeholder="коротко" class="form-control">
-        <span class="input-group-btn">
-          <button id="copyToClipboard" class="btn btn-default">
-            <span class="glyphicon glyphicon-copy"></span>
-            Копировать
-          </button>
-        </span>
+      <div class="panel-body">
+        <div class="input-group">
+          <input id="result-link" readonly type="text" class="form-control">
+          <span class="input-group-btn">
+            <button id="copyToClipboard" class="btn btn-default">
+              <span class="glyphicon glyphicon-copy"></span>
+              Копировать
+            </button>
+          </span>
+        </div>
       </div>
     </div>
     <div class="row text-center">
@@ -104,6 +102,7 @@
   <script defer src="/bower_components/bootstrap/js/popover.js"></script>
   <script defer src="/bower_components/bootstrap/js/modal.js"></script>
   <script defer src="/bower_components/bootstrap-validator/dist/validator.min.js"></script>
+  <script defer src="/bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
   <script defer src="/js/script.js"></script>
 </body>
 

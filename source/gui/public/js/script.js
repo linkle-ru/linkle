@@ -1,10 +1,20 @@
 ;(function(global, document, undefined) {
   const linkShortener = (function() {
-    let hrefInput, aliasInput, resultInput;
+    let
+      mainForm, hrefField, aliasField, resultField,
+      submitButton, copyToClipboardButton, resultBlock;
 
     const initUI = () => {
+      hrefField = $('#href');
+      aliasField = $('#alias');
+      resultField = $('#result-link');
+      submitButton = $('#submit-button');
+      mainForm = $('#mainForm');
+      copyToClipboardButton = $('#copyToClipboard');
+      resultBlock = $('#result-block');
+
       // Подсказка справа в блоке ввода сокращенной ссылки
-      $('#nigger').popover({
+      $('#alias-helper').popover({
         trigger: 'hover',
         placement: 'left',
         container: 'body',
@@ -14,13 +24,32 @@
         title: 'Ограничения'
       });
 
-      $('#mainForm').validator().on('submit', submit);
+      const validatorOpts = {
+        delay: 300,
+        custom: {
+          href: function($el) {
+            const href = $el.val().trim();
 
-      $('#copyToClipboard').on('click', copyToClipboard);
+            switch (true) {
+              case !(/\w+\.\w+/.test(href)):
+                return 'Это не похоже на ссылку!';
+              case /^(https?:\/\/)?short\.taxnuke\.ru\/./.test(href):
+                return 'Это может привести к зацикливанию, не дурите, пожалуйста :)';
+            }
+          },
+          alias: function($el) {
+            const alias = $el.val().trim();
 
-      hrefInput = $('#href');
-      aliasInput = $('#alias');
-      resultInput = $('#result-link');
+            if (!(/^[a-zA-zа-яА-Я\d\._-]+$/.test(alias))) {
+              return 'Запрещенные символы, справа есть подсказка!';
+            }
+          }
+        }
+      };
+      $(mainForm).validator(validatorOpts);
+      $(submitButton).on('click', submit);
+
+      $(copyToClipboardButton).on('click', copyToClipboard);
     };
 
     const copyToClipboard = () => {
@@ -28,14 +57,29 @@
       document.execCommand('Copy');
     };
 
-    const submit = (e) => {
-      if (e.isDefaultPrevented()) {
+    const notify = (message) => {
+      $.notify({
+        icon: 'glyphicon glyphicon-warning-sign',
+        message
+      },{
+        type: 'danger',
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        },
+        delay: 1000,
+        timer: 1000
+      });
+    };
+
+    const submit = () => {
+      if ($(mainForm).data('bs.validator').validate().hasErrors()) {
         return;
       }
 
       const
-        href = hrefInput.val(),
-        alias = aliasInput.val();
+        href = hrefField.val(),
+        alias = aliasField.val();
 
       let data = {href};
 
@@ -43,41 +87,51 @@
           data.name = alias;
       }
 
-      $('#result-area').slideUp();
-      $('#result-block').fadeOut();
-
       $.ajax({
-        'url': 'https://short.taxnuke.ru/api/v1/aliases?lang=ru',
-        'dataType': 'json',
-        'method': 'POST',
-        'data': data,
-        'cache': false,
-        'success': function(data) {
-          $('#result-area').slideDown();
-          if (data.status === 'ok') {
-            resultInput.val('short.taxnuke.ru/' + data.payload.name);
+        url: 'https://short.taxnuke.ru/api/v1/aliases?lang=ru',
+        dataType: 'json',
+        method: 'POST',
+        data: data,
+        cache: false,
+        beforeSend: () => {
+          if ($(submitButton).hasClass('disabled')) {
+            return false;
           } else {
-            alert(data.reason);
+            $(submitButton).val('Обработка...');
+            $(submitButton).addClass('disabled');
+            $(resultBlock).slideUp(500);
           }
         },
-        'error': function(data) {
+        success: (data) => {
+          if (data.status === 'ok') {
+            resultField.val('short.taxnuke.ru/' + data.payload.name);
+            $(resultBlock).slideDown(250);
+          } else {
+            notify(data.reason);
+          }
+        },
+        error: (data) => {
           if (data.status !== 404) {
             var responseJSON = data.responseJSON;
             console.error(responseJSON);
           } else {
-            console.error('Что-то пошло очень не так, сервер не ответил');
+            notify('Что-то пошло очень не так, сервер не ответил');
           }
+        },
+        complete: () => {
+          $(submitButton).removeClass('disabled');
+          $(submitButton).val('Сократить');
         }
       });
     };
 
-    /**
-     * Публичный API
-     */
-     return {initUI};
-   })();
+     /**
+      * Публичный API
+      */
+      return {initUI};
+    })();
 
-   $(document).ready(function() {
-     linkShortener.initUI();
-   });
- })(window, window.document);
+  $(document).ready(function() {
+    linkShortener.initUI();
+  });
+})(window, window.document);
