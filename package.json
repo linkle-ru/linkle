@@ -5,7 +5,7 @@
   "description": "Веб-приложение для сжатия ссылок",
   "main": "source/app.js",
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi",
     "start": "DEBUG=url-short:* node source/app",
     "deploy": "git push heroku master",
     "predevelop": "if ! pgrep -x mongod; then (nohup mongod >> logs/mongo.log 2>&1 &); fi",
