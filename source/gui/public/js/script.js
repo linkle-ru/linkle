@@ -15,7 +15,7 @@
 
       // Подсказка справа в блоке ввода сокращенной ссылки
       $('#alias-helper').popover({
-        trigger: 'hover',
+        trigger: 'click',
         placement: 'left',
         container: 'body',
         content:
