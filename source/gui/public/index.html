@@ -20,14 +20,14 @@
     <form id="mainForm" class="form">
       <div class="form-group">
         <label for="href">Исходная ссылка</label>
-        <input id="href" data-href required data-required-error="Ссылку забыли!" type="text" required class="form-control" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
+        <input id="href" data-href required data-required-error="Ссылку забыли!" autocomplete="off" type="text" required class="form-control" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
         <div class="help-block with-errors"></div>
       </div>
       <div class="form-group">
         <label for="alias">Сокращенная ссылка</label>
         <div class="input-group">
           <span class="input-group-addon">short.taxnuke.ru/</span>
-          <input id="alias" data-alias type="text" placeholder="(случайная)" class="form-control">
+          <input id="alias" data-alias autocomplete="off" type="text" placeholder="(случайная)" class="form-control">
           <span class="input-group-btn">
             <button id="alias-helper" class="btn btn-default" type="button">
               <span class="glyphicon glyphicon glyphicon-question-sign"></span>

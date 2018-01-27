@@ -57,18 +57,17 @@
       document.execCommand('Copy');
     };
 
-    const notify = (message) => {
+    const notify = (message, type = 'warning') => {
       $.notify({
-        icon: 'glyphicon glyphicon-warning-sign',
         message
       },{
-        type: 'danger',
+        type,
         placement: {
-          from: 'bottom',
-          align: 'center'
+          from: 'top',
+          align: 'right'
         },
         delay: 1000,
-        timer: 1000
+        requestTimeout: 1000
       });
     };
 
@@ -81,7 +80,7 @@
         href = hrefField.val(),
         alias = aliasField.val();
 
-      let data = {href};
+      let data = {href}, requestTimeout;
 
       if (alias) {
           data.name = alias;
@@ -97,6 +96,10 @@
           if ($(submitButton).hasClass('disabled')) {
             return false;
           } else {
+            requestTimeout = setTimeout(() => notify(
+              'Сервис немного залежался, ещё пару секунд...',
+              'info'
+            ), 2000);
             $(submitButton).val('Обработка...');
             $(submitButton).addClass('disabled');
             $(resultBlock).slideUp(500);
@@ -104,7 +107,7 @@
         },
         success: (data) => {
           if (data.status === 'ok') {
-            resultField.val('short.taxnuke.ru/' + data.payload.name);
+            resultField.val(`short.taxnuke.ru/${data.payload.name}`);
             $(resultBlock).slideDown(250);
           } else {
             notify(data.reason);
@@ -112,13 +115,15 @@
         },
         error: (data) => {
           if (data.status !== 404) {
-            var responseJSON = data.responseJSON;
-            console.error(responseJSON);
+            notify('Что-то пошло очень не так, сервер не ответил', 'danger');
           } else {
-            notify('Что-то пошло очень не так, сервер не ответил');
+            var responseJSON = data.responseJSON;
+            notify(responseJSON, 'danger');
+            console.error(responseJSON);
           }
         },
         complete: () => {
+          clearTimeout(requestTimeout);
           $(submitButton).removeClass('disabled');
           $(submitButton).val('Сократить');
         }
