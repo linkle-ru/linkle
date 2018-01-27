@@ -87,7 +87,7 @@
       }
 
       $.ajax({
-        url: 'https://short.taxnuke.ru/api/v1/aliases?lang=ru',
+        url: '/api/v1/aliases?lang=ru',
         dataType: 'json',
         method: 'POST',
         data: data,
@@ -107,7 +107,7 @@
         },
         success: (data) => {
           if (data.status === 'ok') {
-            resultField.val(`short.taxnuke.ru/${data.payload.name}`);
+            resultField.val(`${window.location.host}/${data.payload.name}`);
             $(resultBlock).slideDown(250);
           } else {
             notify(data.reason);
