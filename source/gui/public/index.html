@@ -1,52 +1,110 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <title>Сокращалка ссылок</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link href="/css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="site-wrapper">
-      <div class="site-wrapper-inner">
-        <div class="cover-container">
-          <header class="masthead clearfix"><br></header>
-          <main role="main" class="inner cover">
-            <div id="validation-err" class="alert alert-danger" role="alert" style="display: none">
-              <strong>Ошибка!</strong>&nbsp;<span class="err-reason">adad</span>
-            </div>
-            <h1 class="cover-heading">Сократить ссылку</h1>
-            <form id="main-form" role="form">
-              <div class="form-group has-feedback">
-                <div class="input-group">
-                  <input id="long-link" type="text" data-href required placeholder="website.com/super/long/link/that/is/too/annoying?use_this_tool=true" class="form-control">
-                </div>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <div class="input-group"><span class="input-group-addon">short.taxnuke.ru/</span>
-                  <input id="short-link" type="text" data-alias placeholder="коротко" class="form-control">
-                </div>
-                <div class="help-block with-errors">Если не заполнять, будет рандомная</div>
-              </div>
-              <input type="submit" value="Сократить" class="btn btn-primary">
-            </form><br>
-            <div id="result-group" class="form-group">
-              <label for="shortened-link" class="control-label">Сокращенная ссылка</label>
-              <div class="input-group">
-                <input id="shortened-link" type="text" readonly="" class="form-control">
-              </div>
-            </div>
-            <input id="read-docs" type="submit" value="Документация к API на Github" class="btn btn-info">
-            <br><br>
-            <a href="/agreement.html" id="read-agreement" class="btn btn-warning">Пользовательское соглашение</a>
-          </main>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>NEW</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Сокращалка ссылок
+        <small>beta</small>
+      </h1>
+    </div>
+    <form id="mainForm" class="form">
+      <div class="form-group">
+        <label for="href">Исходная ссылка</label>
+        <input id="href" data-href required data-required-error="Ссылку забыли!" type="text" required class="form-control" placeholder="https://website.com/super/long/annoying/link?use_this_tool=true&have=fun">
+        <div class="help-block with-errors"></div>
+      </div>
+      <div class="form-group">
+        <label for="alias">Сокращенная ссылка</label>
+        <div class="input-group">
+          <span class="input-group-addon">short.taxnuke.ru/</span>
+          <input id="alias" data-alias type="text" placeholder="(случайная)" class="form-control">
+          <span class="input-group-btn">
+            <button id="alias-helper" class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+            </button>
+          </span>
+        </div>
+        <div class="help-block with-errors"></div>
+      </div>
+      <div class="form-group">
+        <input id="submit-button" type="button" class="btn btn-primary center-block" value="Сократить">
+      </div>
+    </form>
+    <div id="result-block" style="display: none" class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Сокращенная ссылка</h3>
+      </div>
+      <div class="panel-body">
+        <div class="input-group">
+          <input id="result-link" readonly type="text" class="form-control">
+          <span class="input-group-btn">
+            <button id="copyToClipboard" class="btn btn-default">
+              <span class="glyphicon glyphicon-copy"></span>
+              Копировать
+            </button>
+          </span>
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js"></script>
-    <script src="/js/lib/analytics.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
+    <div class="row text-center">
+      <div class="btn-group-vertical" role="group">
+        <a href="https://github.com/taxnuke/url-shortener/blob/master/README.md" target="_blank"  class="btn btn-info">
+          <span class="glyphicon glyphicon-wrench"></span>
+          Документация к API
+        </a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-check"></span>
+          Пользовательское соглашение
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ</h4>
+        </div>
+        <div class="modal-body">
+          <ol>
+            <li>Пользуясь этим ресурсом, я соглашаюсь с тем, что не буду использовать его для рассылки спама, вредноносного программного обеспечения, распространения и приобретения запрещенных законодательством РФ материалов в любой форме.</li>
+            <li>Автор данного ресурса оставляет за собой право распоряжаться моими сокращенными ссылками (удалять, подменять содержимое, удалять), в случае, если они не удовлетворяют требованиям настоящего пользовательского соглашения.</li>
+            <li>Взаимодействие с данным ресурсом я произвожу на свой страх и риск, автор не несёт никакой ответственности за прямой или косвенный ущерб, причененный путём использованием данного ресурса мной или кем-либо.</li>
+            <li>При обнаружении вредноносной ссылки я обязаюсь сообщить о ней автору ресурса по электронному адресу
+              <a href="mailto:bad-link@taxnuke.ru">
+                bad-link@taxnuke.ru
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script defer src="/bower_components/bootstrap/js/tooltip.js"></script>
+  <script defer src="/bower_components/bootstrap/js/popover.js"></script>
+  <script defer src="/bower_components/bootstrap/js/modal.js"></script>
+  <script defer src="/bower_components/bootstrap-validator/dist/validator.min.js"></script>
+  <script defer src="/bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+  <script defer src="/js/script.js"></script>
+  <script defer src="/js/analytics.js"></script>
+</body>
+
 </html>
