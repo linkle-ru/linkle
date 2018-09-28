@@ -1,16 +1,30 @@
 {
   "env": {
     "es6": true,
-    "node": true
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "Survey": false,
+    "survey": false,
+    "$": false,
+    "cy": false
   },
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 2015
   },
   "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "next|undefined"
+      }
+    ],
     "indent": [
       "error",
-      4
+      2
     ],
     "linebreak-style": [
       "error",
@@ -22,7 +36,7 @@
     ],
     "semi": [
       "error",
-      "always"
+      "never"
     ]
   }
 }

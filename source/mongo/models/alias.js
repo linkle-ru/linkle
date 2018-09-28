@@ -1,53 +1,53 @@
 const mongoose = require('mongoose'),
-    shortid = require('shortid');
+  shortid = require('shortid')
 
 /**
  * Схема данных для модели Alias
  */
 const aliasSchema = new mongoose.Schema({
-    // Короткая ссылка
-    _id: {
-        type: String,
-        default: shortid.generate,
-        minlength: [1, 'v5'],
-        maxlength: [50, 'v0'],
-        validate: {
-            validator: (v) => {
-                return /^[a-zA-zа-яА-Я\d\._-]+$/.test(v);
-            },
-            message: 'v2'
-        },
-        trim: true
+  // Короткая ссылка
+  _id: {
+    type: String,
+    default: shortid.generate,
+    minlength: [1, 'v5'],
+    maxlength: [50, 'v0'],
+    validate: {
+      validator: (v) => {
+        return /^[a-zA-zа-яА-Я\d._-]+$/.test(v)
+      },
+      message: 'v2'
     },
-    // Полная ссылка
-    href: {
-        type: String,
-        maxlength: [2000, 'v3'],
-        required: [true, 'v4'],
-        validate: [{
-            validator: (v) => {
-                return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v));
-            },
-            message: 'v8'
-        }, {
-            validator: (v) => {
-                return /\w+\.\w+/.test(v);
-            },
-            message: 'v7'
-        }],
-        trim: true
-    },
-    // Аналитика
-    analytics: {
-        type: {},
-        default: {
-            followed: 0
-        }
+    trim: true
+  },
+  // Полная ссылка
+  href: {
+    type: String,
+    maxlength: [2000, 'v3'],
+    required: [true, 'v4'],
+    validate: [{
+      validator: (v) => {
+        return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v))
+      },
+      message: 'v8'
+    }, {
+      validator: (v) => {
+        return /\w+\.\w+/.test(v)
+      },
+      message: 'v7'
+    }],
+    trim: true
+  },
+  // Аналитика
+  analytics: {
+    type: {},
+    default: {
+      followed: 0
     }
+  }
 }, {
-    // Конфиг схемы
-    versionKey: false
-});
+  // Конфиг схемы
+  versionKey: false
+})
 
 /**
  * Переопределение метода сериализации объекта в JSON
@@ -55,26 +55,26 @@ const aliasSchema = new mongoose.Schema({
  * @return {obj} JSON
  */
 aliasSchema.methods.toJSON = function() {
-    return {
-        name: this._id,
-        href: this.href,
-        analytics: {
-            followed: this.analytics.followed
-        }
-    };
-};
+  return {
+    name: this._id,
+    href: this.href,
+    analytics: {
+      followed: this.analytics.followed
+    }
+  }
+}
 
 /**
  * Хук, который срабатывает перед сохранением документа в базу
  */
 aliasSchema.pre('save', function(done) {
-    if (this.isNew) {
-        if (!/^http/.test(this.href)) {
-            this.href = 'http://' + this.href;
-        }
+  if (this.isNew) {
+    if (!/^http/.test(this.href)) {
+      this.href = 'http://' + this.href
     }
+  }
 
-    done();
-});
+  done()
+})
 
-module.exports = mongoose.model('Alias', aliasSchema);
+module.exports = mongoose.model('Alias', aliasSchema)

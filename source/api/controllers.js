@@ -1,83 +1,83 @@
 let Alias = require('../mongo/models/alias'),
-    _ = require('underscore');
+  _ = require('underscore')
 
-let getAlias = function(req, res, next) {
-    Alias.findById(req.params.alias)
-        .then((alias) => {
-            if (!alias) {
-                let err = new Error('d0');
+let getAlias = function (req, res, next) {
+  Alias.findById(req.params.alias)
+    .then((alias) => {
+      if (!alias) {
+        let err = new Error('d0')
 
-                next(err);
-            } else {
-                res.locals.payload = alias;
+        next(err)
+      } else {
+        res.locals.payload = alias
 
-                next();
-            }
-        })
-        .catch((error) => {
-            next(error);
-        });
-};
+        next()
+      }
+    })
+    .catch((error) => {
+      next(error)
+    })
+}
 
 /**
  * Редирект по короткой ссылке
  */
-let follow = function(req, res, next) {
-    Alias.findById(req.params.alias)
-        .then((alias) => {
-            if (!alias) {
-                let err = new Error('d0');
+let follow = function (req, res, next) {
+  Alias.findById(req.params.alias)
+    .then((alias) => {
+      if (!alias) {
+        let err = new Error('d0')
 
-                next(err);
-            } else {
-                alias.analytics.followed++;
-                alias.markModified('analytics');
-                alias.save();
+        next(err)
+      } else {
+        alias.analytics.followed++
+        alias.markModified('analytics')
+        alias.save()
 
-                res.redirect(alias.href);
-                res.status(301);
+        res.redirect(alias.href)
+        res.status(301)
 
-                return null;
-            }
-        })
-        .catch((error) => {
-            next(error);
-        });
-};
+        return null
+      }
+    })
+    .catch((error) => {
+      next(error)
+    })
+}
 
 /**
  * Создание новой короткой ссылки
  */
-let newAlias = function(req, res, next) {
-    Alias.create(
-            // На лету формируем объект и отметаем пустые свойства
-            _.omit({
-                '_id': req.body.name,
-                'href': req.body.href
-            }, (value) => _.isUndefined(value))
-        )
-        .then((alias) => {
-            res.locals.payload = {
-                name: alias._id,
-                href: alias.href
-            };
+let newAlias = function (req, res, next) {
+  Alias.create(
+    // На лету формируем объект и отметаем пустые свойства
+    _.omit({
+      '_id': req.body.name,
+      'href': req.body.href
+    }, (value) => _.isUndefined(value))
+  )
+    .then((alias) => {
+      res.locals.payload = {
+        name: alias._id,
+        href: alias.href
+      }
 
-            next();
-        })
-        .catch((err) => {
-            if (err.code === 11000) {
-                err = new Error('v1');
-            } else if ('errors' in err) {
-                const reason = err.errors[Object.keys(err.errors)[0]].message;
-                err = new Error(reason);
-            }
+      next()
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+        err = new Error('v1')
+      } else if ('errors' in err) {
+        const reason = err.errors[Object.keys(err.errors)[0]].message
+        err = new Error(reason)
+      }
 
-            next(err);
-        });
-};
+      next(err)
+    })
+}
 
 module.exports = {
-    follow,
-    newAlias,
-    getAlias
-};
+  follow,
+  newAlias,
+  getAlias
+}
