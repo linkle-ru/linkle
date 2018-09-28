@@ -8,6 +8,7 @@ const debug = require('debug')('url-short:main')
 const requireDir = require('require-dir') // todo: может можно без?
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 
@@ -15,15 +16,13 @@ const env = process.env.NODE_ENV || 'production'
 
 debug(`Node environment is set to "${env}"`)
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // Прописываем заголовки для ответа
 app.use((req, res, next) => {
-  res.set({
-    'Access-Control-Allow-Origin': '*',
-    'X-Powered-By': 'PHP/5.1.6'
-  })
+  res.set('X-Powered-By', 'PHP/5.1.6')
 
   next()
 })
@@ -93,13 +92,11 @@ process.env.DB_URI = mongoUri + dbName
 // Настраиваем Mongoose
 mongoose.Promise = bluebird
 const mongooseOptions = {
-  // useNewUrlParser: true, // todo: обновить mongoose
   useMongoClient: true,
   promiseLibrary: bluebird,
 }
 
 if (env === 'testing') {
-  // todo: код для тестов не должен быть здесь
   const Mockgoose = require('mockgoose').Mockgoose
   const mockgoose = new Mockgoose(mongoose)
 
@@ -118,29 +115,7 @@ if (env === 'testing') {
       }
     )
 
-  // Конфигурируем и подключаем логгер запросов/ответов
-  const morganConfig = JSON.stringify({
-    request: {
-      date: ':date[clf]',
-      ip: ':remote-addr',
-      agent: ':user-agent',
-      referrer: ':referrer',
-      httpV: ':http-version',
-      method: ':method',
-      url: ':url',
-      remoteUser: ':remote-user'
-    },
-    response: {
-      status: ':status',
-      responseTime: ':response-time'
-    }
-  })
-
-  if (env === 'production') {
-    app.use(morgan(morganConfig))
-  } else {
-    app.use(morgan('tiny'))
-  }
+  app.use(morgan('combined'))
 }
 
 const port = process.env.PORT || 8080
