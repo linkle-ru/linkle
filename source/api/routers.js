@@ -33,6 +33,7 @@ router.use((err, req, res, next) => {
       status: 'error',
       code: errorCode,
       // Временное решение
+      // todo: отрефакторить
       reason: res.locals.locale.errors[errorCode[0]][errorCode.substr(1)]
     }
 

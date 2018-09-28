@@ -1,9 +1,9 @@
-let yank = require('supertest'),
-  expect = require('chai').expect,
-  rewire = require('rewire'),
-  chance = new require('chance')()
+const yank = require('supertest')
+const expect = require('chai').expect
+const rewire = require('rewire')
+const chance = new require('chance')()
 
-let app = rewire('../source/app')
+const app = rewire('../source/app')
 
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
@@ -33,10 +33,7 @@ describe('Добавление новой ссылки', () => {
         .expect(200)
         .expect((res) => {
           expect(res.body.status === 'error')
-          /**
-                     * Странно себя ведет, будто игнорируется, хотя
-                     * может я просто хочу спать
-                     */
+          // todo: проверить работоспособность
           expect(res.body.code === 'v1')
         })
         .end(done)
@@ -233,7 +230,7 @@ describe('Главная страница', () => {
     yank(app)
       .get('/')
       .expect(200)
-    // Надо еще поискать текст со страницы
+      // todo: Надо еще поискать текст со страницы
       .end(done)
   })
 })
