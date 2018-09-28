@@ -12,6 +12,7 @@
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha",
     "postcoverage": "mv ./coverage ./reports/coverage",
+    "premutate": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/mutation'; fi",
     "mutate": "export NODE_ENV=testing && stryker run"
   },
   "husky": {

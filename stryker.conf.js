@@ -7,12 +7,11 @@ module.exports = function(config) {
       'source/i18n/**/*.json',
       'source/mongo/models/*.js',
       'source/app.js',
-      'test/*.js',
+      'test/*.js'
     ],
     mutate: [
       'source/api/*.js',
-      'source/mongo/models/*.js',
-      'source/app.js',
+      'source/mongo/models/*.js'
     ],
     testRunner: 'mocha',
     testFramework: 'mocha',
