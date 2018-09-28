@@ -1,10 +1,5 @@
 const router = require('express').Router(),
-  bodyParser = require('body-parser'),
   controllers = require('./controllers')
-
-// Конфигурируем парсеры body для запросов
-router.use(bodyParser.json())
-router.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
