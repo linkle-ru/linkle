@@ -27,13 +27,13 @@ describe('Добавление новой ссылки', () => {
           'name': 'first',
           'href': 'ya.ru'
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'ok')
-          expect(res.body.payload.name === 'first')
-          expect(res.body.payload.href === 'http://ya.ru')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'ok',
+          payload: {
+            name: 'first',
+            href: 'http://ya.ru'
+          }
+        }, done)
     })
 
     it('запрещено, если это дубль', (done) => {
@@ -43,13 +43,26 @@ describe('Добавление новой ссылки', () => {
           'name': 'first',
           'href': 'google.com'
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          // todo: проверить работоспособность
-          expect(res.body.code === 'v1')
+        .expect(200, {
+          status: 'error',
+          reason: 'Alias name is taken',
+          code: 'v1'
+        }, done)
+    })
+
+    // todo: критический баг
+    xit('запрещено, если дубль с другим регистром', (done) => {
+      supertest(app)
+        .post('/api/v1/aliases')
+        .send({
+          'name': 'First',
+          'href': 'google.com'
         })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Alias name is taken',
+          code: 'v1'
+        }, done)
     })
 
     it('запрещено, если ссылка может зациклиться', (done) => {
@@ -59,12 +72,11 @@ describe('Добавление новой ссылки', () => {
           'name': 'loop',
           'href': 'https://short.taxnuke.ru/loop'
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v8')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Link may loop',
+          code: 'v8'
+        }, done)
     })
 
     it('запрещено, если алиас слишком длинный', (done) => {
@@ -74,12 +86,11 @@ describe('Добавление новой ссылки', () => {
           'name': chance.word({ length: 300 }),
           'href': 'google.com'
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v0')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Alias name is too long',
+          code: 'v0'
+        }, done)
     })
 
     it('запрещено, если алиас содержит странные символы', (done) => {
@@ -89,12 +100,11 @@ describe('Добавление новой ссылки', () => {
           'name': '@asasd',
           'href': 'google.com'
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v2')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Incorrect alias name',
+          code: 'v2'
+        }, done)
     })
 
     it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
@@ -104,12 +114,11 @@ describe('Добавление новой ссылки', () => {
           'name': chance.word({ length: 5 }),
           'href': chance.word({ length: 3000 })
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v3')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Link is too long',
+          code: 'v3'
+        }, done)
     })
 
     it('запрещено, если сжимаемая ссылка пустая', (done) => {
@@ -119,12 +128,11 @@ describe('Добавление новой ссылки', () => {
           'name': chance.word({ length: 5 }),
           'href': ''
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v4')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Link is empty',
+          code: 'v4'
+        }, done)
     })
   })
 
@@ -136,9 +144,6 @@ describe('Добавление новой ссылки', () => {
           'href': 'knife.media'
         })
         .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'ok')
-        })
         .end(done)
     })
 
@@ -148,12 +153,11 @@ describe('Добавление новой ссылки', () => {
         .send({
           'href': ''
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v4')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Link is empty',
+          code: 'v4'
+        }, done)
     })
 
     it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
@@ -162,12 +166,11 @@ describe('Добавление новой ссылки', () => {
         .send({
           'href': chance.word({ length: 2400 })
         })
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'v3')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Link is too long',
+          code: 'v3'
+        }, done)
     })
   })
 })
@@ -198,13 +201,11 @@ describe('Переход по короткой ссылке', () => {
         .end((err, res) => {
           supertest(app)
             .get(res.header.location)
-            .expect(200)
-            .expect((res) => {
-              // todo: такие тесты ложно проходят
-              expect(res.body.status === 'error')
-              expect(res.body.code === 'd0')
-            })
-            .end(done)
+            .expect(200, {
+              status: 'error',
+              reason: 'Alias is not in database',
+              code: 'd0'
+            }, done)
         })
     })
   })
@@ -215,13 +216,16 @@ describe('Получение алиаса по имени', () => {
     it('выполняется', (done) => {
       supertest(app)
         .get('/api/v1/aliases/first')
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.payload.name === 'first')
-          expect(res.body.payload.href === 'http://ya.ru')
-          expect(res.body.payload).to.have.property('analytics')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'ok',
+          payload: {
+            name: 'first',
+            href: 'http://ya.ru',
+            analytics: {
+              followed: 1
+            }
+          }
+        }, done)
     })
   })
 
@@ -229,12 +233,11 @@ describe('Получение алиаса по имени', () => {
     it('не выполняется', (done) => {
       supertest(app)
         .get('/api/v1/aliases/lasd')
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.status === 'error')
-          expect(res.body.code === 'd0')
-        })
-        .end(done)
+        .expect(200, {
+          status: 'error',
+          reason: 'Alias is not in database',
+          code: 'd0'
+        }, done)
     })
   })
 })

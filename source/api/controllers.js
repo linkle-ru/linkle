@@ -63,6 +63,7 @@ const newAlias = function (req, res, next) {
       next()
     })
     .catch((err) => {
+      // todo: коды ошибок мангуста надо оформить в константы
       if (err.code === 11000) {
         err = new Error('v1')
       } else if ('errors' in err) {
