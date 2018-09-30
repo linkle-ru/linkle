@@ -91,6 +91,12 @@ npm install;
 npm start;
 ```
 
+## Как задеплоить
+```sh
+heroku git:remote -a taxnuke-url-shortener
+npm run deploy
+```
+
 > Copyright (c) 2017 Semyon Fomin
 >
 > Permission is hereby granted, free of charge, to any person obtaining
