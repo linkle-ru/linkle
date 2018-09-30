@@ -4,14 +4,12 @@ const chance = new require('chance')()
 const app = require('../source/app')
 
 const mongoose = require('mongoose')
-const bluebird = require('bluebird')
 const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
-mongoose.Promise = bluebird
+mongoose.Promise = Promise
 const mongooseOptions = {
-  useMongoClient: true,
-  promiseLibrary: bluebird,
+  useMongoClient: true
 }
 
 mockgoose.prepareStorage().then(() => {
