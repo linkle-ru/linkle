@@ -1,5 +1,5 @@
-let Alias = require('../mongo/models/alias'),
-  _ = require('underscore')
+const Alias = require('../mongo/models/alias')
+const _ = require('underscore')
 
 let getAlias = function (req, res, next) {
   Alias.findById(req.params.alias)

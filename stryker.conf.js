@@ -7,6 +7,7 @@ module.exports = function(config) {
       'source/i18n/**/*.json',
       'source/mongo/models/*.js',
       'source/app.js',
+      'source/server.js',
       'test/*.js'
     ],
     mutate: [
