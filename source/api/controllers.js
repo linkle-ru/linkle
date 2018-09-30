@@ -1,14 +1,11 @@
-const Alias = require('../mongo/models/alias')
-const _ = require('underscore')
+const aliasHelper = require('../helpers/alias')
+const constants = require('../helpers/constants')
 
-// todo: разгрузить экшены от логики
 const getAlias = function (req, res, next) {
-  Alias.findById(req.params.alias)
+  aliasHelper.find(req.params.alias)
     .then((alias) => {
       if (!alias) {
-        let err = new Error('d0')
-
-        next(err)
+        next(new Error(constants.ALIAS_NOT_FOUND))
       } else {
         res.locals.payload = alias
 
@@ -21,21 +18,16 @@ const getAlias = function (req, res, next) {
 }
 
 const follow = function (req, res, next) {
-  Alias.findById(req.params.alias)
+  aliasHelper.find(req.params.alias)
     .then((alias) => {
       if (!alias) {
-        let err = new Error('d0')
-
-        next(err)
+        next(new Error(constants.ALIAS_NOT_FOUND))
       } else {
         alias.analytics.followed++
         alias.markModified('analytics')
         alias.save()
 
-        res.redirect(alias.href)
-        res.status(301)
-
-        return null
+        res.status(301).redirect(alias.href)
       }
     })
     .catch((error) => {
@@ -50,13 +42,7 @@ const newAlias = function (req, res, next) {
   const name = req.body.name && req.body.name.toLowerCase()
   const href = req.body.href
 
-  Alias.create(
-    // На лету формируем объект и отметаем пустые свойства
-    _.omit({
-      '_id': name,
-      'href': href
-    }, (value) => _.isUndefined(value))
-  )
+  aliasHelper.create(name, href)
     .then((alias) => {
       res.locals.payload = {
         name: alias._id,
@@ -68,7 +54,7 @@ const newAlias = function (req, res, next) {
     .catch((err) => {
       // todo: коды ошибок мангуста надо оформить в константы
       if (err.code === 11000) {
-        err = new Error('v1')
+        err = new Error(constants.ALIAS_NAME_TAKEN)
       } else if ('errors' in err) {
         const reason = err.errors[Object.keys(err.errors)[0]].message
         err = new Error(reason)
