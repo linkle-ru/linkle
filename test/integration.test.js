@@ -202,6 +202,7 @@ describe('Переход по короткой ссылке', () => {
             .get(res.header.location)
             .expect(200)
             .expect((res) => {
+              // todo: такие тесты ложно проходят
               expect(res.body.status === 'error')
               expect(res.body.code === 'd0')
             })
