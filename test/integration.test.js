@@ -50,8 +50,7 @@ describe('Добавление новой ссылки', () => {
         }, done)
     })
 
-    // todo: критический баг
-    xit('запрещено, если дубль с другим регистром', (done) => {
+    it('запрещено, если дубль с другим регистром', (done) => {
       supertest(app)
         .post('/api/v1/aliases')
         .send({
@@ -266,7 +265,7 @@ describe('Несуществующая страница ', () => {
 })
 
 describe('Некорректный JSON ', () => {
-  xit('вызывает ошибку', (done) => {
+  it('вызывает ошибку', (done) => {
     supertest(app)
       .post('/api/v1/aliases')
       .set('Content-Type', 'application/json')

@@ -47,11 +47,14 @@ const follow = function (req, res, next) {
  * Создание новой короткой ссылки
  */
 const newAlias = function (req, res, next) {
+  const name = req.body.name && req.body.name.toLowerCase()
+  const href = req.body.href
+
   Alias.create(
     // На лету формируем объект и отметаем пустые свойства
     _.omit({
-      '_id': req.body.name,
-      'href': req.body.href
+      '_id': name,
+      'href': href
     }, (value) => _.isUndefined(value))
   )
     .then((alias) => {
