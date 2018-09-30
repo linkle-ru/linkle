@@ -1,11 +1,11 @@
 {
   "private": true,
-  "main": "source/app.js",
+  "main": "source/server.js",
   "scripts": {
     "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi",
-    "start": "DEBUG=url-short:* node source/app",
+    "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
-    "develop": "(nohup browser-sync start --proxy localhost:9000 --files source/gui >> logs/browsersync.log 2>&1 &) && export PORT=9000 && export NODE_ENV=development && DEBUG=url-short:* nodemon source/app",
+    "develop": "(nohup browser-sync start --proxy localhost:9000 --files source/gui >> logs/browsersync.log 2>&1 &) && export PORT=9000 && export NODE_ENV=development && DEBUG=url-short:* nodemon source/server",
     "pretest": "eslint --ignore-path .gitignore . --fix",
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
