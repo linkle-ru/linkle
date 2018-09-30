@@ -1,11 +1,9 @@
 const mongoose = require('mongoose')
 const debug = require('debug')('url-short:main')
-const bluebird = require('bluebird')
 const morgan = require('morgan')
 const app = require('./app')
 
-// todo: надо через app.get('env')
-const env = process.env.NODE_ENV || 'production'
+const env = app.get('env')
 
 let mongoUri, dbName
 
@@ -20,16 +18,12 @@ if (env === 'production') {
   dbName = `url-shortener-${env}`
 }
 
-process.env.DB_URI = mongoUri + dbName
-
-// todo: избавиться от bluebird
-mongoose.Promise = bluebird
+mongoose.Promise = Promise
 const mongooseOptions = {
-  useMongoClient: true,
-  promiseLibrary: bluebird,
+  useMongoClient: true
 }
 
-mongoose.connect(process.env.DB_URI, mongooseOptions)
+mongoose.connect(mongoUri + dbName, mongooseOptions)
   .then(
     () => {
       debug('Successfully connected to MongoBD!')
@@ -41,7 +35,6 @@ mongoose.connect(process.env.DB_URI, mongooseOptions)
 
 app.use(morgan('combined'))
 
-// todo: порт надо получать через app.get('port')
 const port = process.env.PORT || 8080
 
 app.listen(port)

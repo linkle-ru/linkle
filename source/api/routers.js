@@ -1,5 +1,5 @@
-const router = require('express').Router(),
-  controllers = require('./controllers')
+const router = require('express').Router()
+const controllers = require('./controllers')
 
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)

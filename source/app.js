@@ -11,6 +11,8 @@ const app = express()
 
 const env = process.env.NODE_ENV || 'production'
 
+app.set('env', env)
+
 debug(`Node environment is set to "${env}"`)
 
 app.use(cors())
@@ -32,11 +34,8 @@ app.use((req, res, next) => {
   next()
 })
 
-const api = require('./api/routers')
+app.use('/api/v1', require('./api/routers'))
 
-app.use('/api/v1', api)
-
-// todo: перенести в маршруты
 app.get('/:alias', (req, res) => {
   res.redirect(`/api/v1/follow/${req.params.alias}`)
   res.status(301)

@@ -21,7 +21,6 @@
     }
   },
   "dependencies": {
-    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "debug": "^3.0.0",
@@ -45,7 +44,6 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
     "mockgoose": "^7.3.3",
-    "rewire": "^2.5.2",
     "stryker": "^0.29.2",
     "stryker-api": "^0.21.1",
     "stryker-html-reporter": "^0.16.2",

@@ -1,7 +1,8 @@
 const Alias = require('../mongo/models/alias')
 const _ = require('underscore')
 
-let getAlias = function (req, res, next) {
+// todo: разгрузить экшены от логики
+const getAlias = function (req, res, next) {
   Alias.findById(req.params.alias)
     .then((alias) => {
       if (!alias) {
@@ -19,10 +20,7 @@ let getAlias = function (req, res, next) {
     })
 }
 
-/**
- * Редирект по короткой ссылке
- */
-let follow = function (req, res, next) {
+const follow = function (req, res, next) {
   Alias.findById(req.params.alias)
     .then((alias) => {
       if (!alias) {
@@ -48,7 +46,7 @@ let follow = function (req, res, next) {
 /**
  * Создание новой короткой ссылки
  */
-let newAlias = function (req, res, next) {
+const newAlias = function (req, res, next) {
   Alias.create(
     // На лету формируем объект и отметаем пустые свойства
     _.omit({

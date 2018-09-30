@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-  shortid = require('shortid')
+const mongoose = require('mongoose')
+const shortId = require('shortid')
 
-/**
- * Схема данных для модели Alias
- */
 const aliasSchema = new mongoose.Schema({
-  // Короткая ссылка
   _id: {
     type: String,
-    default: shortid.generate,
+    default: shortId.generate,
     minlength: [1, 'v5'],
     maxlength: [50, 'v0'],
     validate: {
@@ -28,6 +24,7 @@ const aliasSchema = new mongoose.Schema({
       validator: (v) => {
         return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v))
       },
+      // todo: сделать понятные константы для кодов ошибок
       message: 'v8'
     }, {
       validator: (v) => {
@@ -37,7 +34,6 @@ const aliasSchema = new mongoose.Schema({
     }],
     trim: true
   },
-  // Аналитика
   analytics: {
     type: {},
     default: {
@@ -54,7 +50,7 @@ const aliasSchema = new mongoose.Schema({
  *
  * @return {obj} JSON
  */
-aliasSchema.methods.toJSON = function() {
+aliasSchema.methods.toJSON = function () {
   return {
     name: this._id,
     href: this.href,
@@ -64,10 +60,9 @@ aliasSchema.methods.toJSON = function() {
   }
 }
 
-/**
- * Хук, который срабатывает перед сохранением документа в базу
- */
-aliasSchema.pre('save', function(done) {
+
+// Хук, который срабатывает перед сохранением документа в базу
+aliasSchema.pre('save', function (done) {
   if (this.isNew) {
     if (!/^http/.test(this.href)) {
       this.href = 'http://' + this.href
