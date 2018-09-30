@@ -1,14 +1,42 @@
-const yank = require('supertest')
+const supertest = require('supertest')
 const expect = require('chai').expect
-const rewire = require('rewire')
 const chance = new require('chance')()
+const app = require('../source/app')
 
-const server = rewire('../source/server')
+const mongoose = require('mongoose')
+const bluebird = require('bluebird')
+
+let mongoUri, dbName
+
+mongoUri = 'mongodb://localhost:27017/'
+dbName = 'url-shortener-testing'
+process.env.DB_URI = mongoUri + dbName
+mongoose.Promise = bluebird
+const mongooseOptions = {
+  useMongoClient: true,
+  promiseLibrary: bluebird,
+}
+
+const Mockgoose = require('mockgoose').Mockgoose
+const mockgoose = new Mockgoose(mongoose)
+
+mockgoose.prepareStorage()
+  .then(() => {
+    mongoose.connect(process.env.DB_URI, mongooseOptions)
+  })
+
+// todo: порт надо получать через app.get('port')
+const port = process.env.PORT || 8080
+
+// Для мутационного тестирования, чтобы один раз выполнилось
+if (!module.parent) {
+  app.listen(port)
+}
 
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
     it('разрешено, если это первая ссылка в базе', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': 'first',
@@ -24,7 +52,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если это дубль', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': 'first',
@@ -40,7 +68,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если ссылка может зациклиться', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': 'loop',
@@ -55,7 +83,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если алиас слишком длинный', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': chance.word({ length: 300 }),
@@ -70,7 +98,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если алиас содержит странные символы', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': '@asasd',
@@ -85,7 +113,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': chance.word({ length: 5 }),
@@ -100,7 +128,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если сжимаемая ссылка пустая', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'name': chance.word({ length: 5 }),
@@ -117,7 +145,7 @@ describe('Добавление новой ссылки', () => {
 
   describe('с рандомным именем', () => {
     it('разрешено, если сжимаемая ссылка передана', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'href': 'knife.media'
@@ -130,7 +158,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если сжимаемая ссылка пустая', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'href': ''
@@ -144,7 +172,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
-      yank(server)
+      supertest(app)
         .post('/api/v1/aliases')
         .send({
           'href': chance.word({ length: 2400 })
@@ -162,11 +190,11 @@ describe('Добавление новой ссылки', () => {
 describe('Переход по короткой ссылке', () => {
   describe('из базы', () => {
     it('разрешено', (done) => {
-      yank(server)
+      supertest(app)
         .get('/first')
         .expect(302)
         .end((err, res) => {
-          yank(server)
+          supertest(app)
             .get(res.header.location)
             .expect(301)
             .end((err, res) => {
@@ -179,11 +207,11 @@ describe('Переход по короткой ссылке', () => {
 
   describe('не из базы', () => {
     it('запрещено', (done) => {
-      yank(server)
+      supertest(app)
         .get('/googleplex')
         .expect(302)
         .end((err, res) => {
-          yank(server)
+          supertest(app)
             .get(res.header.location)
             .expect(200)
             .expect((res) => {
@@ -199,7 +227,7 @@ describe('Переход по короткой ссылке', () => {
 describe('Получение алиаса по имени', () => {
   describe('если он существует', () => {
     it('выполняется', (done) => {
-      yank(server)
+      supertest(app)
         .get('/api/v1/aliases/first')
         .expect(200)
         .expect((res) => {
@@ -213,7 +241,7 @@ describe('Получение алиаса по имени', () => {
 
   describe('если он не существует', () => {
     it('не выполняется', (done) => {
-      yank(server)
+      supertest(app)
         .get('/api/v1/aliases/lasd')
         .expect(200)
         .expect((res) => {
@@ -227,7 +255,7 @@ describe('Получение алиаса по имени', () => {
 
 describe('Главная страница', () => {
   it('открывается', (done) => {
-    yank(server)
+    supertest(app)
       .get('/')
       .expect(200)
       // todo: Надо еще поискать текст со страницы
@@ -237,7 +265,7 @@ describe('Главная страница', () => {
 
 describe('Несуществующая страница ', () => {
   it('не открывается, брошена ошибка 404', (done) => {
-    yank(server)
+    supertest(app)
       .get('/gui/deprecated')
       .expect(404)
       .end(done)
@@ -246,7 +274,7 @@ describe('Несуществующая страница ', () => {
 
 describe('Некорректный json ', () => {
   it('вызывает ошибку', (done) => {
-    yank(server)
+    supertest(app)
       .post('/api/v1/aliases')
       .set('Content-Type', 'application/json')
       .send('{"a"="b"}')
