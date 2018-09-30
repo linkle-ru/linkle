@@ -5,33 +5,20 @@ const app = require('../source/app')
 
 const mongoose = require('mongoose')
 const bluebird = require('bluebird')
+const Mockgoose = require('mockgoose').Mockgoose
+const mockgoose = new Mockgoose(mongoose)
 
-let mongoUri, dbName
-
-mongoUri = 'mongodb://localhost:27017/'
-dbName = 'url-shortener-testing'
-process.env.DB_URI = mongoUri + dbName
 mongoose.Promise = bluebird
 const mongooseOptions = {
   useMongoClient: true,
   promiseLibrary: bluebird,
 }
 
-const Mockgoose = require('mockgoose').Mockgoose
-const mockgoose = new Mockgoose(mongoose)
+mockgoose.prepareStorage().then(() => {
+  mongoose.connect(null, mongooseOptions)
+})
 
-mockgoose.prepareStorage()
-  .then(() => {
-    mongoose.connect(process.env.DB_URI, mongooseOptions)
-  })
-
-// todo: порт надо получать через app.get('port')
-const port = process.env.PORT || 8080
-
-// Для мутационного тестирования, чтобы один раз выполнилось
-if (!module.parent) {
-  app.listen(port)
-}
+app.listen(55555)
 
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
