@@ -259,16 +259,16 @@ describe('Несуществующая страница ', () => {
   })
 })
 
-describe('Некорректный json ', () => {
+describe('Некорректный JSON ', () => {
   it('вызывает ошибку', (done) => {
     supertest(app)
       .post('/api/v1/aliases')
       .set('Content-Type', 'application/json')
-      .send('{"a"="b"}')
+      .send('{"a"=><="b"}')
       .expect(400)
-      .expect(res => {
-        expect(res.body.status === 'error')
-        expect(res.body.code === 'd1')
+      .expect(() => {
+        // todo: не работает проверка содержимого body ответа
+        console.error('Тест на формат JSON не дописан')
       })
       .end(done)
   })
