@@ -246,7 +246,7 @@ describe('Главная страница', () => {
     supertest(app)
       .get('/')
       .expect(200)
-      .expect(res => {
+      .expect((res) => {
         expect(res.text.indexOf(
           '<title>Сокращалка ссылок</title>'
         )).to.not.equal(-1)

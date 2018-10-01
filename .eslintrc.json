@@ -40,6 +40,10 @@
     ],
     "no-console": [
       "warn"
+    ],
+    "arrow-parens": [
+      "error",
+      "always"
     ]
   }
 }

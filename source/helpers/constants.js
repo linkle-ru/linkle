@@ -1,4 +1,7 @@
 module.exports = Object.freeze({
+  mongo: {
+    DUPLICATE_KEY: 11000
+  },
   ALIAS_NAME_TOO_LONG: 'v0',
   ALIAS_NAME_TAKEN: 'v1',
   ALIAS_NAME_BAD: 'v2',
