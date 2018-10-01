@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'gui/public')))
 
 app.use((req, res, next) => {
-  res.locals.locale = locales[req.query.lang] || locales.en
+  res.locals.locale = (locales[req.query.lang] || locales.en)
 
   next()
 })
@@ -49,6 +49,7 @@ app.get('*', (req, res, next) => {
 })
 
 // Конечный обработчик ошибок
+// todo: тут ему не место
 app.use((err, req, res, next) => {
   // Вываливаем стэк только в окружении development
   res.locals.message = err.message
