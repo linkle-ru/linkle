@@ -2,8 +2,7 @@
   "private": true,
   "main": "source/server.js",
   "scripts": {
-    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi",
-    "prestart": "npx gulp scripts",
+    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi && gulp scripts",
     "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
     "develop": "export NODE_ENV=development && DEBUG=url-short:* && gulp develop",
