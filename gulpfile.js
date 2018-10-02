@@ -3,19 +3,22 @@
 const gulp = require('gulp')
 const browserSync = require('browser-sync').create()
 const nodemon = require('gulp-nodemon')
+const babel = require('gulp-babel')
 
 // todo: продумать получше
 const port = process.env.PORT || 8080
 
-gulp.task('develop', ['serve'], function () {
-  return gulp.watch(['source/gui/*'])
-    .on('change', browserSync.reload)
+gulp.task('scripts', function () {
+  return gulp.src('source/gui/scripts/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('source/gui/public/js/'))
 })
 
-gulp.task('default', ['browser-sync'], function () {
+gulp.task('develop', ['browser-sync'], function () {
+  return gulp.watch(['source/gui/*']).on('change', browserSync.reload)
 })
 
-gulp.task('browser-sync', ['nodemon'], function () {
+gulp.task('browser-sync', ['nodemon', 'scripts'], function () {
   browserSync.init({
     proxy: {
       target: `http://localhost:${port}`,
