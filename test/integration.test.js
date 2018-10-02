@@ -16,7 +16,9 @@ mockgoose.prepareStorage().then(() => {
   mongoose.connect(null, mongooseOptions)
     .then(
       () => {
-        app.listen(55555)
+        if (!module.parent) {
+          app.listen(55555)
+        }
       },
       (err) => {
         throw new Error(`Mockgoose connection failed: ${err}`)
