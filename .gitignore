@@ -7,3 +7,4 @@ prepros-6.config
 bower_components
 logs
 .idea
+dist

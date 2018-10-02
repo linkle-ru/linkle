@@ -11,7 +11,7 @@ const port = process.env.PORT || 8080
 gulp.task('scripts', function () {
   return gulp.src('source/gui/scripts/*.js')
     .pipe(babel())
-    .pipe(gulp.dest('source/gui/public/js/'))
+    .pipe(gulp.dest('source/gui/public/dist/js/'))
 })
 
 gulp.task('develop', ['browser-sync'], function () {
