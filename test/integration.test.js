@@ -14,9 +14,15 @@ const mongooseOptions = {
 
 mockgoose.prepareStorage().then(() => {
   mongoose.connect(null, mongooseOptions)
+    .then(
+      () => {
+        app.listen(55555)
+      },
+      (err) => {
+        throw new Error(`Mockgoose connection failed: ${err}`)
+      }
+    )
 })
-
-app.listen(55555)
 
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
