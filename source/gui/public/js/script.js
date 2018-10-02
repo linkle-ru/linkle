@@ -1,4 +1,6 @@
 (function(global, document, undefined) {
+  // todo: отрефакторить
+  // todo: перегонять галпом в es5
   const linkShortener = (function() {
     let
       mainForm, hrefField, aliasField, resultField,
