@@ -29,7 +29,7 @@ mongoose.connect(mongoUri + dbName, mongooseOptions)
       debug('Successfully connected to MongoBD!')
     },
     (err) => {
-      debug('MongoDB connection error:', err)
+      throw new Error(`MongoDB connection error: ${err}`)
     }
   )
 
