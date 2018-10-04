@@ -1,3 +1,5 @@
+'use strict'
+
 const supertest = require('supertest')
 const expect = require('chai').expect
 const chance = new require('chance')()

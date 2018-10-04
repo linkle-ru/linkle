@@ -1,3 +1,5 @@
+'use strict'
+
 const Alias = require('../mongo/models/alias')
 const _ = require('underscore')
 const constants = require('./constants')

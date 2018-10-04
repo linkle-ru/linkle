@@ -1,9 +1,12 @@
-(function(global, document, undefined) {
-  // todo: отрефакторить и переименовать
-  const linkShortener = (function() {
-    let
-      mainForm, hrefField, aliasField, resultField,
-      submitButton, copyToClipboardButton, resultBlock
+'use strict'
+// const regexes = require('../../helpers/validators')
+
+// todo: отрефакторить и переименовать
+// todo: можно воспользоваться изоморфносью приложения и вынести регексы
+const linkShortener = (function () {
+  let
+    mainForm, hrefField, aliasField, resultField,
+    submitButton, copyToClipboardButton, resultBlock
 
     const initUI = () => {
       hrefField = $('#href')

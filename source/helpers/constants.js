@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = Object.freeze({
   mongo: {
     DUPLICATE_KEY: 11000

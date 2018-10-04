@@ -1,3 +1,5 @@
+'use strict'
+
 const aliasHelper = require('../helpers/alias')
 
 const getAlias = function (req, res, next) {
