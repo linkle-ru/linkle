@@ -1,36 +1,37 @@
 const mongoose = require('mongoose')
 const shortId = require('shortid')
+const constants = require('../../helpers/constants')
 
 const aliasSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: shortId.generate,
-    minlength: [1, 'v5'],
-    maxlength: [50, 'v0'],
+    // todo: возможно стоит просто заменить на "required"?
+    minlength: [1, constants.ALIAS_NAME_EMPTY],
+    maxlength: [50, constants.ALIAS_NAME_TOO_LONG],
     validate: {
       validator: (v) => {
         return /^[a-zA-zа-яА-Я\d._-]+$/.test(v)
       },
-      message: 'v2'
+      message: constants.ALIAS_NAME_BAD
     },
     trim: true
   },
   // Полная ссылка
   href: {
     type: String,
-    maxlength: [2000, 'v3'],
-    required: [true, 'v4'],
+    maxlength: [2000, constants.LINK_TOO_LONG],
+    required: [true, constants.LINK_EMPTY],
     validate: [{
       validator: (v) => {
         return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v))
       },
-      // todo: сделать понятные константы для кодов ошибок
-      message: 'v8'
+      message: constants.LINK_LOOP
     }, {
       validator: (v) => {
         return /\w+\.\w+/.test(v)
       },
-      message: 'v7'
+      message: constants.HREF_BAD
     }],
     trim: true
   },
