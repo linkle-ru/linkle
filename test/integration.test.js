@@ -86,6 +86,20 @@ describe('Добавление новой ссылки', () => {
         }, done)
     })
 
+    it('запрещено, если ссылка - не ссылка', (done) => {
+      supertest(app)
+        .post('/api/v1/aliases')
+        .send({
+          'name': 'loop',
+          'href': 'notalink'
+        })
+        .expect(200, {
+          status: 'error',
+          reason: 'Bad href',
+          code: 'v7'
+        }, done)
+    })
+
     it('запрещено, если алиас слишком длинный', (done) => {
       supertest(app)
         .post('/api/v1/aliases')
