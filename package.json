@@ -2,7 +2,7 @@
   "private": true,
   "main": "source/server.js",
   "scripts": {
-    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi && webpack",
+    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi && npm run webpack",
     "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
     "develop": "export NODE_ENV=development && export DEBUG=url-short:* && gulp develop",
@@ -15,7 +15,7 @@
     "mutate": "export NODE_ENV=testing && stryker run",
     "show-coverage": "open ./reports/coverage/lcov-report/index.html",
     "show-msi": "open ./reports/mutation/html/index.html",
-    "webpack": "webpack"
+    "webpack": "gulp webpack"
   },
   "husky": {
     "hooks": {
@@ -61,7 +61,6 @@
     "stryker-mocha-runner": "^0.14.2",
     "supertest": "^3.0.0",
     "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2",
     "webpack-stream": "^5.1.1"
   }
 }

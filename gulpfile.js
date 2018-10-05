@@ -7,42 +7,51 @@ const webpack = require('webpack-stream')
 
 // todo: продумать получше
 const port = process.env.PORT || 8080
-const NODE_ENV = process.env.NODE_ENV || 'development'
+const NODE_ENV = process.env.NODE_ENV || 'production'
 
-gulp.task('develop', ['browser-sync'], function () {
-  gulp.watch([
+const webpackConfig = {
+  mode: NODE_ENV,
+  watch: (NODE_ENV === 'development'),
+  devtool: 'source-map',
+  entry: './source/gui/scripts/main.js',
+  output: {
+    filename: 'app.js'
+  },
+  stats: {
+    colors: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  }
+}
+
+gulp.task('webpack', function () {
+  return gulp.src('src/entry.js')
+    .pipe(webpack(webpackConfig))
+    .pipe(gulp.dest('./source/gui/public/dist'))
+})
+
+gulp.task('watch', function() {
+  return gulp.watch([
     'source/gui/public/index.html',
     'source/gui/public/dist/app.js'
   ]).on('change', browserSync.reload)
-
-  return gulp.src('src/entry.js')
-    .pipe(webpack({
-      mode: NODE_ENV,
-      watch: true,
-      devtool: 'source-map',
-      entry: './source/gui/scripts/main.js',
-      output: {
-        filename: 'app.js'
-      },
-      stats: {
-        colors: true
-      },
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: ['babel-loader']
-          }
-        ]
-      }
-    }))
-    .pipe(gulp.dest('./source/gui/public/dist'))
 })
+
+gulp.task('develop', ['browser-sync', 'watch', 'webpack'], () => {})
 
 gulp.task('browser-sync', ['nodemon'], function () {
   browserSync.init({
     port: 2999,
+    ui: {
+      port: 2998
+    },
     proxy: {
       target: `http://localhost:${port}`,
       middleware: [
