@@ -3,6 +3,7 @@
 const mongoose = require('mongoose')
 const shortId = require('shortid')
 const constants = require('../../helpers/constants')
+const validators = require('../../helpers/validators')
 
 const aliasSchema = new mongoose.Schema({
   _id: {
@@ -13,7 +14,7 @@ const aliasSchema = new mongoose.Schema({
     maxlength: [50, constants.ALIAS_NAME_TOO_LONG],
     validate: {
       validator: (v) => {
-        return /^[a-zA-zа-яА-Я\d._-]+$/.test(v)
+        return validators.regexes.alias.test(v)
       },
       message: constants.ALIAS_NAME_BAD
     },
@@ -26,12 +27,12 @@ const aliasSchema = new mongoose.Schema({
     required: [true, constants.LINK_EMPTY],
     validate: [{
       validator: (v) => {
-        return !(/^(https?:\/\/)?short\.taxnuke\.ru\/./.test(v))
+        return !(validators.regexes.noLoopHref.test(v))
       },
       message: constants.LINK_LOOP
     }, {
       validator: (v) => {
-        return /\w+\.\w+/.test(v)
+        return validators.regexes.href.test(v)
       },
       message: constants.HREF_BAD
     }],
@@ -62,7 +63,6 @@ aliasSchema.methods.toJSON = function () {
     }
   }
 }
-
 
 // Хук, который срабатывает перед сохранением документа в базу
 aliasSchema.pre('save', function (done) {

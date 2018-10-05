@@ -1,8 +1,8 @@
 'use strict'
-// const regexes = require('../../helpers/validators')
+
+const validators = require('../../helpers/validators')
 
 // todo: отрефакторить
-// todo: можно воспользоваться изоморфносью приложения и вынести регексы
 const linkShortener = (function () {
   let
     mainForm, hrefField, aliasField, resultField,
@@ -35,16 +35,16 @@ const linkShortener = (function () {
           const href = $el.val().trim()
 
           switch (true) {
-          case !(/\w+\.\w+/.test(href)):
+          case !(validators.regexes.href.test(href)):
             return 'Это не похоже на ссылку!'
-          case /^(https?:\/\/)?short\.taxnuke\.ru\/./.test(href):
+          case validators.regexes.noLoopHref.test(href):
             return 'Это может привести к зацикливанию, не дурите, пожалуйста :)'
           }
         },
         alias: function ($el) {
           const alias = $el.val().trim()
 
-          if (!(/^[a-zA-zа-яА-Я\d._-]+$/.test(alias))) {
+          if (!(validators.regexes.alias.test(alias))) {
             return 'Запрещенные символы, справа есть подсказка!'
           }
         }
