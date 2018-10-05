@@ -1,7 +1,5 @@
 'use strict'
 
-const validators = require('../../helpers/validators')
-
 let mainForm
 let hrefField
 let aliasField
@@ -9,29 +7,6 @@ let resultField
 let submitButton
 let copyToClipboardButton
 let resultBlock
-
-const validatorOpts = {
-  delay: 300,
-  custom: {
-    href: function ($el) {
-      const href = $el.val().trim()
-
-      switch (true) {
-      case !(validators.regexes.href.test(href)):
-        return 'Это не похоже на ссылку!'
-      case validators.regexes.noLoopHref.test(href):
-        return 'Это может привести к зацикливанию, не дурите, пожалуйста :)'
-      }
-    },
-    alias: function ($el) {
-      const alias = $el.val().trim()
-
-      if (!(validators.regexes.alias.test(alias))) {
-        return 'Запрещенные символы, справа есть подсказка!'
-      }
-    }
-  }
-}
 
 function initUI() {
   hrefField = $('#href')
@@ -53,7 +28,11 @@ function initUI() {
     title: 'Ограничения'
   })
 
-  $(mainForm).validator(validatorOpts)
+  $(mainForm).validator({
+    delay: 300,
+    custom: require('./customValidators')
+  })
+
   $(submitButton).on('click', submit)
   $(copyToClipboardButton).on('click', copyToClipboard)
 }
@@ -64,7 +43,12 @@ function copyToClipboard() {
   document.execCommand('Copy')
 }
 
-function notify(message, type = 'warning') {
+/**
+ * Обертка над jquery notify
+ * @param message
+ * @param type
+ */
+function notifyWrapper(message, type = 'warning') {
   $.notify({
     message
   }, {
@@ -83,11 +67,11 @@ function submit() {
     return
   }
 
-  const
-    href = hrefField.val(),
-    alias = aliasField.val()
+  const href = hrefField.val()
+  const alias = aliasField.val()
 
-  let data = { href }, requestTimeout
+  let data = { href }
+  let requestTimeout
 
   if (alias) {
     data.name = alias
@@ -99,43 +83,50 @@ function submit() {
     method: 'POST',
     data: data,
     cache: false,
-    beforeSend: () => {
-      if ($(submitButton).hasClass('disabled')) {
-        return false
-      } else {
-        requestTimeout = setTimeout(() => notify(
-          'Сервис немного залежался, ещё пару секунд...',
-          'info'
-        ), 2000)
-        $(submitButton).val('Обработка...')
-        $(submitButton).addClass('disabled')
-        $(resultBlock).slideUp(500)
-      }
-    },
-    success: (data) => {
-      if (data.status === 'ok') {
-        resultField.val(`${window.location.host}/${data.payload.name}`)
-        $(resultBlock).slideDown(250)
-      } else {
-        notify(data.reason)
-      }
-    },
-    error: (data) => {
-      if (data.status !== 404) {
-        notify('Что-то пошло очень не так, сервер не ответил', 'danger')
-      } else {
-        var responseJSON = data.responseJSON
-        notify(responseJSON, 'danger')
-        // todo: кидать исключение
-        // console.error(responseJSON)
-      }
-    },
-    complete: () => {
-      clearTimeout(requestTimeout)
-      $(submitButton).removeClass('disabled')
-      $(submitButton).val('Сократить')
-    }
+    beforeSend: beforeSendAjax,
+    success: onSuccessAjax,
+    error: onErrorAjax,
+    complete: onCompleteAjax
   })
+
+  function onCompleteAjax() {
+    clearTimeout(requestTimeout)
+    $(submitButton).removeClass('disabled')
+    $(submitButton).val('Сократить')
+  }
+
+  function onErrorAjax(data) {
+    if (data.status !== 404) {
+      notifyWrapper('Что-то пошло очень не так, сервер не ответил', 'danger')
+    } else {
+      notifyWrapper(data.responseJSON, 'danger')
+      // todo: кидать исключение
+      // console.error(responseJSON)
+    }
+  }
+
+  function onSuccessAjax(data) {
+    if (data.status === 'ok') {
+      resultField.val(`${window.location.host}/${data.payload.name}`)
+      $(resultBlock).slideDown(250)
+    } else {
+      notifyWrapper(data.reason)
+    }
+  }
+
+  function beforeSendAjax() {
+    if ($(submitButton).hasClass('disabled')) {
+      return false
+    } else {
+      requestTimeout = setTimeout(() => notifyWrapper(
+        'Сервис немного залежался, ещё пару секунд...',
+        'info'
+      ), 2000)
+      $(submitButton).val('Обработка...')
+      $(submitButton).addClass('disabled')
+      $(resultBlock).slideUp(500)
+    }
+  }
 }
 
 module.exports.init = initUI
