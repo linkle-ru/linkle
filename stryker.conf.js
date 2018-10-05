@@ -3,13 +3,13 @@
 module.exports = function(config) {
   config.set({
     files: [
-      'source/api/**/*.js',
+      'source/api/**/*',
       'source/gui/**/*',
-      'source/helpers/*.js',
-      'source/i18n/**/*.json',
-      'source/mongo/models/*.js',
+      'source/helpers/*',
+      'source/i18n/**/*',
+      'source/mongo/models/*',
       'source/app.js',
-      'test/*.js'
+      'test/*.test.js'
     ],
     mutate: [
       'source/api/*.js',
