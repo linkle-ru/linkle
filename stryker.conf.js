@@ -16,6 +16,7 @@ module.exports = function(config) {
       'source/mongo/models/*.js',
       'source/app.js',
       'source/helpers/alias.js',
+      'source/helpers/constants.js',
     ],
     testRunner: 'mocha',
     testFramework: 'mocha',

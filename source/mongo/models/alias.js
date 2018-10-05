@@ -9,8 +9,7 @@ const aliasSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: shortId.generate,
-    // todo: возможно стоит просто заменить на "required"?
-    minlength: [1, constants.ALIAS_NAME_EMPTY],
+    required: [true, constants.ALIAS_NAME_EMPTY],
     maxlength: [50, constants.ALIAS_NAME_TOO_LONG],
     validate: {
       validator: (v) => {

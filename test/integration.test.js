@@ -116,6 +116,20 @@ describe('Добавление новой ссылки', () => {
         }, done)
     })
 
+    it('запрещено, если алиас пустой', (done) => {
+      supertest(app)
+        .post('/api/v1/aliases')
+        .send({
+          'name': '',
+          'href': 'google.com'
+        })
+        .expect(200, {
+          status: 'error',
+          reason: 'Empty alias name',
+          code: 'v5'
+        }, done)
+    })
+
     it('запрещено, если алиас содержит странные символы', (done) => {
       supertest(app)
         .post('/api/v1/aliases')
