@@ -30,149 +30,155 @@ mockgoose.prepareStorage().then(() => {
 
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
-    it('разрешено, если это первая ссылка в базе', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': 'first',
-          'href': 'ya.ru'
-        })
-        .expect(200, {
-          status: 'ok',
-          payload: {
-            name: 'first',
-            href: 'http://ya.ru'
-          }
-        }, done)
+    describe('разрешено, если:', () => {
+      it('первая ссылка в базе', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': 'first',
+            'href': 'ya.ru'
+          })
+          .expect(200, {
+            status: 'ok',
+            payload: {
+              name: 'first',
+              href: 'http://ya.ru'
+            }
+          }, done)
+      })
     })
 
-    it('запрещено, если это дубль', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': 'first',
-          'href': 'google.com'
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Alias name is taken',
-          code: 'v1'
-        }, done)
-    })
+    describe('запрещено, если:', () => {
+      it('дубль', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': 'first',
+            'href': 'google.com'
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Alias name is taken',
+            code: 'v1'
+          }, done)
+      })
 
-    it('запрещено, если дубль с другим регистром', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': 'First',
-          'href': 'google.com'
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Alias name is taken',
-          code: 'v1'
-        }, done)
-    })
+      it('дубль с другим регистром', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': 'First',
+            'href': 'google.com'
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Alias name is taken',
+            code: 'v1'
+          }, done)
+      })
 
-    it('запрещено, если ссылка может зациклиться', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': 'loop',
-          'href': 'https://short.taxnuke.ru/loop'
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Link may loop',
-          code: 'v8'
-        }, done)
-    })
-
-    for (const link of ['abc', 'a.b c', '1.2']) {
-      it(`запрещено, если ссылка - не ссылка (${link})`, (done) => {
+      it('ссылка может зациклиться', (done) => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
             'name': 'loop',
-            'href': link
+            'href': 'https://short.taxnuke.ru/loop'
           })
           .expect(200, {
             status: 'error',
-            reason: 'Bad href',
-            code: 'v7'
+            reason: 'Link may loop',
+            code: 'v8'
           }, done)
       })
-    }
 
-    it('запрещено, если алиас слишком длинный', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': chance.word({ length: 300 }),
-          'href': 'google.com'
+      for (const link of ['abc', 'a.b c', '1.2']) {
+        it(`не ссылка (${link})`, (done) => {
+          supertest(app)
+            .post('/api/v1/aliases')
+            .send({
+              'name': 'loop',
+              'href': link
+            })
+            .expect(200, {
+              status: 'error',
+              reason: 'Bad href',
+              code: 'v7'
+            }, done)
         })
-        .expect(200, {
-          status: 'error',
-          reason: 'Alias name is too long',
-          code: 'v0'
-        }, done)
+      }
+
+      it('алиас слишком длинный', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': chance.word({ length: 300 }),
+            'href': 'google.com'
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Alias name is too long',
+            code: 'v0'
+          }, done)
+      })
+
+      it('алиас пустой', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': '',
+            'href': 'google.com'
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Empty alias name',
+            code: 'v5'
+          }, done)
+      })
+
+      it('алиас содержит странные символы', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': '@asasd',
+            'href': 'google.com'
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Incorrect alias name',
+            code: 'v2'
+          }, done)
+      })
+
+      it('сжимаемая ссылка слишком длинная', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': chance.word({ length: 5 }),
+            'href': chance.word({ length: 3000 })
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Link is too long',
+            code: 'v3'
+          }, done)
+      })
+
+      it('сжимаемая ссылка пустая', (done) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': chance.word({ length: 5 }),
+            'href': ''
+          })
+          .expect(200, {
+            status: 'error',
+            reason: 'Link is empty',
+            code: 'v4'
+          }, done)
+      })
+
     })
 
-    it('запрещено, если алиас пустой', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': '',
-          'href': 'google.com'
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Empty alias name',
-          code: 'v5'
-        }, done)
-    })
-
-    it('запрещено, если алиас содержит странные символы', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': '@asasd',
-          'href': 'google.com'
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Incorrect alias name',
-          code: 'v2'
-        }, done)
-    })
-
-    it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': chance.word({ length: 5 }),
-          'href': chance.word({ length: 3000 })
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Link is too long',
-          code: 'v3'
-        }, done)
-    })
-
-    it('запрещено, если сжимаемая ссылка пустая', (done) => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({
-          'name': chance.word({ length: 5 }),
-          'href': ''
-        })
-        .expect(200, {
-          status: 'error',
-          reason: 'Link is empty',
-          code: 'v4'
-        }, done)
-    })
   })
 
   describe('с рандомным именем', () => {
