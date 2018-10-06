@@ -40,6 +40,7 @@ app.use('/api/v1', require('./api/routers'))
 
 app.get('/:alias', (req, res) => {
   res.redirect(`/api/v1/follow/${req.params.alias}`)
+  // todo: а может 308?
   res.status(301)
 })
 
@@ -52,6 +53,7 @@ app.get('*', (req, res, next) => {
 
 // Конечный обработчик ошибок
 // todo: тут ему не место
+// todo: надо отлавливать другие методы запросов и кидать ошибки в ответах
 app.use((err, req, res, next) => {
   // Вываливаем стэк только в окружении development
   res.locals.message = err.message
