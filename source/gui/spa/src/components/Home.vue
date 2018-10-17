@@ -57,7 +57,7 @@ export default {
     alertMessage: 'nigger',
     href: '',
     hrefRules: [
-      v => /\w+\.\w+\S/.test(v) || !v || 'Are you sure that is a link?'
+      v => /\w+\.\w+\S/.test(v) || !v || 'Это точно ссылка?'
     ],
     headers: [
       {
@@ -110,7 +110,7 @@ export default {
       this.progress = true
 
       axios
-        .post('https://short.taxnuke.ru/api/v1/aliases', { href: this.href })
+        .post('https://short.taxnuke.ru/api/v1/aliases?lang=ru', { href: this.href })
         .then(response => {
           return new Promise((resolve, reject) => {
             if (response.data.status === 'ok') {
@@ -133,7 +133,7 @@ export default {
     },
     deleteItem(item) {
       const index = this.links.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.links.splice(index, 1)
+      confirm('Вы уверены, что хотите удалить эту ссылку?') && this.links.splice(index, 1)
     }
   }
 }
