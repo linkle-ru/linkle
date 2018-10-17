@@ -4,7 +4,7 @@ const aliasHelper = require('../helpers/alias')
 
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
-    .then((alias) => {
+    .then(alias => {
       res.locals.payload = alias
 
       next()
@@ -14,7 +14,7 @@ const getAlias = function (req, res, next) {
 
 const follow = function (req, res, next) {
   aliasHelper.find(req.params.alias)
-    .then((alias) => {
+    .then(alias => {
       alias.analytics.followed++
       alias.markModified('analytics')
       alias.save()
@@ -32,7 +32,7 @@ const newAlias = function (req, res, next) {
   const href = req.body.href
 
   aliasHelper.create(name, href)
-    .then((alias) => {
+    .then(alias => {
       res.locals.payload = {
         name: alias._id,
         href: alias.href
