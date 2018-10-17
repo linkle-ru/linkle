@@ -6,26 +6,33 @@
     </p>
     <v-layout row wrap>
       <v-flex xs12 sm8 md7 lg4>
-        <v-text-field placeholder="https://example.link"></v-text-field>
+        <v-text-field
+            placeholder="https://example.link"
+            v-bind:rules="hrefRules"
+            v-model="href"
+            @keyup.enter="shorten()"
+        >
+        </v-text-field>
       </v-flex>
       <v-flex>
-        <v-btn depressed color="primary">Shorten</v-btn>
+        <v-btn @click="shorten()" depressed color="primary">Shorten</v-btn>
       </v-flex>
     </v-layout>
+    <v-progress-linear v-if="progress" :indeterminate="true"></v-progress-linear>
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">History</p>
     <v-layout align-center justify-space-around>
       <v-flex xs12 sm9>
         <v-data-table :headers="headers" :items="links" hide-actions class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td class="text-truncate">{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.short_url }}</td>
-            <td class="text-xs-right">{{ props.item.visits }}</td>
+            <td class="text-truncate"><a :href="props.item.href">{{ props.item.href }}</a></td>
+            <td class="text-xs-right"><a :href="props.item.short_url">{{ props.item.short_url }}</a></td>
+            <td class="text-xs-right">{{ props.item.visits || 'N/A' }}</td>
             <td class="justify-center layout px-0">
               <v-icon small @click="deleteItem(props.item)">delete</v-icon>
             </td>
           </template>
           <template slot="no-data">
-            <v-btn color="primary" @click="initialize">Reset</v-btn>
+            You haven't shortened any links yet
           </template>
         </v-data-table>
       </v-flex>
@@ -34,9 +41,15 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data: () => ({
-    dialog: false,
+    progress: false,
+    href: '',
+    hrefRules: [
+      v => /\w+\.\w+\S/.test(v) || !v || 'Are you sure that is a link?'
+    ],
     headers: [
       {
         text: 'Original URL',
@@ -45,7 +58,7 @@ export default {
       },
       {
         text: 'Short Url',
-        align: 'center',
+        align: 'right',
         value: 'short_url'
       },
       {
@@ -59,65 +72,43 @@ export default {
         align: 'center',
         sortable: false
       }
-    ].map((header) => {
+    ].map(header => {
       header.text = header.text.toUpperCase()
 
       return header
     }),
-    links: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      short_url: 0,
-      visits: 0
-    },
-    defaultItem: {
-      name: '',
-      short_url: 0,
-      visits: 0
-    }
+    links: []
   }),
-
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
-  },
-
   watch: {
-    dialog(val) {
-      val || this.close()
+    links() {
+      localStorage.linkHistory = JSON.stringify(this.links)
     }
   },
-
   created() {
     this.initialize()
   },
-
   methods: {
     initialize() {
-      this.links = [
-        {
-          name: 'https://news.yandex.ru/story/',
-          short_url: 'https://paslakjsdf',
-          visits: 6
-        },
-        {
-          name: 'http://udemy.com/usability-testing',
-          short_url: 'https://qwlefqwe',
-          visits: 9
-        },
-        {
-          name: 'yandex.ru',
-          short_url: 'https://qwehergwegwre',
-          visits: 16
-        },
-        {
-          name: 'google.com',
-          short_url: 'https://gqergwerwrg',
-          visits: 3
-        }
-      ]
+      this.links = localStorage.linkHistory ? JSON.parse(localStorage.linkHistory) : []
+    },
+    addLink(name, href) {
+      this.links.push({
+        href,
+        short_url: name,
+      })
+    },
+    shorten() {
+      this.progress = true
+
+      axios
+        .post('https://short.taxnuke.ru/api/v1/aliases', { href: this.href })
+        .then(response => {
+          const payload = response.data.payload
+          this.addLink(payload.name, payload.href)
+        })
+        .finally(() => {
+          this.progress = false
+        })
     },
     deleteItem(item) {
       const index = this.links.indexOf(item)

@@ -43,7 +43,7 @@
     ],
     "arrow-parens": [
       "error",
-      "always"
+      "as-needed"
     ],
     "strict": [
       "error",
