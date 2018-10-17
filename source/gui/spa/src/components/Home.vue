@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-snackbar
+        :timeout="2000"
+        :top="true"
+        color="error"
+        v-model="showAlert">
+      {{ alertMessage }}
+    </v-snackbar>
     <p class="display-2 font-weight-black text-uppercase">
       URL Shortener
       <span class="font-italic text-lowercase headline font-weight-light">beta</span>
@@ -15,11 +22,11 @@
         </v-text-field>
       </v-flex>
       <v-flex>
-        <v-btn @click="shorten()" depressed color="primary">Shorten</v-btn>
+        <v-btn @click="shorten()" depressed color="primary">Сократить</v-btn>
       </v-flex>
     </v-layout>
     <v-progress-linear v-if="progress" :indeterminate="true"></v-progress-linear>
-    <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">History</p>
+    <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">История</p>
     <v-layout align-center justify-space-around>
       <v-flex xs12 sm9>
         <v-data-table :headers="headers" :items="links" hide-actions class="elevation-1">
@@ -32,7 +39,7 @@
             </td>
           </template>
           <template slot="no-data">
-            You haven't shortened any links yet
+            У вас пока нету сокращенных ссылок
           </template>
         </v-data-table>
       </v-flex>
@@ -46,28 +53,30 @@ import axios from 'axios'
 export default {
   data: () => ({
     progress: false,
+    showAlert: false,
+    alertMessage: 'nigger',
     href: '',
     hrefRules: [
       v => /\w+\.\w+\S/.test(v) || !v || 'Are you sure that is a link?'
     ],
     headers: [
       {
-        text: 'Original URL',
+        text: 'Оригинальная ссылка',
         align: 'left',
         value: 'name'
       },
       {
-        text: 'Short Url',
+        text: 'Короткая ссылка',
         align: 'right',
         value: 'short_url'
       },
       {
-        text: 'Visits',
+        text: 'Посещения',
         align: 'right',
         value: 'visits'
       },
       {
-        text: 'Actions',
+        text: 'Действия',
         value: 'name',
         align: 'center',
         sortable: false
@@ -103,8 +112,20 @@ export default {
       axios
         .post('https://short.taxnuke.ru/api/v1/aliases', { href: this.href })
         .then(response => {
-          const payload = response.data.payload
+          return new Promise((resolve, reject) => {
+            if (response.data.status === 'ok') {
+              resolve(response.data.payload)
+            } else {
+              reject(response.data.reason)
+            }
+          })
+        })
+        .then(payload => {
           this.addLink(payload.name, payload.href)
+        })
+        .catch(err => {
+          this.alertMessage = err
+          this.showAlert = true
         })
         .finally(() => {
           this.progress = false
