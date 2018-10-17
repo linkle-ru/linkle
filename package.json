@@ -6,7 +6,7 @@
     "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
     "develop": "export NODE_ENV=development && export DEBUG=url-short:* && gulp develop",
-    "pretest": "eslint --ignore-path .gitignore . --fix",
+    "pretest": "eslint --ignore-path .eslintignore . --fix",
     "test": "export NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
     "coverage": "export NODE_ENV=testing && istanbul cover _mocha",
