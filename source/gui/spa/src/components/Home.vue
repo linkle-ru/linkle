@@ -33,9 +33,18 @@
       <v-flex xs12 sm9>
         <v-data-table :headers="headers" :items="links" hide-actions class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td class="text-truncate"><a :href="props.item.href">{{ props.item.href }}</a></td>
-            <td class="text-xs-right"><a :href="props.item.short_url">{{ props.item.short_url }}</a></td>
-            <td class="text-xs-right">{{ props.item.visits || 'N/A' }}</td>
+            <td class="text-truncate">
+              <a :href="props.item.href" target="_blank">{{ props.item.href }}</a>
+            </td>
+            <td class="text-xs-right">
+              <a
+                  :href="`https://short.taxnuke.ru/${props.item.short_url}`"
+                  target="_blank">{{ props.item.short_url }}
+              </a>
+            </td>
+            <td class="text-xs-right">
+              {{ props.item.visits || 'N/A' }}
+            </td>
             <td class="justify-center layout px-0">
               <v-icon small @click="deleteItem(props.item)">delete</v-icon>
             </td>
@@ -107,6 +116,8 @@ export default {
         href,
         short_url: name,
       })
+
+      this.href = `https://short.taxnuke.ru/${name}`
     },
     shorten() {
       this.progress = true
