@@ -38,7 +38,7 @@
             </td>
             <td class="text-xs-right">
               <a
-                  :href="`https://short.taxnuke.ru/${props.item.short_url}`"
+                  :href="`${origin}/${props.item.short_url}`"
                   target="_blank">{{ props.item.short_url }}
               </a>
             </td>
@@ -63,12 +63,13 @@ import axios from 'axios'
 
 export default {
   data: () => ({
+    origin: window.location.origin,
     progress: false,
     showAlert: false,
     alertMessage: '',
     href: '',
     hrefRules: [
-      v => /\w+\.\w+\S/.test(v) || !v || 'Это точно ссылка?'
+      v => !(/\s/g.test(v)) || !v || 'Это точно ссылка?'
     ],
     headers: [
       {
@@ -117,13 +118,13 @@ export default {
         short_url: name,
       })
 
-      this.href = `https://short.taxnuke.ru/${name}`
+      this.href = `${origin}/${name}`
     },
     shorten() {
       this.progress = true
 
       axios
-        .post('https://short.taxnuke.ru/api/v1/aliases?lang=ru', { href: this.href })
+        .post(`${origin}/api/v1/aliases?lang=ru`, { href: this.href })
         .then(response => {
           return new Promise((resolve, reject) => {
             if (response.data.status === 'ok') {

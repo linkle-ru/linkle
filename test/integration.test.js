@@ -301,7 +301,7 @@ describe('Главная страница', () => {
       .expect(200)
       .expect(res => {
         expect(res.text.indexOf(
-          '<title>Сокращалка ссылок</title>'
+          '<title>URL SHORTENER</title>'
         )).to.not.equal(-1)
       })
       .end(done)

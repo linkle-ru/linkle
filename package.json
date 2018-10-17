@@ -2,7 +2,7 @@
   "private": true,
   "main": "source/server.js",
   "scripts": {
-    "postinstall": "bower install; if [ ! -d 'logs' ]; then mkdir 'logs'; fi && npm run webpack",
+    "postinstall": "if [ ! -d 'logs' ]; then mkdir 'logs'; fi && cd source/gui && npm run build",
     "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
     "develop": "export NODE_ENV=development && export DEBUG=url-short:* && gulp develop",
@@ -14,8 +14,7 @@
     "premutate": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/mutation'; fi",
     "mutate": "export NODE_ENV=testing && stryker run",
     "show-coverage": "open ./reports/coverage/lcov-report/index.html",
-    "show-msi": "open ./reports/mutation/html/index.html",
-    "webpack": "gulp webpack"
+    "show-msi": "open ./reports/mutation/html/index.html"
   },
   "husky": {
     "hooks": {
@@ -37,11 +36,6 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "babel-loader": "^8.0.4",
-    "bower": "1.8.2",
-    "browser-sync": "^2.24.7",
     "chai": "^4.1.1",
     "chance": "^1.0.11",
     "codeclimate-test-reporter": "^0.5.0",
@@ -59,8 +53,6 @@
     "stryker-javascript-mutator": "^0.10.0",
     "stryker-mocha-framework": "^0.12.2",
     "stryker-mocha-runner": "^0.14.2",
-    "supertest": "^3.0.0",
-    "webpack": "^4.20.2",
-    "webpack-stream": "^5.1.1"
+    "supertest": "^3.0.0"
   }
 }

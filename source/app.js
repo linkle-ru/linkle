@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static(path.join(__dirname, 'gui/public')))
+app.use(express.static(path.join(__dirname, 'gui/dist')))
 
 app.use((req, res, next) => {
   res.locals.locale = (locales[req.query.lang] || locales.en)

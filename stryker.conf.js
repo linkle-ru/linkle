@@ -4,7 +4,7 @@ module.exports = function(config) {
   config.set({
     files: [
       'source/api/**/*',
-      'source/gui/**/*',
+      'source/gui/index.html',
       'source/helpers/*',
       'source/i18n/**/*',
       'source/mongo/models/*',
