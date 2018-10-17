@@ -22,10 +22,12 @@
         </v-text-field>
       </v-flex>
       <v-flex>
-        <v-btn @click="shorten()" depressed color="primary">Сократить</v-btn>
+        <v-btn @click="shorten()" v-bind:disabled="progress" depressed color="primary">Сократить</v-btn>
       </v-flex>
     </v-layout>
-    <v-progress-linear v-if="progress" :indeterminate="true"></v-progress-linear>
+    <v-slide-y-transition>
+      <v-progress-linear v-show="progress" :indeterminate="true"></v-progress-linear>
+    </v-slide-y-transition>
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">История</p>
     <v-layout align-center justify-space-around>
       <v-flex xs12 sm9>
@@ -54,7 +56,7 @@ export default {
   data: () => ({
     progress: false,
     showAlert: false,
-    alertMessage: 'nigger',
+    alertMessage: '',
     href: '',
     hrefRules: [
       v => /\w+\.\w+\S/.test(v) || !v || 'Это точно ссылка?'
@@ -124,6 +126,10 @@ export default {
           this.addLink(payload.name, payload.href)
         })
         .catch(err => {
+          if (typeof(err) === 'object') {
+            err = 'Что-то пошло очень не так'
+          }
+
           this.alertMessage = err
           this.showAlert = true
         })
