@@ -1,9 +1,8 @@
-
-
 const mongoose = require('mongoose')
 const debug = require('debug')('url-short:main')
 const morgan = require('morgan')
 const app = require('./app')
+const environments = require('../environments')
 
 const env = app.get('env')
 
@@ -37,7 +36,7 @@ mongoose.connect(mongoUri + dbName, mongooseOptions)
 
 app.use(morgan('combined'))
 
-const port = process.env.PORT || 8080
+const port = environments[env].serverPort
 
 app.listen(port)
 
