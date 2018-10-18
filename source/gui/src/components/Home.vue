@@ -30,16 +30,16 @@
     </v-slide-y-transition>
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">История</p>
     <v-layout align-center justify-space-around>
-      <v-flex xs12 sm9>
+      <v-flex xs12 sm11>
         <v-data-table :headers="headers" :items="links" hide-actions class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td class="text-truncate">
+            <td class="text-truncate" style="max-width: 300px">
               <a :href="props.item.href" target="_blank">{{ props.item.href }}</a>
             </td>
             <td class="text-xs-right">
               <a
                   :href="`${origin}/${props.item.short_url}`"
-                  target="_blank">{{ props.item.short_url }}
+                  target="_blank">{{ `${origin}/${props.item.short_url}` }}
               </a>
             </td>
             <td class="text-xs-right">
