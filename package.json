@@ -2,7 +2,7 @@
   "private": true,
   "main": "source/server.js",
   "scripts": {
-    "prestart": "npm run build",
+    "postinstall": "npm run build",
     "start": "DEBUG=url-short:* node source/server",
     "deploy": "git push heroku master",
     "predevelop": "mongod&",
@@ -22,8 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm t",
-      "pre-push": "npm t"
+      "pre-commit": "npm t"
     }
   },
   "dependencies": {
