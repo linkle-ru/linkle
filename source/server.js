@@ -36,7 +36,7 @@ mongoose.connect(mongoUri + dbName, mongooseOptions)
 
 app.use(morgan('combined'))
 
-const port = environments[env].serverPort
+const port = process.env.PORT || environments[env].serverPort
 
 app.listen(port)
 
