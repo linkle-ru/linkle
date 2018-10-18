@@ -38,12 +38,12 @@
                 <a :href="props.item.href" target="_blank">{{ props.item.href }}</a>
               </td>
               <td class="text-xs-right">
-                <a
-                    :href="`${origin}/api/v1/follow/${props.item.short_url}`"
-                    target="_blank">{{ `${origin}/${props.item.short_url}` }}
+                <a :href="`${origin}/api/v1/follow/${props.item.short_url}`"
+                   target="_blank">{{ `${origin}/${props.item.short_url}` }}
                 </a>
               </td>
               <td class="text-xs-right">
+                <!-- todo: реализовать посещения ссылок -->
                 {{ props.item.visits || 'N/A' }}
               </td>
               <td class="justify-center layout px-0">
@@ -56,21 +56,100 @@
           </v-data-table>
         </v-flex>
       </v-layout>
+      <template>
+        <div class="text-xs-center">
+          <v-dialog
+              v-model="dialog"
+              width="500"
+          >
+            <v-card>
+              <v-card-title
+                  class="headline grey lighten-2"
+                  primary-title
+              >
+                Ваша сокращенная ссылка
+              </v-card-title>
+
+              <v-card-text>
+                <p class="title font-weight-light">
+                  {{ dialogMessage }}
+                </p>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    flat
+                    @click="copyToClipboard(dialogMessage)"
+                >
+                  скопировать
+                </v-btn>
+                <v-btn
+                    color="red darken-1"
+                    flat
+                    @click="dialog = false"
+                >
+                  закрыть
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="licenseAgreement" width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="headline">Пользовательское соглашение</span>
+              </v-card-title>
+              <v-card-text>
+                <ol>
+                  <li>Пользуясь этим ресурсом, я соглашаюсь с тем, что не буду использовать его для рассылки спама, вредноносного программного обеспечения, распространения и приобретения запрещенных законодательством РФ материалов в любой форме.</li>
+                  <li>Автор данного ресурса оставляет за собой право распоряжаться моими сокращенными ссылками (удалять, подменять содержимое, удалять), в случае, если они не удовлетворяют требованиям настоящего пользовательского соглашения.</li>
+                  <li>Взаимодействие с данным ресурсом я произвожу на свой страх и риск, автор не несёт никакой ответственности за прямой или косвенный ущерб, причененный путём использованием данного ресурса мной или кем-либо.</li>
+                  <li>При обнаружении вредноносной ссылки я обязаюсь сообщить о ней автору ресурса по электронному адресу
+                    <a href="mailto:bad-link@taxnuke.ru">
+                      bad-link@taxnuke.ru
+                    </a>
+                  </li>
+                </ol>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" flat="flat" @click="licenseAgreement = false">Закрыть</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
     </v-container>
+    <v-footer class="pa-3 body-2">
+      <a href="#" @click="licenseAgreement = true">Пользовательское соглашение</a>
+      <a class="ml-2"
+         href="https://github.com/taxnuke/url-shortener/blob/master/README.md"
+         target="_blank">Документация и REST API
+      </a>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 import axios from 'axios'
+import copyToClipboard from 'copy-to-clipboard'
 
 export default {
   name: 'App',
   data: () => ({
     origin: window.location.origin,
     progress: false,
+    dialog: false,
+    dialogMessage: '',
     showAlert: false,
     alertMessage: '',
     href: '',
+    licenseAgreement: false,
     hrefRules: [
       v => !(/\s/g.test(v)) || !v || 'Это точно ссылка?'
     ],
@@ -120,6 +199,10 @@ export default {
         href,
         short_url: name,
       })
+
+      this.dialog = true
+      this.href = ''
+      this.dialogMessage = `${origin}/${name}`
     },
     shorten() {
       this.progress = true
@@ -151,8 +234,10 @@ export default {
           this.progress = false
         })
     },
+    copyToClipboard,
     deleteItem(item) {
       const index = this.links.indexOf(item)
+      // todo: сделать модалкой
       confirm('Вы уверены, что хотите удалить эту ссылку?') && this.links.splice(index, 1)
     }
   }

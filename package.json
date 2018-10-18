@@ -25,7 +25,9 @@
     }
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.17.2",
+    "copy-to-clipboard": "^3.0.8",
     "cors": "^2.8.4",
     "debug": "^3.0.0",
     "express": "^4.15.4",
@@ -37,7 +39,6 @@
     "require-dir": "^0.3.2",
     "shortid": "^2.2.8",
     "underscore": "^1.8.3",
-    "axios": "^0.18.0",
     "vue": "^2.5.2",
     "vue-yandex-metrika": "^1.7.2",
     "vuetify": "^1.2.10"
