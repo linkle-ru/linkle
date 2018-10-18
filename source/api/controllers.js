@@ -1,4 +1,4 @@
-'use strict'
+
 
 const aliasHelper = require('../helpers/alias')
 

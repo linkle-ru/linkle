@@ -1,3 +1,5 @@
-gui
+build
+config
+dist
 node_modules
 reports
