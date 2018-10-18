@@ -1,4 +1,4 @@
-'use strict'
+
 
 module.exports.regexes = {
   alias: /^[a-zA-zа-яА-Я\d._-]+$/,

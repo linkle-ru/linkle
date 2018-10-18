@@ -1,4 +1,4 @@
-'use strict'
+
 
 const supertest = require('supertest')
 const expect = require('chai').expect
@@ -22,7 +22,7 @@ mockgoose.prepareStorage().then(() => {
           app.listen(55555)
         }
       },
-      (err) => {
+      err => {
         throw new Error(`Mockgoose connection failed: ${err}`)
       }
     )
@@ -31,7 +31,7 @@ mockgoose.prepareStorage().then(() => {
 describe('Добавление новой ссылки', () => {
   describe('с кастомным именем', () => {
     describe('разрешено, если:', () => {
-      it('первая ссылка в базе', (done) => {
+      it('первая ссылка в базе', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -49,7 +49,7 @@ describe('Добавление новой ссылки', () => {
     })
 
     describe('запрещено, если:', () => {
-      it('дубль', (done) => {
+      it('дубль', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -63,7 +63,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('дубль с другим регистром', (done) => {
+      it('дубль с другим регистром', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -77,7 +77,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('ссылка может зациклиться', (done) => {
+      it('ссылка может зациклиться', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -92,7 +92,7 @@ describe('Добавление новой ссылки', () => {
       })
 
       for (const link of ['abc', 'a.b c', '1.2']) {
-        it(`не ссылка (${link})`, (done) => {
+        it(`не ссылка (${link})`, done => {
           supertest(app)
             .post('/api/v1/aliases')
             .send({
@@ -107,7 +107,7 @@ describe('Добавление новой ссылки', () => {
         })
       }
 
-      it('алиас слишком длинный', (done) => {
+      it('алиас слишком длинный', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -121,7 +121,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('алиас пустой', (done) => {
+      it('алиас пустой', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -135,7 +135,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('алиас содержит странные символы', (done) => {
+      it('алиас содержит странные символы', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -149,7 +149,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('сжимаемая ссылка слишком длинная', (done) => {
+      it('сжимаемая ссылка слишком длинная', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -163,7 +163,7 @@ describe('Добавление новой ссылки', () => {
           }, done)
       })
 
-      it('сжимаемая ссылка пустая', (done) => {
+      it('сжимаемая ссылка пустая', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
@@ -190,7 +190,7 @@ describe('Добавление новой ссылки', () => {
     ]
 
     for (const href of hrefs) {
-      it('разрешено, если сжимаемая ссылка валидная', (done) => {
+      it('разрешено, если сжимаемая ссылка валидная', done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({ href })
@@ -199,7 +199,7 @@ describe('Добавление новой ссылки', () => {
       })
     }
 
-    it('запрещено, если сжимаемая ссылка пустая', (done) => {
+    it('запрещено, если сжимаемая ссылка пустая', done => {
       supertest(app)
         .post('/api/v1/aliases')
         .send({
@@ -212,7 +212,7 @@ describe('Добавление новой ссылки', () => {
         }, done)
     })
 
-    it('запрещено, если сжимаемая ссылка слишком длинная', (done) => {
+    it('запрещено, если сжимаемая ссылка слишком длинная', done => {
       supertest(app)
         .post('/api/v1/aliases')
         .send({
@@ -229,7 +229,7 @@ describe('Добавление новой ссылки', () => {
 
 describe('Переход по короткой ссылке', () => {
   describe('из базы', () => {
-    it('разрешено', (done) => {
+    it('разрешено', done => {
       supertest(app)
         .get('/first')
         .expect(302)
@@ -246,7 +246,7 @@ describe('Переход по короткой ссылке', () => {
   })
 
   describe('не из базы', () => {
-    it('запрещено', (done) => {
+    it('запрещено', done => {
       supertest(app)
         .get('/googleplex')
         .expect(302)
@@ -265,7 +265,7 @@ describe('Переход по короткой ссылке', () => {
 
 describe('Получение алиаса по имени', () => {
   describe('если он существует', () => {
-    it('выполняется', (done) => {
+    it('выполняется', done => {
       supertest(app)
         .get('/api/v1/aliases/first')
         .expect(200, {
@@ -282,7 +282,7 @@ describe('Получение алиаса по имени', () => {
   })
 
   describe('если он не существует', () => {
-    it('не выполняется', (done) => {
+    it('не выполняется', done => {
       supertest(app)
         .get('/api/v1/aliases/lasd')
         .expect(200, {
@@ -295,13 +295,13 @@ describe('Получение алиаса по имени', () => {
 })
 
 describe('Главная страница', () => {
-  it('открывается', (done) => {
+  it('открывается', done => {
     supertest(app)
       .get('/')
       .expect(200)
-      .expect((res) => {
+      .expect(res => {
         expect(res.text.indexOf(
-          '<title>Сокращалка ссылок</title>'
+          '<title>URL SHORTENER</title>'
         )).to.not.equal(-1)
       })
       .end(done)
@@ -309,7 +309,7 @@ describe('Главная страница', () => {
 })
 
 describe('Несуществующая страница ', () => {
-  it('не открывается, брошена ошибка 404', (done) => {
+  it('не открывается, брошена ошибка 404', done => {
     supertest(app)
       .get('/gui/deprecated')
       .expect(404)
@@ -318,7 +318,7 @@ describe('Несуществующая страница ', () => {
 })
 
 describe('Некорректный JSON ', () => {
-  it('вызывает ошибку', (done) => {
+  it('вызывает ошибку', done => {
     supertest(app)
       .post('/api/v1/aliases')
       .set('Content-Type', 'application/json')

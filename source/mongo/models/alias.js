@@ -1,4 +1,4 @@
-'use strict'
+
 
 const mongoose = require('mongoose')
 const shortId = require('shortid')
@@ -14,7 +14,7 @@ const aliasSchema = new mongoose.Schema({
     required: [true, constants.ALIAS_NAME_EMPTY],
     maxlength: [50, constants.ALIAS_NAME_TOO_LONG],
     validate: {
-      validator: (v) => {
+      validator: v => {
         return validators.regexes.alias.test(v)
       },
       message: constants.ALIAS_NAME_BAD
@@ -27,12 +27,12 @@ const aliasSchema = new mongoose.Schema({
     maxlength: [2000, constants.LINK_TOO_LONG],
     required: [true, constants.LINK_EMPTY],
     validate: [{
-      validator: (v) => {
+      validator: v => {
         return !(validators.regexes.noLoopHref.test(v))
       },
       message: constants.LINK_LOOP
     }, {
-      validator: (v) => {
+      validator: v => {
         return validators.regexes.href.test(v)
       },
       message: constants.HREF_BAD
