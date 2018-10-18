@@ -38,7 +38,7 @@
             </td>
             <td class="text-xs-right">
               <a
-                  :href="`${origin}/${props.item.short_url}`"
+                  :href="`${origin}/api/v1/follow/${props.item.short_url}`"
                   target="_blank">{{ `${origin}/${props.item.short_url}` }}
               </a>
             </td>
@@ -75,7 +75,7 @@ export default {
       {
         text: 'Оригинальная ссылка',
         align: 'left',
-        value: 'name'
+        value: 'href'
       },
       {
         text: 'Короткая ссылка',
@@ -117,8 +117,6 @@ export default {
         href,
         short_url: name,
       })
-
-      this.href = `${origin}/${name}`
     },
     shorten() {
       this.progress = true
@@ -138,6 +136,7 @@ export default {
           this.addLink(payload.name, payload.href)
         })
         .catch(err => {
+          // todo: если сервер долго не отвечает, показать ошибку
           if (typeof(err) === 'object') {
             err = 'Что-то пошло очень не так'
           }
