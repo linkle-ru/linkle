@@ -12,6 +12,12 @@ Vue.use(VueYandexMetrika, {
   env: process.env.NODE_ENV
 })
 
+export const shared = new Vue({
+  data: {
+    origin: window.location.origin
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
