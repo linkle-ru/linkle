@@ -1,8 +1,8 @@
 
 const mongoose = require('mongoose')
 const shortId = require('shortid')
-const constants = require('../../helpers/constants')
-const validators = require('../../helpers/validators')
+const constants = require('../helpers/constants')
+const validators = require('../helpers/validators')
 
 // todo: добавить поле с таймштампом
 

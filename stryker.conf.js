@@ -7,7 +7,7 @@ module.exports = function(config) {
       'source/gui/index.html',
       'source/helpers/*',
       'source/i18n/**/*',
-      'source/mongo/models/*',
+      'source/models/*',
       'source/app.js',
       'test/*.test.js'
     ],

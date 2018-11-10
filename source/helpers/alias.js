@@ -1,5 +1,5 @@
 
-const Alias = require('../mongo/models/alias')
+const Alias = require('../models/alias')
 const _ = require('underscore')
 const constants = require('./constants')
 
