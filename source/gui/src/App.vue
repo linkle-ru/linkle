@@ -1,10 +1,10 @@
 <template>
   <v-app id="app">
     <v-snackbar
-        :timeout="2000"
-        :top="true"
-        color="error"
-        v-model="showAlert">
+      :timeout="2000"
+      :top="true"
+      v-model="showAlert"
+      color="error">
       {{ alertMessage }}
     </v-snackbar>
     <v-container>
@@ -14,41 +14,46 @@
           dev
         </span>
       </p>
-      <v-layout row wrap>
-        <v-flex xs12 sm8 md7 lg4>
+      <v-layout 
+        row 
+        wrap>
+        <v-flex 
+          xs12 
+          sm8 
+          md7 
+          lg4>
           <v-text-field
-              placeholder="https://example.link"
-              :rules="hrefRules"
-              v-model="href"
-              @keyup.enter="shorten()"
-          >
-          </v-text-field>
+            :rules="hrefRules"
+            v-model="href"
+            placeholder="https://example.link"
+            @keyup.enter="shorten()"
+          />
         </v-flex>
         <v-flex>
           <v-btn
-              @click="shorten()"
-              :disabled="progress"
-              depressed color="primary">Сократить
+            :disabled="progress"
+            depressed
+            color="primary" 
+            @click="shorten()">Сократить
           </v-btn>
         </v-flex>
       </v-layout>
       <v-slide-y-transition>
         <v-progress-linear
-            v-show="progress"
-            :indeterminate="true">
-        </v-progress-linear>
+          v-show="progress"
+          :indeterminate="true"/>
       </v-slide-y-transition>
-      <history :source="links"></history>
+      <history :source="links"/>
       <template>
         <div class="text-xs-center">
           <v-dialog
-              v-model="dialog"
-              width="500"
+            v-model="dialog"
+            width="500"
           >
             <v-card>
               <v-card-title
-                  class="headline grey lighten-2"
-                  primary-title
+                class="headline grey lighten-2"
+                primary-title
               >
                 Ваша сокращенная ссылка
               </v-card-title>
@@ -59,21 +64,21 @@
                 </p>
               </v-card-text>
 
-              <v-divider></v-divider>
+              <v-divider/>
 
               <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn
-                    color="primary"
-                    flat
-                    @click="copyToClipboard(dialogMessage)"
+                  color="primary"
+                  flat
+                  @click="copyToClipboard(dialogMessage)"
                 >
                   скопировать
                 </v-btn>
                 <v-btn
-                    color="red darken-1"
-                    flat
-                    @click="dialog = false"
+                  color="red darken-1"
+                  flat
+                  @click="dialog = false"
                 >
                   закрыть
                 </v-btn>
@@ -83,7 +88,7 @@
         </div>
       </template>
     </v-container>
-    <legal></legal>
+    <legal/>
   </v-app>
 </template>
 

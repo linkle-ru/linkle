@@ -1,2 +1,1 @@
-source/gui/build/* linguist-generated=true
-source/gui/config/* linguist-generated=true
+webpack.config.js linguist-generated=true

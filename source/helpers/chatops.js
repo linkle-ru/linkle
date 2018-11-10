@@ -1,5 +1,4 @@
 
-
 const
   request = require('request'),
   debug = require('debug')('url-short:chatops')

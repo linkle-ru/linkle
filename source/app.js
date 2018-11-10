@@ -1,5 +1,4 @@
 
-
 const express = require('express')
 const path = require('path')
 const chatops = require('./helpers/chatops')
@@ -28,7 +27,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static(path.join(__dirname, 'gui/dist')))
+app.use(express.static(path.join(__dirname, 'gui')))
 
 app.use((req, res, next) => {
   res.locals.locale = (locales[req.query.lang] || locales.en)
