@@ -44,7 +44,7 @@
        target="_blank">Документация и REST API
     </a>
     <v-spacer></v-spacer>
-    <div>&copy; {{ new Date().getFullYear() }}</div>
+    <div>&copy; {{ new Date().getFullYear() }} Семён Фомин</div>
   </v-footer>
 </template>
 
