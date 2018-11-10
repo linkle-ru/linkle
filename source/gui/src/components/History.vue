@@ -3,51 +3,57 @@
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">
       История
     </p>
-    <v-layout justify-center>
-      <v-flex xs12 sm10 md6>
-        <v-data-table
-            :items="source"
-            class="elevation-1"
-            hide-headers
-        >
-          <template slot="items" slot-scope="props">
-            <td class="py-3">
-              <span class="remove-link-button">
-              </span>
-              <v-layout>
-                <v-flex>
-                  <span class="subheading">
-                    {{ props.item.title || 'Без названия' }}
-                  </span>
-                </v-flex>
-              </v-layout>
-              <v-layout>
-                <v-flex>
-                  <a :href="`${shared.origin}/api/v1/follow/${props.item.short_url}`">
-                    {{props.item.short_url}}
-                  </a>
+    <v-flex xs12>
+      <v-card v-if="source.length">
+        <v-list two-line>
+          <template v-for="(link, index) in source">
+            <v-list-tile
+                :key="link.title"
+                avatar
+                @click="()=>{}"
+            >
+              <v-list-tile-avatar>
+                {{link.visits || NaN}}
+              </v-list-tile-avatar>
+
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{link.title || 'Без заголовка'}}
+                </v-list-tile-title>
+                <v-list-tile-sub-title>
+                  <a :href="link.short_url">{{link.short_url}}</a>
                   &mdash;
-                  <span>
-                    {{props.item.href}}
-                  </span>
-                </v-flex>
-              </v-layout>
-            </td>
-            <!--<td v-if="$vuetify.breakpoint.mdAndUp">-->
-            <!--Lorem ipsum dolor sit amet.-->
-            <!--</td>-->
-            <td>
-              <v-icon
-                  color="red lighten-2"
-                  @click="deleteItem(props.item)"
-              >
-                delete
-              </v-icon>
-            </td>
+                  <span>{{link.href}}</span>
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon ripple>
+                  <v-icon
+                      color="red lighten-2"
+                      @click="deleteItem(source.item)"
+                  >
+                    delete
+                  </v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-divider
+                v-if="index + 1 < source.length"
+                :key="index"
+            ></v-divider>
           </template>
-        </v-data-table>
-      </v-flex>
-    </v-layout>
+        </v-list>
+      </v-card>
+      <v-alert
+          v-else
+          :value="true"
+          color="info"
+          icon="info"
+          outline
+      >
+        У Вас пока нет сокращенных ссылок
+      </v-alert>
+    </v-flex>
   </div>
 </template>
 
