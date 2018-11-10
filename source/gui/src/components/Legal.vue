@@ -1,5 +1,7 @@
 <template>
   <v-footer class="pa-3 body-2">
+    <div>&copy; {{ new Date().getFullYear() }} Семён Фомин</div>
+    <v-spacer></v-spacer>
     <v-dialog v-model="licenseAgreement" width="600px">
       <v-card>
         <v-card-title>
@@ -43,8 +45,6 @@
        href="https://github.com/taxnuke/url-shortener/blob/master/README.md"
        target="_blank">Документация и REST API
     </a>
-    <v-spacer></v-spacer>
-    <div>&copy; {{ new Date().getFullYear() }} Семён Фомин</div>
   </v-footer>
 </template>
 

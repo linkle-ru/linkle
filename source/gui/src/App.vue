@@ -11,7 +11,7 @@
       <p class="display-2 font-weight-black text-uppercase">
         URL Shortener
         <span class="font-italic text-capitalize headline font-weight-light">
-          beta
+          dev
         </span>
       </p>
       <v-layout row wrap>

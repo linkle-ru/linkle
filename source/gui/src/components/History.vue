@@ -3,42 +3,47 @@
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">
       История
     </p>
-    <v-layout align-center justify-space-around>
-      <v-flex xs12 sm11>
+    <v-layout justify-center>
+      <v-flex xs12 sm10 md6>
         <v-data-table
-            :headers="headers"
             :items="source"
-            hide-actions
             class="elevation-1"
+            hide-headers
         >
-          <template
-              slot="items"
-              slot-scope="props"
-
-          >
-            <!-- todo: отрефакторить -->
-            <td class="text-truncate" style="max-width: 300px">
-              <a target="_blank"
-                 :href="props.item.href">
-                {{ props.item.href }}
-              </a>
+          <template slot="items" slot-scope="props">
+            <td class="py-3">
+              <span class="remove-link-button">
+              </span>
+              <v-layout>
+                <v-flex>
+                  <span class="subheading">
+                    {{ props.item.title || 'Без названия' }}
+                  </span>
+                </v-flex>
+              </v-layout>
+              <v-layout>
+                <v-flex>
+                  <a :href="`${shared.origin}/api/v1/follow/${props.item.short_url}`">
+                    {{props.item.short_url}}
+                  </a>
+                  &mdash;
+                  <span>
+                    {{props.item.href}}
+                  </span>
+                </v-flex>
+              </v-layout>
             </td>
-            <td class="text-xs-right">
-              <a target="_blank"
-                 :href="`${shared.origin}/api/v1/follow/${props.item.short_url}`">
-                {{ `${shared.origin}/${props.item.short_url}` }}
-              </a>
+            <!--<td v-if="$vuetify.breakpoint.mdAndUp">-->
+            <!--Lorem ipsum dolor sit amet.-->
+            <!--</td>-->
+            <td>
+              <v-icon
+                  color="red lighten-2"
+                  @click="deleteItem(props.item)"
+              >
+                delete
+              </v-icon>
             </td>
-            <td class="text-xs-right">
-              <!-- todo: реализовать посещения ссылок -->
-              {{ props.item.visits || 'N/A' }}
-            </td>
-            <td class="justify-center layout px-0">
-              <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-            </td>
-          </template>
-          <template slot="no-data">
-            У вас пока нету сокращенных ссылок
           </template>
         </v-data-table>
       </v-flex>
@@ -51,34 +56,7 @@ import {shared} from '../main'
 
 export default {
   data: () => ({
-    shared,
-    headers: [
-      {
-        text: 'Оригинальная ссылка',
-        align: 'left',
-        value: 'href'
-      },
-      {
-        text: 'Короткая ссылка',
-        align: 'right',
-        value: 'short_url'
-      },
-      {
-        text: 'Посещения',
-        align: 'right',
-        value: 'visits'
-      },
-      {
-        text: 'Действия',
-        value: 'name',
-        align: 'center',
-        sortable: false
-      }
-    ].map(header => {
-      header.text = header.text.toUpperCase()
-
-      return header
-    })
+    shared
   }),
   props: ['source'],
   methods: {
