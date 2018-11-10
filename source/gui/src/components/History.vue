@@ -46,8 +46,8 @@
       <v-flex md6 v-else>
         <v-alert
             :value="true"
-            color="blue"
-            icon="info"
+            color="info"
+            icon="content_cut"
             outline
         >
           У Вас пока нет сокращенных ссылок
