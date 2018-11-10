@@ -1,6 +1,6 @@
 const express = require('express')
 const path = require('path')
-const chatops = require('./helpers/chatops')
+const chatops = require('./lib/chatops')
 const debug = require('debug')('url-short:main')
 const requireDir = require('require-dir') // todo: может можно без?
 const locales = requireDir('./i18n', { recurse: true })

@@ -1,4 +1,4 @@
-const aliasHelper = require('../helpers/alias')
+const aliasHelper = require('../lib/alias')
 
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)

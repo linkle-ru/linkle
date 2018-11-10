@@ -5,7 +5,7 @@ module.exports = function(config) {
     files: [
       'source/api/**/*',
       'source/gui/index.html',
-      'source/helpers/*',
+      'source/lib/*',
       'source/i18n/**/*',
       'source/models/*',
       'source/app.js',
