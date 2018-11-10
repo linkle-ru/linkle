@@ -37,17 +37,14 @@
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
-            <v-divider
-                v-if="index + 1 < source.length"
-                :key="index"
-            ></v-divider>
+            <v-divider v-if="index + 1 < source.length" :key="index"></v-divider>
           </template>
         </v-list>
       </v-card>
       <v-alert
           v-else
           :value="true"
-          color="info"
+          color="blue"
           icon="info"
           outline
       >
