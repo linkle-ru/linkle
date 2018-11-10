@@ -80,6 +80,13 @@ export default {
       return header
     })
   }),
-  props: ['source']
+  props: ['source'],
+  methods: {
+    deleteItem(item) {
+      const index = this.source.indexOf(item)
+      // todo: сделать модалкой
+      confirm('Вы уверены, что хотите удалить эту ссылку?') && this.source.splice(index, 1)
+    }
+  }
 }
 </script>

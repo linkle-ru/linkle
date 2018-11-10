@@ -157,12 +157,7 @@ export default {
           this.progress = false
         })
     },
-    copyToClipboard,
-    deleteItem(item) {
-      const index = this.links.indexOf(item)
-      // todo: сделать модалкой
-      confirm('Вы уверены, что хотите удалить эту ссылку?') && this.links.splice(index, 1)
-    }
+    copyToClipboard
   }
 }
 </script>
