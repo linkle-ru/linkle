@@ -57,7 +57,8 @@ module.exports = {
       'error',
       {
         'max': 1,
-        'maxBOF': 1
+        'maxBOF': 0,
+        'maxEOF': 1
       }
     ]
   }
