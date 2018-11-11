@@ -1,6 +1,12 @@
 const router = require('express').Router()
 const controllers = require('./controllers')
 
+/**
+ * todo: express-rate-limit
+ * todo: http-errors
+ * todo: вынести обработчики в модуль
+ */
+
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
 router.post('/aliases', controllers.newAlias)
