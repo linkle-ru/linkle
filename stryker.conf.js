@@ -1,5 +1,3 @@
-
-
 module.exports = function(config) {
   config.set({
     files: [
@@ -21,7 +19,7 @@ module.exports = function(config) {
     testRunner: 'mocha',
     testFramework: 'mocha',
     mutator: 'javascript',
-    reporters: ['html', 'clear-text', 'progress'],
+    reporters: ['html', 'clear-text', 'progress', 'dashboard'],
     coverageAnalysis: 'perTest',
     maxConcurrentTestRunners: 4
   })
