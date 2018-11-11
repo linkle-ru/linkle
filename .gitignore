@@ -4,6 +4,7 @@ node_modules
 reports
 logs
 .idea
+out
 dist
 vendor
 /dist/

@@ -1,5 +1,5 @@
-build
-config
+docs
 dist
+out
 node_modules
 reports
