@@ -49,6 +49,23 @@ module.exports = {
       'error',
       'as-needed'
     ],
+    'max-len': [
+      'warn',
+      {
+        'code': 80,
+        'comments': 65
+      }
+    ],
+    'max-lines': [
+      'error',
+      200
+    ],
+    'max-lines-per-function': [
+      'warn', {
+        'max': 25,
+        'skipComments': true
+      }
+    ],
     'strict': [
       'error',
       'global'

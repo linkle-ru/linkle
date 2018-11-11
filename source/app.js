@@ -7,9 +7,8 @@ const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const app = express()
-
 const env = process.env.NODE_ENV || 'production'
+const app = express()
 
 app.set('env', env)
 
@@ -19,7 +18,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// Прописываем заголовки для ответа
+// Мимикрируем под PHP
 app.use((req, res, next) => {
   res.set('X-Powered-By', 'PHP/5.1.6')
 
@@ -34,7 +33,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api/v1', require('./api/routers'))
+app.use('/api/v1', require('./api/v1/routers'))
 
 app.get('/:alias', (req, res) => {
   res.redirect(`/api/v1/follow/${req.params.alias}`)
@@ -51,7 +50,7 @@ app.get('*', (req, res, next) => {
 
 // Конечный обработчик ошибок
 // todo: тут ему не место
-// todo: надо отлавливать другие методы запросов и кидать ошибки в ответах
+// todo: надо отлавливать другие методы запросов
 app.use((err, req, res, next) => {
   // Вываливаем стэк только в окружении development
   res.locals.message = err.message
