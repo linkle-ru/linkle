@@ -1,12 +1,11 @@
 {
   "private": true,
-  "main": "source/server.js",
   "scripts": {
     "predev": "pm2 restart 'URL-ShortenerAPI' || pm2 start",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --open 'Google Chrome'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "postinstall": "npm run build",
-    "start": "cross-env DEBUG=url-short:* node source/server",
+    "start": "node source/server",
     "deploy": "git push heroku master",
     "pretest": "npm run lint",
     "test": "cross-env NODE_ENV=testing && mocha --timeout 120000 test/*.test.js",
@@ -55,7 +54,7 @@
     "chance": "^1.0.11",
     "codeclimate-test-reporter": "^0.5.0",
     "css-loader": "^0.28.7",
-    "eslint": "^5.9.0",
+    "eslint": "^4.0.0",
     "eslint-plugin-vue": "^4.7.1",
     "file-loader": "^1.1.4",
     "husky": "^1.0.1",
