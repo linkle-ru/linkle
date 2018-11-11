@@ -10,11 +10,11 @@ module.exports = function(config) {
       'test/*.test.js'
     ],
     mutate: [
-      'source/api/*.js',
-      'source/mongo/models/*.js',
+      'source/api/**/*.js',
+      'source/models/*.js',
       'source/app.js',
-      'source/helpers/alias.js',
-      'source/helpers/constants.js',
+      'source/lib/alias.js',
+      'source/lib/constants.js',
     ],
     testRunner: 'mocha',
     testFramework: 'mocha',
