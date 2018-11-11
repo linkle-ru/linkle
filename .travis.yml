@@ -1,8 +1,7 @@
 language: node_js
 node_js:
 - 8.4.0
-before_script:
-#- npm run build
+before_script: 
 after_success:
 - npm run coverage
 - codeclimate-test-reporter < ./reports/coverage/lcov.info
@@ -13,3 +12,6 @@ deploy:
   app: taxnuke-url-shortener
   on:
     repo: taxnuke/url-shortener
+env:
+  global:
+    secure: GwDlMSBhECaJy1T1A91jVxuhkkzTf7D3pHZbgnSoIQ+sFvSZQNyqxN3dElcLgnC5UfKhiXle0fi67thXzON+WByVCzlWoVPe2+lmFPio/2YhHO63OUeU3Ltr/PWsrGH9vIlSQsMIjg6+UkwSac9k4Yfl3jBX6UR3MoIE4yqAZ6wH+TvVPMP/HRQZP3v3eBFJgIQ8Hohi0ebWtkuU78A06zxW8LNG+kkxGKxqMbWfL+9ER6j+E1UH8RO/T2HkToeD6Im6EngZ4nraFXYQopDVRi6SpbL2mHK6QZqXBgxzp8dMX7iqdJqEKEdYYS4qxn+0i4Uu7ZaAskrAVvge/mgZ2QAu9sQS4+Zmz5OiFUdMS4iImIlLp1kn8/MuNN/rqVoXjbTPWdLIthCWE1h1KjvvsiTmMD96lkbzNkZh9gV34DI8QaTCn+HMuR0SaSwPJtBlJ7tqDhoNLv/ab08csu3/TLZM4+dcMn1GnL+8u7/nkmvdD2R0ZPIMVVc7kY8Fvopi40JeEoKun6Mzx1npvCGumVSs1WVK8+UQ9UD2bylADZ2eKQpWMF+/xcwHLos53WyngnXrBs2X6V6uk8dD/USeYaytC9hnbAWSHkWrXAZjXFkmdikx2hNp2VmYbIaKqFVHxrNVN6egQ0r0gNTCpo7C1vbKo0q+sEwww6TcTCRv0p8=
