@@ -60,12 +60,12 @@ module.exports = {
       'error',
       200
     ],
-    'max-lines-per-function': [
-      'warn', {
-        'max': 25,
-        'skipComments': true
-      }
-    ],
+    // 'max-lines-per-function': [
+    //   'warn', {
+    //     'max': 25,
+    //     'skipComments': true
+    //   }
+    // ],
     'strict': [
       'error',
       'global'

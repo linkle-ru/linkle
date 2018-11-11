@@ -1,57 +1,27 @@
 const router = require('express').Router()
 const controllers = require('./controllers')
+const rateLimit = require('express-rate-limit')
 
 /**
- * todo: express-rate-limit
  * todo: http-errors
- * todo: вынести обработчики в модуль
  */
 
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
-router.post('/aliases', controllers.newAlias)
 
-// Перехватываем ошибку формата JSON и передаем дальше в своем формате
-router.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    err = new Error('d1')
-    err.status = 400
+const rateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  skipSuccessfulRequests: true,
+  handler: (req, res, next) => {
+    const err = new Error('too many requests')
+    err.status = 429
+    next(err)
   }
-
-  next(err)
 })
 
-// мидлвэр, отправляющий положительный ответ
-router.use((req, res, next) => {
-  const resBody = {
-    status: 'ok',
-    payload: res.locals.payload
-  }
+router.post('/aliases', rateLimiter, controllers.newAlias)
 
-  res.status(200).json(resBody)
-})
-
-// мидлвэр-обработчик ошибок, отправляющий отрицательный ответ
-router.use((err, req, res, next) => {
-  const
-    errorCode = err.message,
-    resBody = {
-      status: 'error',
-      code: errorCode,
-      // Временное решение
-      // todo: отрефакторить
-      reason: res.locals.locale.errors[errorCode[0]][errorCode.substr(1)]
-    }
-
-  let resStatus
-
-  if (err.status) {
-    resStatus = err.status
-  } else if (errorCode) {
-    resStatus = 200
-  }
-
-  res.status(resStatus || 500).json(resBody)
-})
+require('./reporters')(router)
 
 module.exports = router
