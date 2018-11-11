@@ -1,4 +1,3 @@
 exclude_paths:
-- "source/gui/build"
-- "source/gui/config"
+- "source/gui/dist"
 - "test"
