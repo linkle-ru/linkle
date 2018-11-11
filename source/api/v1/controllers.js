@@ -1,5 +1,7 @@
 const aliasHelper = require('../../lib/alias')
 
+// todo: добавить методы для батч-загрузки данных по ссылкам
+
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
     .then(alias => {
