@@ -2,7 +2,7 @@
 
 TEX=pdflatex
 
-all:pdf
+all:pdf run
 
 pdf:
 	$(TEX) report.tex
