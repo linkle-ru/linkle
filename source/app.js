@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const chatops = require('./lib/chatops')
-const logger = require('pino')()
+const logger = require('./lib/logger')
 const requireDir = require('require-dir') // todo: может без?
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const app = require('./app')
-const logger = require('pino')()
+const logger = require('./lib/logger')
 const environments = require('../environments')
 
 const env = app.get('env')

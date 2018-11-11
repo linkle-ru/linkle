@@ -4,7 +4,7 @@ module.exports = {
     script: './source/server.js',
     watch: [
       './source/api/*',
-      './source/helpers/*',
+      './source/lib/*',
       './source/mongo/models/*',
       './source/app.js',
       './source/server.js'
