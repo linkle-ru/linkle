@@ -1,19 +1,21 @@
 const express = require('express')
 const path = require('path')
 const chatops = require('./lib/chatops')
-const debug = require('debug')('url-short:main')
-const requireDir = require('require-dir') // todo: может можно без?
+const logger = require('pino')()
+const requireDir = require('require-dir') // todo: может без?
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const pinoExpress = require('express-pino-logger')()
 
 const env = process.env.NODE_ENV || 'production'
 const app = express()
 
 app.set('env', env)
 
-debug(`Node environment is set to "${env}"`)
+logger.info(`Node environment is set to "${env}"`)
 
+app.use(pinoExpress)
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

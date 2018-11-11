@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-const debug = require('debug')('url-short:main')
-const morgan = require('morgan')
 const app = require('./app')
+const logger = require('pino')()
 const environments = require('../environments')
 
 const env = app.get('env')
@@ -27,17 +26,15 @@ const mongooseOptions = {
 mongoose.connect(mongoUri + dbName, mongooseOptions)
   .then(
     () => {
-      debug('Successfully connected to MongoBD!')
+      logger.info('Successfully connected to MongoBD!')
     },
     err => {
       throw new Error(`MongoDB connection error: ${err}`)
     }
   )
 
-app.use(morgan('combined'))
-
 const port = process.env.PORT || environments[env].serverPort
 
 app.listen(port)
 
-debug(`Listening on port ${port}`)
+logger.info(`Listening on port ${port}`)
