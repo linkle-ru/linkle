@@ -3,9 +3,6 @@ const shortId = require('shortid')
 const constants = require('../lib/constants')
 const validators = require('../lib/validators')
 
-// todo: добавить поле с таймштампом
-// todo: добавить поле с тайтлом
-
 const aliasSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -46,7 +43,8 @@ const aliasSchema = new mongoose.Schema({
   }
 }, {
   // Конфиг схемы
-  versionKey: false
+  versionKey: false,
+  timestamps: true
 })
 
 /**
