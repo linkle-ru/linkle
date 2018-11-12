@@ -6,12 +6,14 @@
     <v-layout
       align-center
       justify-center
-      column->
+      column-
+    >
       <v-flex
         v-if="source.length"
         xs12
         lg10
-        xl8>
+        xl8
+      >
         <v-card>
           <v-list two-line>
             <template v-for="(link, index) in source">
@@ -37,7 +39,8 @@
                 <v-list-tile-action>
                   <v-btn
                     icon
-                    ripple>
+                    ripple
+                  >
                     <v-icon
                       color="red lighten-2"
                       @click="deleteItem(source.item)"
@@ -49,14 +52,16 @@
               </v-list-tile>
               <v-divider
                 v-if="index + 1 < source.length"
-                :key="index"/>
+                :key="index"
+              />
             </template>
           </v-list>
         </v-card>
       </v-flex>
       <v-flex
         v-else
-        md6>
+        md6
+      >
         <v-alert
           :value="true"
           color="info"
@@ -82,7 +87,7 @@ export default {
     deleteItem(item) {
       const index = this.source.indexOf(item)
       // todo: сделать модалкой?
-      confirm('Вы уверены, что хотите удалить эту ссылку?') && this.source.splice(index, 1)
+      confirm('Вы уверены?') && this.source.splice(index, 1)
     }
   }
 }

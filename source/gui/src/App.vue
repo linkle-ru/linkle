@@ -1,10 +1,11 @@
 <template>
   <v-app id="app">
     <v-snackbar
+      v-model="showAlert"
       :timeout="2000"
       :top="true"
-      v-model="showAlert"
-      color="error">
+      color="error"
+    >
       {{ alertMessage }}
     </v-snackbar>
     <v-container>
@@ -14,17 +15,19 @@
           dev
         </span>
       </p>
-      <v-layout 
-        row 
-        wrap>
-        <v-flex 
-          xs12 
-          sm8 
-          md7 
-          lg4>
+      <v-layout
+        row
+        wrap
+      >
+        <v-flex
+          xs12
+          sm8
+          md7
+          lg4
+        >
           <v-text-field
-            :rules="hrefRules"
             v-model="href"
+            :rules="hrefRules"
             placeholder="https://example.link"
             @keyup.enter="shorten()"
           />
@@ -33,17 +36,19 @@
           <v-btn
             :disabled="progress"
             depressed
-            color="primary" 
-            @click="shorten()">Сократить
+            color="primary"
+            @click="shorten()"
+          >Сократить
           </v-btn>
         </v-flex>
       </v-layout>
       <v-slide-y-transition>
         <v-progress-linear
           v-show="progress"
-          :indeterminate="true"/>
+          :indeterminate="true"
+        />
       </v-slide-y-transition>
-      <history :source="links"/>
+      <history :source="links" />
       <template>
         <div class="text-xs-center">
           <v-dialog
@@ -64,10 +69,10 @@
                 </p>
               </v-card-text>
 
-              <v-divider/>
+              <v-divider />
 
               <v-card-actions>
-                <v-spacer/>
+                <v-spacer />
                 <v-btn
                   color="primary"
                   flat
@@ -88,7 +93,7 @@
         </div>
       </template>
     </v-container>
-    <legal/>
+    <legal />
   </v-app>
 </template>
 
@@ -119,9 +124,19 @@ export default {
     }
   },
   created() {
-    this.links = localStorage.linkHistory ? JSON.parse(localStorage.linkHistory) : []
+    // todo: добавить проверку на статус соединения
+    // todo: добавить возможность выбора языка
+    try {
+      this.links = JSON.parse(localStorage.linkHistory)
+    } catch (e) {
+      this.links = []
+    }
   },
   methods: {
+    displayError(message) {
+      this.alertMessage = message
+      this.showAlert = true
+    },
     addLink(name, href) {
       this.links.push({
         href,
@@ -148,15 +163,11 @@ export default {
         })
         .then(payload => {
           this.addLink(payload.name, payload.href)
-        })
-        .catch(err => {
+        }, err => {
           // todo: если сервер долго не отвечает, показать ошибку
-          if (typeof(err) === 'object') {
-            err = 'Что-то пошло очень не так'
-          }
+          err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err
 
-          this.alertMessage = err
-          this.showAlert = true
+          this.displayError(err)
         })
         .finally(() => {
           this.progress = false
