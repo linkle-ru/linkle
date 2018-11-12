@@ -18,13 +18,24 @@
           <v-list two-line>
             <template v-for="(link, index) in source">
               <v-list-tile
-                :key="link.title"
+                :key="link.short_url"
                 avatar
                 @click="()=>{}"
               >
-                <v-list-tile-avatar>
-                  {{ link.visits || NaN }}
-                </v-list-tile-avatar>
+                <!--<v-list-tile-avatar>-->
+                <!--<v-layout align-center justify-center column fill-height>-->
+                <!--<v-flex>-->
+                <!--{{ link.visits || 'N/A' }}-->
+                <!--</v-flex>-->
+                <!--<v-icon-->
+                <!--small-->
+                <!--color="grey lighten-1"-->
+                <!--&gt;-->
+                <!--visibility-->
+                <!--</v-icon>-->
+
+                <!--</v-layout>-->
+                <!--</v-list-tile-avatar>-->
 
                 <v-list-tile-content>
                   <v-list-tile-title>
@@ -37,17 +48,20 @@
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                  <v-btn
-                    icon
-                    ripple
-                  >
-                    <v-icon
-                      color="red lighten-2"
-                      @click="deleteItem(source.item)"
+                  <v-hover>
+                    <v-btn
+                      slot-scope="{ hover }"
+                      icon
+                      ripple
+                      @click="deleteLink(link)"
                     >
-                      delete
-                    </v-icon>
-                  </v-btn>
+                      <v-icon
+                        :color="`red lighten-${hover ? 1 : 3}`"
+                      >
+                        remove_circle
+                      </v-icon>
+                    </v-btn>
+                  </v-hover>
                 </v-list-tile-action>
               </v-list-tile>
               <v-divider
@@ -84,8 +98,8 @@ export default {
     }
   },
   methods: {
-    deleteItem(item) {
-      const index = this.source.indexOf(item)
+    deleteLink(link) {
+      const index = this.source.indexOf(link)
       // todo: сделать модалкой?
       confirm('Вы уверены?') && this.source.splice(index, 1)
     }

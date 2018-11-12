@@ -10,9 +10,8 @@ router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
 
 const rateLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 10,
-  skipSuccessfulRequests: true,
+  windowMs: 5 * 60 * 1000,
+  max: 100,
   handler: (req, res, next) => {
     const err = new Error('too many requests')
     err.status = 429

@@ -3,9 +3,9 @@ module.exports = {
     name: 'URL-ShortenerAPI',
     script: './source/server.js',
     watch: [
-      './source/api/*',
+      './source/api/v1/*',
       './source/lib/*',
-      './source/mongo/models/*',
+      './source/models/*',
       './source/app.js',
       './source/server.js'
     ],

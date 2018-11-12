@@ -1,4 +1,5 @@
 const aliasHelper = require('../../lib/alias')
+const request = require('request-promise')
 
 // todo: добавить методы для батч-загрузки данных по ссылкам
 
@@ -35,7 +36,17 @@ const newAlias = function (req, res, next) {
     .then(alias => {
       res.locals.payload = {
         name: alias._id,
-        href: alias.href
+        href: alias.href,
+        title: null
+      }
+
+      return request.get(alias.href)
+    })
+    .then(html => {
+      const title = html.match(/<title>(.*?)<\/title>/i)[1]
+
+      if (title && title.length) {
+        res.locals.payload.title = title
       }
 
       next()

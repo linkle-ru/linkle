@@ -19,9 +19,7 @@
     "lint": "eslint --ignore-path .eslintignore --ext .js,.vue source"
   },
   "husky": {
-    "hooks": {
-      "pre-push": "npm t"
-    }
+    "hooks": {}
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -38,7 +36,8 @@
     "pino": "^5.8.1",
     "pino-pretty": "^2.2.3",
     "pm2": "^3.2.2",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "require-dir": "^0.3.2",
     "shortid": "^2.2.8",
     "underscore": "^1.8.3",

@@ -137,10 +137,11 @@ export default {
       this.alertMessage = message
       this.showAlert = true
     },
-    addLink(name, href) {
+    addLink(name, href, title) {
       this.links.push({
         href,
         short_url: name,
+        title
       })
 
       this.dialog = true
@@ -162,7 +163,7 @@ export default {
           })
         })
         .then(payload => {
-          this.addLink(payload.name, payload.href)
+          this.addLink(payload.name, payload.href, payload.title)
         }, err => {
           // todo: если сервер долго не отвечает, показать ошибку
           err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err

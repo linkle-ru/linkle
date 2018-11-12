@@ -40,7 +40,8 @@ describe('Добавление новой ссылки', () => {
             status: 'ok',
             payload: {
               name: 'first',
-              href: 'http://ya.ru'
+              href: 'http://ya.ru',
+              title: 'Яндекс'
             }
           }, done)
       })
