@@ -49,6 +49,16 @@
           :indeterminate="true"
         />
       </v-slide-y-transition>
+      <v-slide-y-transition>
+        <v-alert
+          v-show="isOffline"
+          value="true"
+          color="warning"
+          icon="wifi_off"
+        >
+          У Вас отвалился Интернет
+        </v-alert>
+      </v-slide-y-transition>
       <history :source="links" />
       <template>
         <div class="text-xs-center">
@@ -109,6 +119,7 @@ export default {
   components: { Legal, History },
   data: () => ({
     progress: false,
+    isOffline: false,
     dialog: false,
     dialogMessage: '',
     showAlert: false,
@@ -130,6 +141,14 @@ export default {
     } catch (e) {
       this.links = []
     }
+
+    addEventListener('online', () => {
+      this.isOffline = false
+    })
+
+    addEventListener('offline', () => {
+      this.isOffline = true
+    })
   },
   methods: {
     displayError(message) {
@@ -148,7 +167,7 @@ export default {
       this.dialogMessage = `${shared.origin}/${name}`
     },
     shorten() {
-      // todo: проверка на существование сайта
+      // todo: проверка на существование сайта на стороне клиента
       this.progress = true
 
       axios
