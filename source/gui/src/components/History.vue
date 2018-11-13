@@ -38,8 +38,7 @@
                 <!--</v-list-tile-avatar>-->
 
                 <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ link.title || 'Без заголовка' }}
+                  <v-list-tile-title v-html='$sanitize(link.title || "Без заголовка")'>
                   </v-list-tile-title>
                   <v-list-tile-sub-title>
                     <a :href="link.short_url">{{ link.short_url }}</a>
