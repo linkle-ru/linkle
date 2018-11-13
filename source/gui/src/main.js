@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import Vuetify from 'vuetify'
 import VueYandexMetrika from 'vue-yandex-metrika'
-import sanitizeHTML from 'sanitize-html';
+import sanitizeHTML from 'sanitize-html'
 
 Vue.prototype.$sanitize = sanitizeHTML
 Vue.config.productionTip = false

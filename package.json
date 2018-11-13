@@ -19,7 +19,9 @@
     "lint": "eslint --ignore-path .eslintignore --ext .js,.vue source"
   },
   "husky": {
-    "hooks": {}
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
