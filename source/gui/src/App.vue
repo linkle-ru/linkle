@@ -42,6 +42,7 @@
           </v-btn>
         </v-flex>
       </v-layout>
+      <!--todo: лучше лоадер https://vuetifyjs.com/en/components/dialogs#example-loader-->
       <v-slide-y-transition>
         <v-progress-linear
           v-show="progress"
@@ -124,8 +125,6 @@ export default {
     }
   },
   created() {
-    // todo: добавить проверку на статус соединения
-    // todo: добавить возможность выбора языка
     try {
       this.links = JSON.parse(localStorage.linkHistory)
     } catch (e) {
@@ -149,6 +148,7 @@ export default {
       this.dialogMessage = `${shared.origin}/${name}`
     },
     shorten() {
+      // todo: проверка на существование сайта
       this.progress = true
 
       axios
@@ -165,7 +165,6 @@ export default {
         .then(payload => {
           this.addLink(payload.name, payload.href, payload.title)
         }, err => {
-          // todo: если сервер долго не отвечает, показать ошибку
           err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err
 
           this.displayError(err)

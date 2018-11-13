@@ -37,7 +37,6 @@ app.use('/api/v1', require('./api/v1/routers'))
 
 app.get('/:alias', (req, res) => {
   res.redirect(`/api/v1/follow/${req.params.alias}`)
-  // todo: а может 308?
   res.status(301)
 })
 

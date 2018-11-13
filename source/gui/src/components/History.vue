@@ -3,6 +3,7 @@
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">
       История
     </p>
+    <!-- todo: добавить поиск -->
     <v-layout
       align-center
       justify-center

@@ -7,6 +7,10 @@ const mongoose = require('mongoose')
 const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
+/**
+ * todo: улучшить качество тестов
+ */
+
 mongoose.Promise = Promise
 const mongooseOptions = {
   useMongoClient: true
