@@ -55,12 +55,12 @@
     <a
       href="#"
       @click="licenseAgreement = true"
-    >Пользовательское соглашение</a>
+    >Оферта</a>
     <a
       class="ml-2"
       href="https://github.com/taxnuke/url-shortener/blob/master/README.md"
       target="_blank"
-    >Документация и REST API
+    >API
     </a>
   </v-footer>
 </template>
