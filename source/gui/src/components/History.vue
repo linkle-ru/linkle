@@ -18,53 +18,80 @@
         <v-card>
           <v-list two-line>
             <template v-for="(link, index) in source">
-              <v-list-tile
+              <v-hover
                 :key="link.short_url"
-                avatar
-                @click="()=>{}"
               >
-                <!--<v-list-tile-avatar>-->
-                <!--<v-layout align-center justify-center column fill-height>-->
-                <!--<v-flex>-->
-                <!--{{ link.visits || 'N/A' }}-->
-                <!--</v-flex>-->
-                <!--<v-icon-->
-                <!--small-->
-                <!--color="grey lighten-1"-->
-                <!--&gt;-->
-                <!--visibility-->
-                <!--</v-icon>-->
+                <v-list-tile
+                  slot-scope="{ hover }"
+                  avatar
+                  @click="followLink(link)"
+                >
+                  <v-list-tile-avatar>
+                    <v-layout
+                      align-center
+                      justify-center
+                      column
+                      fill-height
+                    >
+                      <v-tooltip bottom>
+                        <v-flex slot="activator">
+                          {{ link.visits || 'N/A' }}
+                        </v-flex>
+                        <!--todo: реализовать-->
+                        <span>В разработке</span>
+                      </v-tooltip>
+                      <v-icon
+                        small
+                        color="grey lighten-1"
+                      >
+                        visibility
+                      </v-icon>
 
-                <!--</v-layout>-->
-                <!--</v-list-tile-avatar>-->
+                    </v-layout>
+                  </v-list-tile-avatar>
 
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ $sanitize(link.title || "Без заголовка") }}
-                  </v-list-tile-title>
-                  <v-list-tile-sub-title>
-                    <a :href="link.short_url">{{ link.short_url }}</a>
-                    &mdash;
-                    <span>{{ link.href }}</span>
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-hover>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ $sanitize(link.title || "Без заголовка") }}
+                    </v-list-tile-title>
+                    <v-list-tile-sub-title>
+                      <a
+                        class="subheading"
+                        target="_blank"
+                        :href="link.short_url"
+                      >{{ link.short_url }}</a>
+                      &mdash;
+                      <span class="font-weight-thin">{{ link.href }}</span>
+                    </v-list-tile-sub-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action v-show="hover">
                     <v-btn
-                      slot-scope="{ hover }"
                       icon
                       ripple
-                      @click="deleteLink(link)"
+                      @click.stop="cbCopy(`${shared.origin}/${link.short_url}`)"
                     >
                       <v-icon
-                        :color="`red lighten-${hover ? 1 : 3}`"
+                        color="blue lighten-2"
+                      >
+                        file_copy
+                      </v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                  <v-list-tile-action v-show="hover">
+                    <v-btn
+                      icon
+                      ripple
+                      @click.stop="deleteLink(link)"
+                    >
+                      <v-icon
+                        color="red lighten-2"
                       >
                         remove_circle
                       </v-icon>
                     </v-btn>
-                  </v-hover>
-                </v-list-tile-action>
-              </v-list-tile>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </v-hover>
               <v-divider
                 v-if="index + 1 < source.length"
                 :key="index"
@@ -91,6 +118,9 @@
 </template>
 
 <script>
+import {shared} from '../main'
+import cbCopy from 'copy-to-clipboard'
+
 export default {
   props: {
     source: {
@@ -98,12 +128,19 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    // todo: рефакторинг
+    shared
+  }),
   methods: {
+    followLink(link) {
+      window.open(link.href, '_blank')
+    },
     deleteLink(link) {
       const index = this.source.indexOf(link)
-      // todo: сделать модалкой?
       confirm('Вы уверены?') && this.source.splice(index, 1)
-    }
+    },
+    cbCopy
   }
 }
 </script>
