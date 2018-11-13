@@ -138,7 +138,7 @@ export default {
       this.showAlert = true
     },
     addLink(name, href, title) {
-      this.links.push({
+      this.links.unshift({
         href,
         short_url: name,
         title
