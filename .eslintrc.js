@@ -59,7 +59,7 @@ module.exports = {
     ],
     'max-lines': [
       'error',
-      200
+      250
     ],
     'max-lines-per-function': [
       'warn', {
