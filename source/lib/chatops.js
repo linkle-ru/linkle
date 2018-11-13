@@ -1,5 +1,6 @@
 const
   request = require('request'),
+  // todo: request < axios
   debug = require('debug')('url-short:chatops')
 
 let credentials = {
