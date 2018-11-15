@@ -1,5 +1,6 @@
 const aliasHelper = require('../../lib/alias')
 const axios = require('axios')
+const Alias = require('../../models/alias')
 
 // todo: добавить методы для батч-загрузки данных по ссылкам
 
@@ -55,11 +56,13 @@ const newAlias = function (req, res, next) {
 }
 
 const getTotal = function(req, res, next) {
-  res.locals.payload = {
-    test: 'xxx'
-  }
+  Alias.count({}, function( err, count){
+    res.locals.payload = {
+      total_links: count
+    }
 
-  next()
+    next()
+  })
 }
 
 module.exports = {
