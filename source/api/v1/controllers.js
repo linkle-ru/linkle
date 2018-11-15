@@ -54,8 +54,17 @@ const newAlias = function (req, res, next) {
     .catch(next)
 }
 
+const getTotal = function(req, res, next) {
+  res.locals.payload = {
+    test: 'xxx'
+  }
+
+  next()
+}
+
 module.exports = {
   follow,
   newAlias,
-  getAlias
+  getAlias,
+  getTotal
 }

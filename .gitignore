@@ -2,9 +2,11 @@
 .stryker-tmp
 node_modules
 reports
+*.vagrant
 logs
 .idea
 out
+*.log
 dist
 vendor
 /dist/
