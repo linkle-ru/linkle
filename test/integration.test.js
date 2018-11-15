@@ -339,9 +339,6 @@ describe('В инфе о сервисе', () => {
     supertest(app)
       .get('/api/v1/info/total')
       .expect(200)
-      .expect(res => {
-        expect(res.body.payload.test).to.be.
-      })
       .end(done)
   })
 })
