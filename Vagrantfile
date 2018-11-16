@@ -18,7 +18,7 @@ project_root = nginx_root + "/" + host_name
 
 Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "generic/debian9"
   config.vm.hostname = "url-shortener-ubuntu"
   config.vm.synced_folder ".", project_root, nfs: true
 
