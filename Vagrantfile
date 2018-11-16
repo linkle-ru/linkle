@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-host_name = "url-shortener.taxnuke.local"
+host_name = "s.taxnuke.local"
 database_name = "url-shortener"
 server_private_ip = "192.168.10.30"
 
