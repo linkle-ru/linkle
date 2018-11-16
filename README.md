@@ -94,7 +94,6 @@ npm start;
 
 ## Как задеплоить
 ```sh
-heroku git:remote -a taxnuke-url-shortener
 npm run deploy
 ```
 

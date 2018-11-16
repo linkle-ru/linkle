@@ -1,17 +1,10 @@
 language: node_js
 node_js:
-- 8.4.0
+- 8.12.0
 script: npm run coverage
 after_success:
 - npm run mutate
 - codeclimate-test-reporter < ./reports/coverage/lcov.info
-deploy:
-  provider: heroku
-  api_key:
-    secure: VRpMGchfjWbdqrd0S4+xjPT1BaQPi4l7YQchnO7gYPDC5FTnwK2NqwfXfsPE3n1mDfwnxhT0l0joLQ55RDidzhNlRD5h9efhf/1WiwbxKIK7esjrpU3FKYHWo/CEigLXj+t88C1Hqq8DxZsqRFIIgEkTUMlLAn5GN1GyXr1xmw8trndDDqGsNPi6sG2muH6YkwJ092HVGY06DawEABgKD5ca17xuyq0oygTLkdIocVB89/dH7nOLiHLacMKcyhjsHH4qSGmkspX5pYwCqg8voqi5Ep0p1dAySyRgakx8XkEUQ36uK0S/XyaeJ5d9+IifrrmaR3dUyw1A+lmg0rx5uyrm1nEr5cwuVkQtdOoT4NJocD+19ZucY057GACVzBjzo4ZbzcB/RooNoRtaP3iiQ9vFhguh5TieVcTEVgEv7V3aOgpS9Ivef3KR3QxqYYpNHmO2iqQvpf04GT2pareZCC2Du7AX+XrwAnq9B+OEc8cR+4xYI3o/ztp1mjLRdL+UqlYHWc5tjI5o5IwSdoC0KqTK0eXcXrC72fbt6imURhO5/JSazF/2tsl6AJRk7tXOKeMqvmWAFI8I12/0zMBZVpWN2cCUD0OYgPCd2W8QikykXJpq8Wsbz834Uhv3ypt/MfJBIM5W/cWHmbEW/Ez6Bp2+ffez+kOxK9R+GB05HXQ=
-  app: taxnuke-url-shortener
-  on:
-    repo: taxnuke/url-shortener
 env:
   global:
     secure: GwDlMSBhECaJy1T1A91jVxuhkkzTf7D3pHZbgnSoIQ+sFvSZQNyqxN3dElcLgnC5UfKhiXle0fi67thXzON+WByVCzlWoVPe2+lmFPio/2YhHO63OUeU3Ltr/PWsrGH9vIlSQsMIjg6+UkwSac9k4Yfl3jBX6UR3MoIE4yqAZ6wH+TvVPMP/HRQZP3v3eBFJgIQ8Hohi0ebWtkuU78A06zxW8LNG+kkxGKxqMbWfL+9ER6j+E1UH8RO/T2HkToeD6Im6EngZ4nraFXYQopDVRi6SpbL2mHK6QZqXBgxzp8dMX7iqdJqEKEdYYS4qxn+0i4Uu7ZaAskrAVvge/mgZ2QAu9sQS4+Zmz5OiFUdMS4iImIlLp1kn8/MuNN/rqVoXjbTPWdLIthCWE1h1KjvvsiTmMD96lkbzNkZh9gV34DI8QaTCn+HMuR0SaSwPJtBlJ7tqDhoNLv/ab08csu3/TLZM4+dcMn1GnL+8u7/nkmvdD2R0ZPIMVVc7kY8Fvopi40JeEoKun6Mzx1npvCGumVSs1WVK8+UQ9UD2bylADZ2eKQpWMF+/xcwHLos53WyngnXrBs2X6V6uk8dD/USeYaytC9hnbAWSHkWrXAZjXFkmdikx2hNp2VmYbIaKqFVHxrNVN6egQ0r0gNTCpo7C1vbKo0q+sEwww6TcTCRv0p8=
