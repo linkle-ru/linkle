@@ -5,7 +5,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --open 'Google Chrome'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "node source/server",
-    "deploy": "pm2 deploy vps",
+    "deploy": "pm2 deploy production",
     "pretest": "npm run lint",
     "test": "cross-env NODE_ENV=testing mocha --timeout 120000 test/*.test.js",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
