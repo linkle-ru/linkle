@@ -1,5 +1,4 @@
 const express = require('express')
-const path = require('path')
 const chatops = require('./lib/chatops')
 const logger = require('./lib/logger')
 const requireDir = require('require-dir') // todo: может без?
@@ -25,8 +24,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static(path.join(__dirname, 'gui')))
-
 app.use((req, res, next) => {
   res.locals.locale = (locales[req.query.lang] || locales.en)
 
@@ -35,13 +32,8 @@ app.use((req, res, next) => {
 
 app.use('/api/v1', require('./api/v1/routers'))
 
-app.get('/:alias', (req, res) => {
-  res.redirect(`/api/v1/follow/${req.params.alias}`)
-  res.status(301)
-})
-
-app.get('*', (req, res, next) => {
-  let err = new Error('Not Found')
+app.use('*', (req, res, next) => {
+  let err = new Error('Bad gateway')
   err.status = 404
 
   next(err)

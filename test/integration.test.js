@@ -234,16 +234,11 @@ describe('Переход по короткой ссылке', () => {
   describe('из базы', () => {
     it('разрешено', done => {
       supertest(app)
-        .get('/first')
-        .expect(302)
+        .get('/api/v1/follow/first')
+        .expect(301)
         .end((err, res) => {
-          supertest(app)
-            .get(res.header.location)
-            .expect(301)
-            .end((err, res) => {
-              expect(res.header.location).equal('http://ya.ru')
-              done()
-            })
+          expect(res.header.location).equal('http://ya.ru')
+          done()
         })
     })
   })
@@ -251,17 +246,12 @@ describe('Переход по короткой ссылке', () => {
   describe('не из базы', () => {
     it('запрещено', done => {
       supertest(app)
-        .get('/googleplex')
-        .expect(302)
-        .end((err, res) => {
-          supertest(app)
-            .get(res.header.location)
-            .expect(200, {
-              status: 'error',
-              reason: 'Alias is not in database',
-              code: 'd0'
-            }, done)
-        })
+        .get('/api/v1/follow/googleplex')
+        .expect(200, {
+          status: 'error',
+          reason: 'Alias is not in database',
+          code: 'd0'
+        }, done)
     })
   })
 })
@@ -294,20 +284,6 @@ describe('Получение алиаса по имени', () => {
           code: 'd0'
         }, done)
     })
-  })
-})
-
-describe('Главная страница', () => {
-  it('открывается', done => {
-    supertest(app)
-      .get('/')
-      .expect(200)
-      .expect(res => {
-        expect(res.text.indexOf(
-          '<title>URL SHORTENER</title>'
-        )).to.not.equal(-1)
-      })
-      .end(done)
   })
 })
 
