@@ -25,7 +25,7 @@ server {
                 proxy_set_header Host \$host;
         }
 
-        location ~* /[a-zа-я\d._-]+$ {
+        location ~* /[a-zа-я\d._-]+$/ {
                 rewrite /(.*) /api/v1/follow/$1 break;
                 proxy_pass http://localhost:8080;
                 add_header Access-Control-Allow-Origin *;
