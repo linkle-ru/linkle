@@ -14,6 +14,9 @@ if (env === 'production') {
 
   app.use(pinoExpress)
 
+  /**
+   * надо слезать с mLab на свою монгу
+   */
   mongoUri = `mongodb://${mLabUser}:${mLabPass}@ds247327.mlab.com:47327/`
   dbName = 'url-shortener-production'
 } else {
