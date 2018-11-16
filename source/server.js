@@ -6,23 +6,12 @@ const pinoExpress = require('express-pino-logger')()
 
 const env = app.get('env')
 
-let mongoUri, dbName
-
 if (env === 'production') {
-  const mLabUser = process.env.MLAB_USER
-  const mLabPass = process.env.MLAB_PASS
-
   app.use(pinoExpress)
-
-  /**
-   * надо слезать с mLab на свою монгу
-   */
-  mongoUri = `mongodb://${mLabUser}:${mLabPass}@ds247327.mlab.com:47327/`
-  dbName = 'url-shortener-production'
-} else {
-  mongoUri = 'mongodb://localhost:27017/'
-  dbName = `url-shortener-${env}`
 }
+
+const mongoUri = `mongodb://localhost:${environments[env].mongoPort}/`
+const dbName = 'url-shortener'
 
 mongoose.Promise = Promise
 const mongooseOptions = {
