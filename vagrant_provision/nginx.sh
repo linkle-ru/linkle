@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-#
-# todo: переработать
-#
-
 NGINX_ROOT=$1
 VAGRANT_ROOT=$2
 HOST_NAME=$3
 
 usermod -aG www-data vagrant
 
-# todo: в локейшене 27 захардкожен порт
+# todo: в локейшенах захардкожены порты для проксирования
 
 read -d '' NGINX_SITE <<EOF
 server {

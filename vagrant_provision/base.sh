@@ -6,5 +6,5 @@ apt-get install -y git vim build-essential htop nodejs ufw nginx=1.10.* curl tre
 npm i -g pm2
 ufw allow 'Nginx HTTP'
 ufw allow 'OpenSSH'
-ufw allow 27017 # todo: вообще вот это не хорошо
+ufw allow 27017
 yes | ufw enable
