@@ -19,13 +19,12 @@ module.exports = {
     }
   }],
   deploy: {
-    production: {
+    vps: {
       user: 'adminus',
       host: '138.68.183.160',
       ref: 'origin/master',
       repo: 'git@github.com:taxnuke/url-shortener.git',
-      // todo: поменять на short.taxnuke.ru
-      path: '/var/www/s.taxnuke.ru',
+      path: '/var/www/short.taxnuke.ru',
       'post-deploy': 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
     }
   }
