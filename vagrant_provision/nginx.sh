@@ -19,14 +19,11 @@ server {
         gzip_types text/plain text/css application/json application/x-javascript text/xml
         application/xml application/xml+rss text/javascript application/javascript;
 
-        location ~ /api/ {
-                proxy_pass http://localhost:8080;
-                add_header Access-Control-Allow-Origin *;
-                proxy_set_header Host \$host;
+        location ~* ^/[a-zа-я\d._-]+$ {
+                rewrite /(.*) /api/v1/follow/$1 last;
         }
 
-        location ~* /[a-zа-я\d._-]+$/ {
-                rewrite /(.*) /api/v1/follow/$1 break;
+        location ~ ^/api/ {
                 proxy_pass http://localhost:8080;
                 add_header Access-Control-Allow-Origin *;
                 proxy_set_header Host \$host;
