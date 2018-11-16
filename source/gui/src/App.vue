@@ -12,7 +12,7 @@
       <p class="display-2 font-weight-black text-uppercase">
         URL Shortener
         <span class="font-italic text-capitalize headline font-weight-light">
-          dev
+          developer beta
         </span>
       </p>
       <v-layout
