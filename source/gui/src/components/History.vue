@@ -37,8 +37,7 @@
                         <v-flex slot="activator">
                           {{ link.visits || 'N/A' }}
                         </v-flex>
-                        <!--todo: реализовать-->
-                        <span>В разработке</span>
+                        <span>бета</span>
                       </v-tooltip>
                       <v-icon
                         small

@@ -135,13 +135,7 @@ export default {
       localStorage.linkHistory = JSON.stringify(this.links)
     }
   },
-  created() {
-    try {
-      this.links = JSON.parse(localStorage.linkHistory)
-    } catch (e) {
-      this.links = []
-    }
-
+  mounted() {
     addEventListener('online', () => {
       this.isOffline = false
     })
@@ -149,6 +143,28 @@ export default {
     addEventListener('offline', () => {
       this.isOffline = true
     })
+  },
+  created() {
+    try {
+      this.links = JSON.parse(localStorage.linkHistory)
+
+      axios
+        .get(`${shared.origin}/api/v1/aliases?lang=ru&list=${this.links
+          .map(link => link.short_url)
+          .reverse()
+        }`)
+        .then(response => {
+          if (response.data.status === 'ok') {
+            for (let i = 0; i < this.links.length; i++) {
+              this.links[i].visits = response.data.payload[i].analytics.followed
+            }
+          } else {
+            this.displayError(response.data.reason)
+          }
+        })
+    } catch (e) {
+      this.links = []
+    }
   },
   methods: {
     displayError(message) {
@@ -159,7 +175,8 @@ export default {
       this.links.unshift({
         href,
         short_url: name,
-        title
+        title,
+        visits: 0
       })
 
       this.dialog = true
