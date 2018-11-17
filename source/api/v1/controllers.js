@@ -56,7 +56,7 @@ const newAlias = function (req, res, next) {
       return axios.get(alias.href)
     })
     .then(response => {
-      const title = response.data.match(/<title>(.*?)<\/title>/i)[1]
+      const title = response.data.match(/<title.*?>(.*?)<\/title>/i)[1]
 
       if (title && title.length) {
         res.locals.payload.title = title
