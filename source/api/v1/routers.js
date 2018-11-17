@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit')
 
 /**
  * todo: http-errors
+ * todo: улучшить обработку и отправку ошибок
  */
 
 router.get('/follow/:alias', controllers.follow)

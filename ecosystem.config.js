@@ -12,6 +12,7 @@ module.exports = {
     }
   }],
   deploy: {
+    // todo: добавить env для разработческой деятельности
     production: {
       'user': 'adminus',
       'host': '138.68.183.160',
