@@ -18,6 +18,10 @@
 
 ##### `GET` [https://short.taxnuke.ru/api/v1/aliases/<алиас>](#)
 
+#### Получить содержимое списка алиасов
+
+##### `GET` [https://short.taxnuke.ru/api/v1/aliases?list=<алиас>[, <алиас> ...]](#)
+
 #### Создать алиас
 
 ##### `POST` [https://short.taxnuke.ru/api/v1/aliases](#)

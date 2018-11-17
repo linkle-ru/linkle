@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit')
 
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
+router.get('/aliases', controllers.getAliases)
 
 const rateLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,

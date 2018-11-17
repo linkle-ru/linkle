@@ -1,12 +1,25 @@
 const aliasHelper = require('../../lib/alias')
 const axios = require('axios')
-
-// todo: добавить методы для батч-загрузки данных по ссылкам
+const Alias = require('../../models/alias')
 
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
     .then(alias => {
       res.locals.payload = alias
+
+      next()
+    })
+    .catch(next)
+}
+
+const getAliases = function (req, res, next) {
+  const list = req.query.list.split(',')
+
+  Alias.find({
+    '_id': { $in: list }
+  })
+    .then(links => {
+      res.locals.payload = links
 
       next()
     })
@@ -57,5 +70,6 @@ const newAlias = function (req, res, next) {
 module.exports = {
   follow,
   newAlias,
-  getAlias
+  getAlias,
+  getAliases
 }
