@@ -1,3 +1,5 @@
+const logger = require('../../lib/logger')
+
 function badJsonHandler(err, req, res, next) {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
     err = new Error('d1')
@@ -17,6 +19,8 @@ function sendOk(req, res, next) {
 }
 
 function sendErr(err, req, res, next) {
+  logger.error(err)
+
   const
     errorCode = err.message,
     resBody = {
