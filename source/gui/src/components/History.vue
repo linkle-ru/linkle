@@ -35,6 +35,7 @@
                     >
                       <v-tooltip bottom>
                         <v-flex slot="activator">
+                          <!-- todo: добавить постфиксы K M B -->
                           {{ link.visits || 'N/A' }}
                         </v-flex>
                         <span>бета</span>
