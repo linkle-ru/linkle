@@ -19,7 +19,9 @@ function sendOk(req, res, next) {
 }
 
 function sendErr(err, req, res, next) {
-  logger.error(err)
+  if (process.env.NODE_ENV !== 'testing') {
+    logger.error(err)
+  }
 
   const
     errorCode = err.message,
