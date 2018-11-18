@@ -1,7 +1,5 @@
-const
-  request = require('request'),
-  // todo: request < axios
-  debug = require('debug')('url-short:chatops')
+const logger = require('./logger')
+const axios = require('axios')
 
 let credentials = {
   telegramCO: {
@@ -10,22 +8,14 @@ let credentials = {
   }
 }
 
-const notify = function(message) {
-  request.post({
-    url: credentials.telegramCO.botToken,
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      'chat_id': credentials.telegramCO.chatId,
-      'parse_mode': 'Markdown',
-      'text': message
+const notify = function (message) {
+  axios
+    .post(credentials.telegramCO.botToken, {
+      chat_id: credentials.telegramCO.chatId,
+      parse_mode: 'Markdown',
+      text: message
     })
-  }, (error, response) => {
-    if (error) {
-      debug(response)
-    }
-  })
+    .catch(logger.error)
 }
 
 module.exports = {

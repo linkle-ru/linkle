@@ -149,7 +149,6 @@ export default {
     }
   },
   data: () => ({
-    // todo: рефакторинг
     shared
   }),
   methods: {
