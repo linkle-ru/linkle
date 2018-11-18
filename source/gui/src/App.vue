@@ -170,6 +170,7 @@ export default {
               for (let i = 0; i < this.links.length; i++) {
                 if (this.links[i].name === link.name) {
                   this.$set(this.links[i], 'analytics', link.analytics)
+                  break
                 }
               }
             }
