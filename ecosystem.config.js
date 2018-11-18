@@ -10,13 +10,11 @@ module.exports = {
         './source/app.js',
         './source/server.js'
       ],
-      NODE_ENV: 'development',
-      DEBUG: 'url-short:*'
+      NODE_ENV: 'development'
     },
     env_production: {
       watch: false,
-      NODE_ENV: 'production',
-      DEBUG: 'url-short:*' // todo: выпилить
+      NODE_ENV: 'production'
     }
   }],
   deploy: {
@@ -27,7 +25,7 @@ module.exports = {
       'repo': 'git@github.com:taxnuke/url-shortener.git',
       'path': '/var/www/short.taxnuke.ru',
       'post-deploy':
-        'npm i && npm run build && pm2 start ecosystem.config.js --env production'
+        'npm i && npm run build && pm2 startOrReload ecosystem.config.js --env production'
     }
   }
 }
