@@ -17,6 +17,9 @@ module.exports = function(config) {
       'source/lib/constants.js',
     ],
     testRunner: 'mocha',
+    mochaOptions: {
+      timeout: 5000
+    },
     testFramework: 'mocha',
     mutator: 'javascript',
     reporters: ['html', 'clear-text', 'progress', 'dashboard'],
