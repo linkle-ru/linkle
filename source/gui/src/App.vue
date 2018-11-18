@@ -163,13 +163,15 @@ export default {
 
       axios
         .get(`${shared.origin}/api/v1/aliases?lang=ru&list=${this.links
-          .map(link => link.short_url)
-          .reverse()
-        }`)
+          .map(link => link.name)}`)
         .then(response => {
           if (response.data.status === 'ok') {
-            for (let i = 0; i < this.links.length; i++) {
-              this.links[i].visits = response.data.payload[i].analytics.followed
+            for (const link of response.data.payload) {
+              for (let i = 0; i < this.links.length; i++) {
+                if (this.links[i].name === link.name) {
+                  this.$set(this.links[i], 'analytics', link.analytics)
+                }
+              }
             }
           } else {
             this.displayError(response.data.reason)
@@ -184,17 +186,12 @@ export default {
       this.alertMessage = message
       this.showAlert = true
     },
-    addLink(name, href, title) {
-      this.links.unshift({
-        href,
-        short_url: name,
-        title,
-        visits: 0
-      })
+    addLink(link) {
+      this.links.unshift(link)
 
       this.dialog = true
       this.href = ''
-      this.dialogMessage = `${shared.origin}/${name}`
+      this.dialogMessage = `${shared.origin}/${link.name}`
     },
     shorten() {
       this.progress = true
@@ -210,8 +207,8 @@ export default {
             }
           })
         })
-        .then(payload => {
-          this.addLink(payload.name, payload.href, payload.title)
+        .then(link => {
+          this.addLink(link)
         }, err => {
           err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err
 

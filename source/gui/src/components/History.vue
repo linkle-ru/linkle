@@ -18,7 +18,7 @@
           <v-list two-line>
             <template v-for="(link, index) in source">
               <v-hover
-                :key="link.short_url"
+                :key="link.name"
               >
                 <v-list-tile
                   slot-scope="{ hover }"
@@ -37,7 +37,7 @@
                           slot="activator"
                           class="body-2"
                         >
-                          {{ link.visits | visitFormatter }}
+                          {{ link | visitsFormatter }}
                         </v-flex>
                         <span>бета</span>
                       </v-tooltip>
@@ -59,8 +59,8 @@
                       <a
                         class="subheading"
                         onclick="return false"
-                        :href="link.short_url"
-                      >{{ link.short_url }}</a>
+                        :href="link.name"
+                      >{{ link.name }}</a>
                       &mdash;
                       <span class="font-weight-thin">{{ link.href }}</span>
                     </v-list-tile-sub-title>
@@ -69,7 +69,7 @@
                     <v-btn
                       icon
                       ripple
-                      @click.stop="cbCopy(`${shared.origin}/${link.short_url}`)"
+                      @click.stop="cbCopy(`${shared.origin}/${link.name}`)"
                     >
                       <v-icon
                         color="blue lighten-2"
@@ -124,18 +124,22 @@ import cbCopy from 'copy-to-clipboard'
 
 export default {
   filters: {
-    visitFormatter: visits => {
-      if (typeof(visits) !== 'number') {
+    visitsFormatter: link => {
+      const analytics = link.analytics
+
+      if (typeof analytics === 'undefined') {
         return 'N/A'
       }
 
-      if (visits > 1000 && visits < 1000000) {
-        visits = `${(visits / 1000).toFixed()} K`
-      } else if (visits > 1000000) {
-        visits = `${(visits / 1000000).toFixed()} M`
+      let followed = analytics.followed
+
+      if (followed > 1000 && followed < 1000000) {
+        followed = `${(followed / 1000).toFixed()} K`
+      } else if (followed > 1000000) {
+        followed = `${(followed / 1000000).toFixed()} M`
       }
 
-      return visits
+      return followed
     }
   },
   props: {
