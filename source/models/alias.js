@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const shortId = require('shortid')
 const constants = require('../lib/constants')
 const validators = require('../lib/validators')
+const axios = require('axios')
 
 const aliasSchema = new mongoose.Schema({
   _id: {
@@ -23,13 +24,22 @@ const aliasSchema = new mongoose.Schema({
     maxlength: [2000, constants.LINK_TOO_LONG],
     required: [true, constants.LINK_EMPTY],
     validate: [{
-      validator: v => {
-        return !(validators.regexes.noLoopHref.test(v))
+      validator: href => {
+        return !(validators.regexes.noLoopHref.test(href))
       },
       message: constants.LINK_LOOP
     }, {
-      validator: v => {
-        return validators.regexes.href.test(v)
+      validator: href => {
+        return validators.regexes.href.test(href)
+      },
+      message: constants.HREF_BAD
+    }, {
+      validator: href => {
+        return axios
+          .head(href)
+          .then(() => {
+            return Promise.resolve()
+          })
       },
       message: constants.HREF_BAD
     }],
@@ -62,12 +72,10 @@ aliasSchema.methods.toJSON = function () {
   }
 }
 
-// Хук, который срабатывает перед сохранением документа в базу
-aliasSchema.pre('save', function (done) {
-  if (this.isNew) {
-    if (!/^http/.test(this.href)) {
-      this.href = 'http://' + this.href
-    }
+// Хук, который срабатывает перед валидацией нового документа
+aliasSchema.pre('validate', function (done) {
+  if (this.href && !/^http/.test(this.href)) {
+    this.href = 'http://' + this.href
   }
 
   done()
