@@ -238,7 +238,11 @@ describe('Переход по короткой ссылке', () => {
         .expect(301)
         .end((err, res) => {
           expect(res.header.location).equal('http://ya.ru')
-          done()
+
+          // иначе не успевает аналитика записаться для следующего теста
+          setTimeout(() => {
+            done()
+          }, 2000)
         })
     })
   })
