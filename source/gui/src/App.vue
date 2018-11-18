@@ -42,13 +42,26 @@
           </v-btn>
         </v-flex>
       </v-layout>
-      <!--todo: лучше лоадер https://vuetifyjs.com/en/components/dialogs#example-loader-->
-      <v-slide-y-transition>
-        <v-progress-linear
-          v-show="progress"
-          :indeterminate="true"
-        />
-      </v-slide-y-transition>
+      <v-dialog
+        v-model="progress"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+            Запрос обрабатывается
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            />
+          </v-card-text>
+        </v-card>
+      </v-dialog>
       <v-slide-y-transition>
         <v-alert
           v-show="isOffline"
