@@ -3,7 +3,6 @@
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">
       История
     </p>
-    <!-- todo: добавить поиск -->
     <v-layout
       align-center
       justify-center
@@ -57,7 +56,7 @@
                     <v-list-tile-sub-title>
                       <a
                         class="subheading"
-                        target="_blank"
+                        onclick="return false"
                         :href="link.short_url"
                       >{{ link.short_url }}</a>
                       &mdash;
