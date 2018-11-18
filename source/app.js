@@ -1,7 +1,7 @@
 const express = require('express')
 const chatops = require('./lib/chatops')
 const logger = require('./lib/logger')
-const requireDir = require('require-dir') // todo: может без?
+const requireDir = require('require-dir')
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  res.locals.locale = (locales[req.query.lang] || locales.en)
+  res.locals.lang = (locales[req.query.lang] || locales.en)
 
   next()
 })

@@ -184,11 +184,10 @@ export default {
       this.dialogMessage = `${shared.origin}/${name}`
     },
     shorten() {
-      // todo: проверка на существование сайта на стороне клиента
       this.progress = true
 
       axios
-        .post(`${shared.origin}/api/v1/aliases?lang=ru`, { href: this.href })
+        .post('/api/v1/aliases?lang=ru', { href: this.href })
         .then(response => {
           return new Promise((resolve, reject) => {
             if (response.data.status === 'ok') {

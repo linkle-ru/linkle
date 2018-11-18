@@ -28,8 +28,7 @@ function sendErr(err, req, res, next) {
     resBody = {
       status: 'error',
       code: errorCode,
-      // todo: отрефакторить
-      reason: res.locals.locale.errors[errorCode[0]][errorCode.substr(1)]
+      reason: res.locals.lang.errors[errorCode[0]][errorCode.substr(1)]
     }
 
   let resStatus
