@@ -33,9 +33,11 @@
                       fill-height
                     >
                       <v-tooltip bottom>
-                        <v-flex slot="activator">
-                          <!-- todo: добавить постфиксы K M B -->
-                          {{ link.visits || 'N/A' }}
+                        <v-flex
+                          slot="activator"
+                          class="body-2"
+                        >
+                          {{ link.visits | visitFormatter }}
                         </v-flex>
                         <span>бета</span>
                       </v-tooltip>
@@ -121,6 +123,21 @@ import {shared} from '../main'
 import cbCopy from 'copy-to-clipboard'
 
 export default {
+  filters: {
+    visitFormatter: visits => {
+      if (typeof(visits) !== 'number') {
+        return 'N/A'
+      }
+
+      if (visits > 1000 && visits < 1000000) {
+        visits = `${(visits / 1000).toFixed()} K`
+      } else if (visits > 1000000) {
+        visits = `${(visits / 1000000).toFixed()} M`
+      }
+
+      return visits
+    }
+  },
   props: {
     source: {
       type: Array,
