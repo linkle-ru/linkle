@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const app = require('./app')
 const logger = require('./lib/logger')
-const environments = require('../environments')
 const pinoExpress = require('express-pino-logger')()
 
 const env = app.get('env')
@@ -10,7 +9,7 @@ if (env === 'production') {
   app.use(pinoExpress)
 }
 
-const mongoUri = `mongodb://localhost:${environments[env].mongoPort}/`
+const mongoUri = `mongodb://localhost:${process.env.MONGO_PORT}/`
 const dbName = 'url-shortener'
 
 mongoose.Promise = Promise
@@ -28,7 +27,7 @@ mongoose.connect(mongoUri + dbName, mongooseOptions)
     }
   )
 
-const port = process.env.PORT || environments[env].serverPort
+const port = process.env.API_PORT
 
 app.listen(port)
 

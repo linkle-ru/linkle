@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const environments = require('./environments')
 
 module.exports = {
   entry: './source/gui/src/main.js',
@@ -51,7 +50,7 @@ module.exports = {
     noInfo: false,
     proxy: [{
       context: ['/api'],
-      target: `http://localhost:${environments.development.serverPort}`,
+      target: `http://localhost:${process.env.API_PORT}`,
       changeOrigin: true
     }],
     overlay: true

@@ -10,11 +10,15 @@ module.exports = {
         './source/app.js',
         './source/server.js'
       ],
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
+      MONGO_PORT: 28017,
+      API_PORT: 8000
     },
     env_production: {
       watch: false,
-      NODE_ENV: 'production'
+      NODE_ENV: 'production',
+      MONGO_PORT: 27017,
+      API_PORT: 8080
     }
   }],
   deploy: {
@@ -25,7 +29,7 @@ module.exports = {
       'repo': 'git@github.com:taxnuke/url-shortener.git',
       'path': '/var/www/short.taxnuke.ru',
       'post-deploy':
-        'npm i && npm run build && pm2 startOrReload ecosystem.config.js --env production'
+        'npm i && npm run build && pm2 startOrReload ecosystem.config.js --update-env --env production'
     }
   }
 }

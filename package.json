@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "predev": "vagrant up && pm2 startOrReload ecosystem.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --open 'Google Chrome'",
+    "predev": "vagrant up && pm2 startOrReload ecosystem.config.js --update-env",
+    "dev": "cross-env NODE_ENV=development API_PORT=8000 webpack-dev-server --hot --open 'Google Chrome'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "node source/server",
     "deploy": "pm2 deploy production",
