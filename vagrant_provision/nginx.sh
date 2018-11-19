@@ -6,8 +6,6 @@ HOST_NAME=$3
 
 usermod -aG www-data vagrant
 
-# todo: в локейшенах захардкожены порты для проксирования
-
 read -d '' NGINX_SITE <<EOF
 server {
         listen 80;
