@@ -67,6 +67,18 @@ const newAlias = function (req, res, next) {
       }
 
       next()
+
+      return Promise.resolve(res.locals.payload.name)
+    })
+    .then(name => {
+      if (process.env.NODE_ENV === 'production') {
+        axios.post(
+          `http://localhost:${process.env.HOOK_PORT}`,
+          { name }
+        )
+          .then(console.log)
+          .catch(console.error)
+      }
     })
     .catch(next)
 }

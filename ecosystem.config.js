@@ -12,6 +12,7 @@ module.exports = {
     env_production: {
       watch: false,
       NODE_ENV: 'production',
+      HOOK_PORT: 8813,
       MONGO_PORT: 27017,
       API_PORT: 8080
     }
