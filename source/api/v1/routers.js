@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const controllers = require('./controllers')
+const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
 
 /**
@@ -16,9 +17,15 @@ const rateLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 100,
   handler: (req, res, next) => {
-    const err = new Error('too many requests')
-    err.status = 429
-    next(err)
+    next(httpError.TooManyRequests())
+  }
+})
+
+router.use('*', (req, res, next) => {
+  if (req.app.settings.env === 'production' && !req.secure) {
+    next(httpError.Forbidden('Bad protocol'))
+  } else {
+    next()
   }
 })
 
