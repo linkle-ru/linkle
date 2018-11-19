@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "predev": "vagrant up && pm2 startOrReload ecosystem.config.js --update-env",
-    "dev": "cross-env NODE_ENV=development API_PORT=8000 webpack-dev-server --hot --open 'Google Chrome'",
+    "dev:server": "vagrant up && pm2 startOrReload ecosystem.config.js --update-env --no-daemon",
+    "dev:client": "cross-env NODE_ENV=development API_PORT=8000 webpack-dev-server --hot --open 'Google Chrome'",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "node source/server",
     "deploy": "pm2 deploy production",
@@ -63,6 +63,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
     "mockgoose": "^7.3.3",
+    "pm2": "^3.2.2",
     "postcss-import": "^12.0.1",
     "postcss-url": "^8.0.0",
     "stryker": "^0.29.2",
