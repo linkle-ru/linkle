@@ -21,7 +21,8 @@ const rateLimiter = rateLimit({
 
 router.use('*', (req, res, next) => {
   if (req.app.settings.env === 'production' && !req.secure) {
-    next(httpError.Forbidden('Bad protocol'))
+    // todo: добавить ризон через константу
+    next(httpError.Forbidden())
   } else {
     next()
   }
