@@ -72,11 +72,13 @@ const newAlias = function (req, res, next) {
     })
     .then(name => {
       if (process.env.NODE_ENV === 'production') {
-        axios.post(
-          `http://localhost:${process.env.HOOK_PORT}`,
-          { name }
-        )
-          .then(console.log)
+        Alias.count({}).exec()
+          .then(count => {
+            return axios.get(
+              `http://localhost:${process.env.HOOK_PORT}`,
+              { link_count: count, latest: name }
+            )
+          })
           .catch(console.error)
       }
     })
