@@ -169,6 +169,7 @@ export default {
             for (const link of response.data.payload) {
               for (let i = 0; i < this.links.length; i++) {
                 if (this.links[i].name === link.name) {
+                  // todo: скачут визиты при обновлении страницы
                   this.$set(this.links[i], 'analytics', link.analytics)
                   break
                 }
