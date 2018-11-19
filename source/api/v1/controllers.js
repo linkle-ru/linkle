@@ -74,9 +74,10 @@ const newAlias = function (req, res, next) {
       if (process.env.NODE_ENV === 'production') {
         Alias.count({}).exec()
           .then(count => {
+            const data = JSON.stringify({ link_count: count, latest: name })
+
             return axios.get(
-              `http://localhost:${process.env.HOOK_PORT}`,
-              { link_count: count, latest: name }
+              `http://localhost:${process.env.HOOK_PORT}?data=${data}`
             )
           })
           .catch(console.error)
