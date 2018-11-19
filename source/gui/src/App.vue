@@ -161,24 +161,26 @@ export default {
     try {
       this.links = JSON.parse(localStorage.linkHistory)
 
-      axios
-        .get(`${shared.origin}/api/v1/aliases?lang=ru&list=${this.links
-          .map(link => link.name)}`)
-        .then(response => {
-          if (response.data.status === 'ok') {
-            for (const link of response.data.payload) {
-              for (let i = 0; i < this.links.length; i++) {
-                if (this.links[i].name === link.name) {
+      if (this.links.length) {
+        axios
+          .get(`${shared.origin}/api/v1/aliases?lang=ru&list=${this.links
+            .map(link => link.name)}`)
+          .then(response => {
+            if (response.data.status === 'ok') {
+              for (const link of response.data.payload) {
+                for (let i = 0; i < this.links.length; i++) {
+                  if (this.links[i].name === link.name) {
                   // todo: скачут визиты при обновлении страницы
-                  this.$set(this.links[i], 'analytics', link.analytics)
-                  break
+                    this.$set(this.links[i], 'analytics', link.analytics)
+                    break
+                  }
                 }
               }
+            } else {
+              this.displayError(response.data.reason)
             }
-          } else {
-            this.displayError(response.data.reason)
-          }
-        })
+          })
+      }
     } catch (e) {
       this.links = []
     }
