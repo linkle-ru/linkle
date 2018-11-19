@@ -13,17 +13,21 @@ const getAlias = function (req, res, next) {
 }
 
 const getAliases = function (req, res, next) {
-  const list = req.query.list.split(',')
+  if (!req.query.list) {
+    next(new Error('No list passed'))
+  } else {
+    const list = req.query.list.split(',')
 
-  Alias.find({
-    '_id': { $in: list }
-  })
-    .then(links => {
-      res.locals.payload = links
-
-      next()
+    Alias.find({
+      '_id': { $in: list }
     })
-    .catch(next)
+      .then(links => {
+        res.locals.payload = links
+
+        next()
+      })
+      .catch(next)
+  }
 }
 
 const follow = function (req, res, next) {

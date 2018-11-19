@@ -307,18 +307,15 @@ describe('Некорректный JSON ', () => {
       .set('Content-Type', 'application/json')
       .send('{"a"=><="b"}')
       .expect(400)
-      .expect(() => {
-        // todo: не работает проверка содержимого body ответа
-      })
       .end(done)
   })
 })
 
-describe('В инфе о сервисе', () => {
-  it('есть общее число ссылок', done => {
+describe('Стук в левый эндпоинт', () => {
+  it('заканчивается ошибкой', done => {
     supertest(app)
       .get('/api/v1/info/total')
-      .expect(200)
+      .expect(400)
       .end(done)
   })
 })

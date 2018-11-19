@@ -1,5 +1,5 @@
 const express = require('express')
-const chatops = require('./lib/chatops')
+const fallback = require('./lib/fallback')
 const logger = require('./lib/logger')
 const requireDir = require('require-dir')
 const locales = requireDir('./i18n', { recurse: true })
@@ -33,35 +33,13 @@ app.use((req, res, next) => {
 app.use('/api/v1', require('./api/v1/routers'))
 
 app.use('*', (req, res, next) => {
-  let err = new Error('Bad gateway')
+  // todo: http-errors
+  let err = new Error('Not found')
   err.status = 404
 
   next(err)
 })
 
-// Конечный обработчик ошибок
-// todo: тут ему не место
-// todo: надо отлавливать другие методы запросов
-app.use((err, req, res, next) => {
-  // Вываливаем стэк только в окружении development
-  res.locals.message = err.message
-  res.locals.error = env === 'development' ? err : {}
-
-  err.status = err.status || 500
-
-  if (env === 'production') {
-    switch (err.status) {
-    case 400:
-    case 404:
-    case 500:
-      chatops.notify(`\`${err.status} method:${req.method} route:${req.url}\``)
-
-      break
-    }
-  }
-
-  res.status(err.status)
-  res.send(err)
-})
+app.use(fallback)
 
 module.exports = app

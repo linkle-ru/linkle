@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit')
 /**
  * todo: http-errors
  * todo: улучшить обработку и отправку ошибок
+ * todo: проверка протокола
  */
 
 router.get('/follow/:alias', controllers.follow)
@@ -22,6 +23,17 @@ const rateLimiter = rateLimit({
 })
 
 router.post('/aliases', rateLimiter, controllers.newAlias)
+
+router.use((req, res, next) => {
+  if (res.locals.payload) {
+    next()
+  } else {
+    const err = new Error('Bad route')
+    err.status = 400
+
+    next(err)
+  }
+})
 
 require('./reporters')(router)
 
