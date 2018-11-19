@@ -8,7 +8,7 @@ const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
 /**
- * todo: улучшить качество тестов
+ * todo: улучшить покрытие до 95% и MSI до 70%
  */
 
 mongoose.Promise = Promise
@@ -315,7 +315,14 @@ describe('Стук в левый эндпоинт', () => {
   it('заканчивается ошибкой', done => {
     supertest(app)
       .get('/api/v1/info/total')
-      .expect(400)
+      .expect(404)
+      .end(done)
+  })
+
+  it('заканчивается ошибкой', done => {
+    supertest(app)
+      .get('/asdfasfas/asdfs')
+      .expect(404)
       .end(done)
   })
 })

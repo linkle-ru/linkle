@@ -43,7 +43,8 @@
     "underscore": "^1.8.3",
     "vue": "^2.5.2",
     "vue-yandex-metrika": "^1.7.2",
-    "vuetify": "^1.2.10"
+    "vuetify": "^1.2.10",
+    "http-errors": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^9.3.1",

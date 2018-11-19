@@ -4,9 +4,7 @@ const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
 
 /**
- * todo: http-errors
  * todo: улучшить обработку и отправку ошибок
- * todo: проверка протокола
  */
 
 router.get('/follow/:alias', controllers.follow)
@@ -35,13 +33,10 @@ router.use((req, res, next) => {
   if (res.locals.payload) {
     next()
   } else {
-    const err = new Error('Bad route')
-    err.status = 400
-
-    next(err)
+    next(httpError.NotFound())
   }
 })
 
-require('./reporters')(router)
+require('../../lib/reporters')(router)
 
 module.exports = router

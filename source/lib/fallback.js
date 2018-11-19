@@ -18,34 +18,24 @@ const notify = function (message) {
     .catch(logger.error)
 }
 
-// todo: отрефакторить
 module.exports = (err, req, res, next) => {
-  if (err instanceof SyntaxError && err.message.includes('JSON')) {
-    logger.warn('Bad JSON received')
+  logger.error(err)
 
-    res.status(err.status)
-    // todo: в ошибки
-    res.send('Bad JSON')
-  } else {
-    logger.error(err)
+  res.locals.message = err.message
+  res.locals.error = process.env.NODE_ENV === 'development' ? err : {}
 
-    res.locals.message = err.message
-    res.locals.error = process.env.NODE_ENV === 'development' ? err : {}
+  err.status = err.status || 500
 
-    err.status = err.status || 500
+  if (process.env.NODE_ENV === 'production') {
+    switch (err.status) {
+    case 400:
+    case 404:
+    case 500:
+      notify(`\`${err.status} method:${req.method} route:${req.url}\``)
 
-    if (process.env.NODE_ENV === 'production') {
-      switch (err.status) {
-      case 400:
-      case 404:
-      case 500:
-        notify(`\`${err.status} method:${req.method} route:${req.url}\``)
-
-        break
-      }
+      break
     }
-
-    res.status(err.status)
-    res.send(err.message)
   }
+
+  res.status(err.status).send(err.message)
 }

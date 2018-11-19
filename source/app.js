@@ -1,7 +1,10 @@
 const express = require('express')
 const fallback = require('./lib/fallback')
+const httpError = require('http-errors')
 const logger = require('./lib/logger')
 const requireDir = require('require-dir')
+
+// todo: это надо в константы по-красоте чтобы не гадать коды
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -30,15 +33,23 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.message.includes('JSON')) {
+    logger.warn(`Invalid JSON received: "${err.body}"`)
+    // todo: в константы
+    res.status(400).send('Invalid JSON')
+  } else {
+    next(err)
+  }
+})
+
 app.use('/api/v1', require('./api/v1/routers'))
 
 app.use('*', (req, res, next) => {
-  // todo: http-errors
-  let err = new Error('Not found')
-  err.status = 404
-
-  next(err)
+  next(httpError.NotFound())
 })
+
+require('./lib/reporters')(app)
 
 app.use(fallback)
 
