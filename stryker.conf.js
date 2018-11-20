@@ -24,7 +24,6 @@ module.exports = function(config) {
     testFramework: 'mocha',
     mutator: 'javascript',
     reporters: ['html', 'clear-text', 'progress', 'dashboard'],
-    coverageAnalysis: 'perTest',
-    maxConcurrentTestRunners: 4
+    coverageAnalysis: 'perTest'
   })
 }

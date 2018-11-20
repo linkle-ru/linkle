@@ -10,7 +10,9 @@ module.exports = Object.freeze({
   ALIAS_NAME_EMPTY: 'v5',
   HREF_BAD: 'v7',
   LINK_LOOP: 'v8',
+  LINK_BROKEN: 'v9',
+  BAD_LINK_LIST: 'v10',
 
   ALIAS_NOT_FOUND: 'd0',
-  BAD_JSON: 'v1'
+  BAD_JSON: 'd1',
 })

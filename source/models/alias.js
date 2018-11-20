@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const shortId = require('shortid')
 const constants = require('../i18n/error-codes')
 const validators = require('../lib/validators')
-const axios = require('axios')
 
 const aliasSchema = new mongoose.Schema({
   _id: {
@@ -31,15 +30,6 @@ const aliasSchema = new mongoose.Schema({
     }, {
       validator: href => {
         return validators.regexes.href.test(href)
-      },
-      message: constants.HREF_BAD
-    }, {
-      validator: href => {
-        return axios
-          .head(href)
-          .then(() => {
-            return Promise.resolve()
-          })
       },
       message: constants.HREF_BAD
     }],

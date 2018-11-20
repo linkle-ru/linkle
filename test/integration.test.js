@@ -211,23 +211,20 @@ describe('Добавление новой ссылки', () => {
       'http://vk.com',
       'http://repl.it',
       'http://github.com',
-      'https://youtube.com',
       'https://instagram.com',
       'penup.com',
       'twitter.com',
-      'http://tripadvisor.ru',
-      'http://facebook.com',
       'http://wikipedia.org',
     ]
 
     for (const href of hrefs) {
-      xit(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
+      it(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({ href })
           .expect(200)
           .end(done)
-      })
+      }).timeout(5000)
     }
 
     it('запрещено, если сжимаемая ссылка пустая', done => {
@@ -240,6 +237,19 @@ describe('Добавление новой ссылки', () => {
           status: 'error',
           reason: 'Link is empty',
           code: 'v4'
+        }, done)
+    })
+
+    it('запрещено, если сжимаемая ссылка ведет в никуда', done => {
+      supertest(app)
+        .post('/api/v1/aliases')
+        .send({
+          'href': 'foajsdfasd.asdfas.sdfsf'
+        })
+        .expect(400, {
+          status: 'error',
+          reason: 'Link is broken',
+          code: 'v9'
         }, done)
     })
 
@@ -344,13 +354,13 @@ describe('Несуществующая страница', () => {
 
 describe('Запрос данных', () => {
   describe('с пустым списком', () => {
-    xit('валится', done => {
+    it('валится', done => {
       supertest(app)
         .get('/api/v1/aliases')
         .expect(400, {
           status: 'error',
-          code: 'No list passed', // todo: надо код сделать для этой ошибки
-          reason: 'No list passed'
+          code: 'v10',
+          reason: 'Bad link list'
         }, done)
     })
   })

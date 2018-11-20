@@ -1,18 +1,18 @@
 {
-    "v":
-    {
-        "0": "Alias name is too long",
-        "1": "Alias name is taken",
-        "2": "Incorrect alias name",
-        "3": "Link is too long",
-        "4": "Link is empty",
-        "5": "Empty alias name",
-        "7": "Bad href",
-        "8": "Link may loop"
-    },
-    "d":
-    {
-        "0": "Alias is not in database",
-        "1": "Could not parse JSON"
-    }
+  "v": {
+    "0": "Alias name is too long",
+    "1": "Alias name is taken",
+    "2": "Incorrect alias name",
+    "3": "Link is too long",
+    "4": "Link is empty",
+    "5": "Empty alias name",
+    "7": "Bad href",
+    "8": "Link may loop",
+    "9": "Link is broken",
+    "10": "Bad link list"
+  },
+  "d": {
+    "0": "Alias is not in database",
+    "1": "Could not parse JSON"
+  }
 }

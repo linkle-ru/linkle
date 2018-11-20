@@ -1,6 +1,7 @@
 const aliasHelper = require('../../lib/alias')
-const axios = require('axios')
+const constants = require('../../i18n/error-codes')
 const Alias = require('../../models/alias')
+const request = require('request')
 
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
@@ -14,7 +15,7 @@ const getAlias = function (req, res, next) {
 
 const getAliases = function (req, res, next) {
   if (!req.query.list) {
-    next(new Error('No list passed'))
+    next(new Error(constants.BAD_LINK_LIST))
   } else {
     const list = req.query.list.split(',')
 
@@ -57,25 +58,25 @@ const newAlias = function (req, res, next) {
         title: null
       }
 
-      return axios.get(alias.href)
-    })
-    .then(response => {
-      const title = response.data.match(/<title.*?>(.*?)<\/title>/i)[1]
+      request(alias.href, (e, response, body) => {
+        if (e) {
+          next(new Error(constants.LINK_BROKEN))
 
-      if (title && title.length) {
-        res.locals.payload.title = title
-      }
+          return
+        }
 
-      next()
+        const title = body.match(/<title.*?>[\s\S]*?(\D*?)<\/title>/i)[1].trim()
 
-      if (process.env.NODE_ENV === 'production') {
-        axios
-          .get(`http://localhost:${process.env.HOOK_PORT}`)
-          .then(() => {
-            console.log('yanked a hook...')
-          })
-          .catch(console.error)
-      }
+        if (title && title.length) {
+          res.locals.payload.title = title
+        }
+
+        next()
+
+        if (process.env.NODE_ENV === 'production') {
+          request(`http://localhost:${process.env.HOOK_PORT}`)
+        }
+      })
     })
     .catch(next)
 }
