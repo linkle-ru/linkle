@@ -9,7 +9,7 @@ const mockedLogger = {
     realLogger.info('log() called')
   },
   warn() {
-    realLogger.info('warn() called')
+
   },
   error() {
     realLogger.info('error() called')

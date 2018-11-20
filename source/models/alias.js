@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const shortId = require('shortid')
-const constants = require('../lib/constants')
+const constants = require('../i18n/error-codes')
 const validators = require('../lib/validators')
 const axios = require('axios')
 

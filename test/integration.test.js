@@ -76,7 +76,7 @@ describe('Добавление новой ссылки', () => {
             'name': 'first',
             'href': 'google.com'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Alias name is taken',
             code: 'v1'
@@ -90,7 +90,7 @@ describe('Добавление новой ссылки', () => {
             'name': 'First',
             'href': 'google.com'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Alias name is taken',
             code: 'v1'
@@ -104,7 +104,7 @@ describe('Добавление новой ссылки', () => {
             'name': 'loop',
             'href': 'https://short.taxnuke.ru/loop'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Link may loop',
             code: 'v8'
@@ -119,7 +119,7 @@ describe('Добавление новой ссылки', () => {
               'name': 'loop',
               'href': link
             })
-            .expect(200, {
+            .expect(400, {
               status: 'error',
               reason: 'Bad href',
               code: 'v7'
@@ -134,7 +134,7 @@ describe('Добавление новой ссылки', () => {
             'name': chance.word({ length: 300 }),
             'href': 'google.com'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Alias name is too long',
             code: 'v0'
@@ -148,7 +148,7 @@ describe('Добавление новой ссылки', () => {
             'name': '',
             'href': 'google.com'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Empty alias name',
             code: 'v5'
@@ -162,7 +162,7 @@ describe('Добавление новой ссылки', () => {
             'name': '@asasd',
             'href': 'google.com'
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Incorrect alias name',
             code: 'v2'
@@ -176,7 +176,7 @@ describe('Добавление новой ссылки', () => {
             'name': chance.word({ length: 5 }),
             'href': chance.word({ length: 3000 })
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Link is too long',
             code: 'v3'
@@ -190,7 +190,7 @@ describe('Добавление новой ссылки', () => {
             'name': chance.word({ length: 5 }),
             'href': ''
           })
-          .expect(200, {
+          .expect(400, {
             status: 'error',
             reason: 'Link is empty',
             code: 'v4'
@@ -203,14 +203,25 @@ describe('Добавление новой ссылки', () => {
 
   describe('с рандомным именем', () => {
     const hrefs = [
-      'https://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
       'https://www.pochta.ru/courier?utm_source=pochta_ru&utm_medium=banner&utm_campaign=carousel&utm_content=courier',
       'http://www.pochta.ru/courier?utm_source=pochta_ru&utm_medium=banner&utm_campaign=carousel&utm_content=courier',
-      'news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d'
+      'http://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
+      'http://taxnuke.ru',
+      'http://bing.com',
+      'http://vk.com',
+      'http://repl.it',
+      'http://github.com',
+      'https://youtube.com',
+      'https://instagram.com',
+      'penup.com',
+      'twitter.com',
+      'http://tripadvisor.ru',
+      'http://facebook.com',
+      'http://wikipedia.org',
     ]
 
     for (const href of hrefs) {
-      it('разрешено, если сжимаемая ссылка валидная', done => {
+      it(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({ href })
@@ -225,7 +236,7 @@ describe('Добавление новой ссылки', () => {
         .send({
           'href': ''
         })
-        .expect(200, {
+        .expect(400, {
           status: 'error',
           reason: 'Link is empty',
           code: 'v4'
@@ -238,7 +249,7 @@ describe('Добавление новой ссылки', () => {
         .send({
           'href': chance.word({ length: 2400 })
         })
-        .expect(200, {
+        .expect(400, {
           status: 'error',
           reason: 'Link is too long',
           code: 'v3'
@@ -268,7 +279,7 @@ describe('Переход по короткой ссылке', () => {
     it('запрещено', done => {
       supertest(app)
         .get('/api/v1/follow/googleplex')
-        .expect(200, {
+        .expect(400, {
           status: 'error',
           reason: 'Alias is not in database',
           code: 'd0'
@@ -296,14 +307,28 @@ describe('Получение алиаса по имени', () => {
   })
 
   describe('если он не существует', () => {
-    it('не выполняется', done => {
-      supertest(app)
-        .get('/api/v1/aliases/lasd')
-        .expect(200, {
-          status: 'error',
-          reason: 'Alias is not in database',
-          code: 'd0'
-        }, done)
+    describe('на английском', () => {
+      it('не выполняется', done => {
+        supertest(app)
+          .get('/api/v1/aliases/lasd')
+          .expect(400, {
+            status: 'error',
+            reason: 'Alias is not in database',
+            code: 'd0'
+          }, done)
+      })
+    })
+
+    describe('на русском', () => {
+      it('не выполняется', done => {
+        supertest(app)
+          .get('/api/v1/aliases/lasd?lang=ru')
+          .expect(400, {
+            status: 'error',
+            reason: 'Алиас не найден в базе',
+            code: 'd0'
+          }, done)
+      })
     })
   })
 })
@@ -322,7 +347,7 @@ describe('Запрос данных', () => {
     it('валится', done => {
       supertest(app)
         .get('/api/v1/aliases')
-        .expect(200, {
+        .expect(400, {
           status: 'error',
           code: 'No list passed', // todo: надо код сделать для этой ошибки
           reason: 'No list passed'

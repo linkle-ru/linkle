@@ -1,6 +1,6 @@
 const Alias = require('../models/alias')
 const _ = require('underscore')
-const constants = require('./constants')
+const constants = require('../i18n/error-codes')
 
 module.exports.find = function (name) {
   return new Promise((resolve, reject) => {
