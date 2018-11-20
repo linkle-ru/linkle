@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const shortId = require('shortid')
 const constants = require('../i18n/error-codes')
 const validators = require('../lib/validators')
+const path = require('path')
 
 const aliasSchema = new mongoose.Schema({
   _id: {
@@ -71,4 +72,4 @@ aliasSchema.pre('validate', function (done) {
   done()
 })
 
-module.exports = mongoose.model('Alias', aliasSchema)
+module.exports = mongoose.model(path.parse(__filename).name, aliasSchema)

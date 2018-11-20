@@ -1,4 +1,5 @@
 const aliasHelper = require('../../lib/alias')
+const hookHandler = require('../../lib/hook-handler')
 const constants = require('../../i18n/error-codes')
 const Alias = require('../../models/alias')
 const request = require('request')
@@ -71,11 +72,9 @@ const newAlias = function (req, res, next) {
           res.locals.payload.title = title
         }
 
-        next()
+        hookHandler()
 
-        if (process.env.NODE_ENV === 'production') {
-          request(`http://localhost:${process.env.HOOK_PORT}`)
-        }
+        next()
       })
     })
     .catch(next)

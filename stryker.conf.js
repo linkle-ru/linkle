@@ -15,7 +15,7 @@ module.exports = function(config) {
       'source/app.js',
       'source/lib/reporters.js',
       'source/lib/validators.js',
-      'source/lib/constants.js',
+      'source/i18n/error-codes.js',
     ],
     testRunner: 'mocha',
     mochaOptions: {
