@@ -17,12 +17,11 @@ function sendErr(err, req, res, next) {
   try {
     resBody.code = errorCode
     resBody.reason = res.locals.lang.errors[errorCode[0]][errorCode.substr(1)]
+    logger.warn(resBody.reason || err)
   } catch (e) {
-    resBody.reason = err.message
-
+    logger.error(err)
+    resBody.code = 'err'
   }
-
-  logger.warn(resBody.reason || err)
 
   let resStatus
 

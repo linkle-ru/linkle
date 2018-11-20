@@ -221,7 +221,7 @@ describe('Добавление новой ссылки', () => {
     ]
 
     for (const href of hrefs) {
-      it(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
+      xit(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({ href })
@@ -344,7 +344,7 @@ describe('Несуществующая страница', () => {
 
 describe('Запрос данных', () => {
   describe('с пустым списком', () => {
-    it('валится', done => {
+    xit('валится', done => {
       supertest(app)
         .get('/api/v1/aliases')
         .expect(400, {

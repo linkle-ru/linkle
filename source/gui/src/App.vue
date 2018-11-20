@@ -203,18 +203,21 @@ export default {
       axios
         .post('/api/v1/aliases?lang=ru', { href: this.href })
         .then(response => {
-          return new Promise((resolve, reject) => {
-            if (response.data.status === 'ok') {
-              resolve(response.data.payload)
-            } else {
-              reject(response.data.reason)
-            }
-          })
+          return Promise.resolve(response.data.payload)
         })
         .then(link => {
           this.addLink(link)
         }, err => {
-          err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err
+          try {
+            const data = err.response.data
+            if (data.code === 'err') {
+              err = 'Что-то пошло не так'
+            } else {
+              err = data.reason
+            }
+          } catch (e) {
+            err = typeof(err) === 'object' ? 'Что-то пошло очень не так' : err
+          }
 
           this.displayError(err)
         })
