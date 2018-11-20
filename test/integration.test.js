@@ -49,6 +49,23 @@ describe('Добавление новой ссылки', () => {
             }
           }, done)
       })
+
+      it('вторая ссылка в базе', done => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({
+            'name': 'second',
+            'href': 'google.ru'
+          })
+          .expect(200, {
+            status: 'ok',
+            payload: {
+              name: 'second',
+              href: 'http://google.ru',
+              title: 'Google'
+            }
+          }, done)
+      })
     })
 
     describe('запрещено, если:', () => {
@@ -291,7 +308,7 @@ describe('Получение алиаса по имени', () => {
   })
 })
 
-describe('Несуществующая страница ', () => {
+describe('Несуществующая страница', () => {
   it('не открывается, брошена ошибка 404', done => {
     supertest(app)
       .get('/gui/deprecated')
@@ -300,7 +317,64 @@ describe('Несуществующая страница ', () => {
   })
 })
 
-describe('Некорректный JSON ', () => {
+describe('Запрос данных', () => {
+  describe('с пустым списком', () => {
+    it('валится', done => {
+      supertest(app)
+        .get('/api/v1/aliases')
+        .expect(200, {
+          status: 'error',
+          code: 'No list passed', // todo: надо код сделать для этой ошибки
+          reason: 'No list passed'
+        }, done)
+    })
+  })
+  describe('по одной ссылке', () => {
+    it('успешно отрабатывается', done => {
+      supertest(app)
+        .get('/api/v1/aliases?list=first')
+        .expect(200, {
+          status: 'ok',
+          payload: [
+            {
+              analytics: {
+                followed: 1
+              },
+              href: 'http://ya.ru',
+              name: 'first'
+            }
+          ],
+        }, done)
+    })
+  })
+
+  describe('по двум ссылкам', () => {
+    it('успешно отрабатывается', done => {
+      supertest(app)
+        .get('/api/v1/aliases?list=first,second')
+        .expect(200, {
+          status: 'ok',
+          payload: [
+            {
+              analytics: {
+                followed: 1
+              },
+              href: 'http://ya.ru',
+              name: 'first'
+            }, {
+              analytics: {
+                followed: 0
+              },
+              href: 'http://google.ru',
+              name: 'second'
+            }
+          ],
+        }, done)
+    })
+  })
+})
+
+describe('Некорректный JSON', () => {
   it('вызывает ошибку', done => {
     supertest(app)
       .post('/api/v1/aliases')
@@ -312,14 +386,14 @@ describe('Некорректный JSON ', () => {
 })
 
 describe('Стук в левый эндпоинт', () => {
-  it('заканчивается ошибкой', done => {
+  it('в api заканчивается ошибкой', done => {
     supertest(app)
       .get('/api/v1/info/total')
       .expect(404)
       .end(done)
   })
 
-  it('заканчивается ошибкой', done => {
+  it('от корня заканчивается ошибкой', done => {
     supertest(app)
       .get('/asdfasfas/asdfs')
       .expect(404)
