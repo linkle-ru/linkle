@@ -68,17 +68,11 @@ const newAlias = function (req, res, next) {
 
       next()
 
-      return Promise.resolve(res.locals.payload.name)
-    })
-    .then(name => {
       if (process.env.NODE_ENV === 'production') {
-        Alias.count({}).exec()
-          .then(count => {
-            const data = JSON.stringify({ link_count: count, latest: name })
-
-            return axios.get(
-              `http://localhost:${process.env.HOOK_PORT}?data=${data}`
-            )
+        axios
+          .get(`http://localhost:${process.env.HOOK_PORT}`)
+          .then(() => {
+            console.log('yanked a hook...')
           })
           .catch(console.error)
       }
