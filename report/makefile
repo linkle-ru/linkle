@@ -2,16 +2,12 @@
 
 TEX=pdflatex
 
-all:pdf run
+all:pdf clean
 
 pdf:
 	$(TEX) report.tex
 	if [ ! -d 'out' ]; then mkdir 'out'; fi
 	mv report.pdf out/report.pdf
-	rm -fv *.aux *.bbl *.blg *.lof \
-	*.out *.pdf *.snm *.vrb *.toc  \
-	*.log *.lol *.lot *.nav *.bak  \
-	*.loa *.thm
 
 run:
 	if [ ! -r 'out/report.pdf' ];    \
