@@ -1,6 +1,6 @@
 .PHONY:report presentation open_report open_presentation checkdocs
 
-TEX = pdflatex
+TEX = pdflatex -shell-escape
 
 all: report presentation open_report open_presentation
 
