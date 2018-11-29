@@ -1,6 +1,13 @@
 <template>
   <v-footer class="pa-3 body-2">
-    <div>&copy; {{ new Date().getFullYear() }} Семён Фомин</div>
+    <div>
+      &copy; {{ new Date().getFullYear() }}
+      <a
+          href="https://vk.com/taxnuke"
+          target="_blank"
+      >Семён Фомин
+      </a>
+    </div>
     <v-spacer />
     <v-dialog
       v-model="licenseAgreement"
