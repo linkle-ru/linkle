@@ -17,7 +17,7 @@ server {
         gzip_types text/plain text/css application/json application/x-javascript text/xml
         application/xml application/xml+rss text/javascript application/javascript;
 
-        location ~* ^/[a-zа-я\d_-]+/?$ {
+        location ~ ^/(?!api)[^./]+/?$ {
                 rewrite /(.+) /api/v1/follow/$1 last;
         }
 
