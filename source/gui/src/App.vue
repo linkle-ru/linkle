@@ -9,37 +9,63 @@
       {{ alertMessage }}
     </v-snackbar>
     <v-container>
-      <p class="display-2 font-weight-black text-uppercase">
-        URL Shortener
-        <span class="font-italic text-capitalize headline font-weight-light">
-          developer beta
+      <h1 class="blue--text display-2 font-weight-black text-uppercase">
+        Linkle.ru
+        <span class="red--text font-italic text-lowercase headline font-weight-light">
+          beta
         </span>
-      </p>
+      </h1>
+      <!--<h2 class="font-italic">Сервис укорачивания ссылок</h2>-->
       <v-layout
-        row
-        wrap
+        v-bind="binding"
+        justify-space-around
       >
         <v-flex
           xs12
-          sm8
-          md7
-          lg4
+          sm4
+          md6
         >
           <v-text-field
             v-model="href"
+            autofocus
+            prepend-icon="explore"
             :rules="hrefRules"
+            messages="Оригинальная ссылка"
             placeholder="https://example.link"
             @keyup.enter="shorten()"
           />
         </v-flex>
-        <v-flex>
-          <v-btn
-            :disabled="progress"
-            depressed
-            color="primary"
-            @click="shorten()"
-          >Сократить
-          </v-btn>
+        <v-flex
+          xs12
+          sm4
+          md3
+        >
+          <v-tooltip top>
+            <v-text-field
+              slot="activator"
+              v-model="aliasName"
+              prepend-icon="link"
+              :placeholder="randomAlias"
+              prefix="linkle.ru/"
+              messages="Короткая ссылка"
+            />
+            <span>Латиница, кириллица, 0-9 и _ -</span>
+          </v-tooltip>
+        </v-flex>
+        <v-flex
+          xs12
+          sm2
+          md2
+        >
+          <div class="text-xs-center">
+            <v-btn
+              :disabled="progress"
+              depressed
+              color="primary"
+              @click="shorten()"
+            >Сократить
+            </v-btn>
+          </div>
         </v-flex>
       </v-layout>
       <v-dialog
@@ -131,6 +157,8 @@ import Legal from './components/Legal'
 export default {
   components: { Legal, History },
   data: () => ({
+    randomAlias: null,
+    aliasName: '',
     progress: false,
     isOffline: false,
     dialog: false,
@@ -143,12 +171,28 @@ export default {
     ],
     links: []
   }),
+  computed: {
+    binding () {
+      const binding = {}
+
+      if (this.$vuetify.breakpoint.xsOnly) binding.column = true
+
+      return binding
+    }
+  },
   watch: {
     links() {
       localStorage.linkHistory = JSON.stringify(this.links)
     }
   },
   mounted() {
+    setInterval(() => {
+      const charCode = Math.random() * (116 - 108) + 108
+      this.randomAlias = String.fromCharCode(
+        charCode, charCode - 4, charCode + 3, charCode - 2, charCode - 7, charCode + 2
+      )
+    }, 150)
+
     addEventListener('online', () => {
       this.isOffline = false
     })

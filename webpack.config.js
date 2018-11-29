@@ -46,6 +46,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    compress: true,
+    disableHostCheck: true,
     contentBase: './source/gui',
     noInfo: false,
     proxy: [{
