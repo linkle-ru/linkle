@@ -48,6 +48,7 @@
               :placeholder="randomAlias"
               prefix="linkle.ru/"
               messages="Короткая ссылка"
+              @keyup.enter="shorten()"
             />
             <span>Латиница, кириллица, 0-9 и _ -</span>
           </v-tooltip>
@@ -187,11 +188,9 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      const charCode = Math.random() * (116 - 108) + 108
-      this.randomAlias = String.fromCharCode(
-        charCode, charCode - 4, charCode + 3, charCode - 2, charCode - 7, charCode + 2
-      )
-    }, 150)
+      const randomChars = Array(8).fill(0).map(el => Math.random() * (122 - 97) + 97)
+      this.randomAlias = String.fromCharCode(...randomChars)
+    }, 100)
 
     addEventListener('online', () => {
       this.isOffline = false
@@ -244,8 +243,14 @@ export default {
     shorten() {
       this.progress = true
 
+      const aliasData = {href: this.href}
+
+      if (this.aliasName) {
+        aliasData.name = this.aliasName
+      }
+
       axios
-        .post('/api/v1/aliases?lang=ru', { href: this.href })
+        .post('/api/v1/aliases?lang=ru', aliasData)
         .then(response => {
           return Promise.resolve(response.data.payload)
         })
