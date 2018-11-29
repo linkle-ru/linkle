@@ -188,7 +188,7 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      const randomChars = Array(8).fill(0).map(el => Math.random() * (122 - 97) + 97)
+      const randomChars = Array(8).fill(0).map(() => Math.random() * (122 - 97) + 97)
       this.randomAlias = String.fromCharCode(...randomChars)
     }, 100)
 
