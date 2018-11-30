@@ -159,7 +159,7 @@ describe('Добавление новой ссылки', () => {
         supertest(app)
           .post('/api/v1/aliases')
           .send({
-            'name': '@asasd',
+            'name': '*#asasd',
             'href': 'google.com'
           })
           .expect(400, {
