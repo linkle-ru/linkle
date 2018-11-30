@@ -27,6 +27,7 @@
         >
           <v-text-field
             v-model="href"
+            clearable
             autofocus
             prepend-icon="explore"
             :rules="hrefRules"
