@@ -3,8 +3,8 @@
     <div>
       &copy; {{ new Date().getFullYear() }}
       <a
-          href="https://vk.com/taxnuke"
-          target="_blank"
+        href="https://vk.com/taxnuke"
+        target="_blank"
       >Семён Фомин
       </a>
     </div>

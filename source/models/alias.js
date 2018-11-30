@@ -4,6 +4,10 @@ const constants = require('../i18n/error-codes')
 const validators = require('../lib/validators')
 const path = require('path')
 
+shortId.characters(
+  '0123456789abcdefghijklmnopqrstuvwxyz@бвгд$ёжзийклмнптфхцчшщэюя-_'
+)
+
 const aliasSchema = new mongoose.Schema({
   _id: {
     type: String,

@@ -51,7 +51,7 @@
               messages="Короткая ссылка"
               @keyup.enter="shorten()"
             />
-            <span>Латиница, кириллица, 0-9 и _ -</span>
+            <span>Латиница, кириллица, 0-9 и _ - @ $</span>
           </v-tooltip>
         </v-flex>
         <v-flex
@@ -189,9 +189,10 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      const randomChars = Array(8).fill(0).map(() => Math.random() * (122 - 97) + 97)
-      this.randomAlias = String.fromCharCode(...randomChars)
-    }, 100)
+      const possibleChars = '0123456789abcdefghijklmnopqrstuvwxyz@бвгд$ёжзийклмнптфхцчшщэюя-_'
+      const randomChars = Array(7).fill(0).map(() => possibleChars[Math.random() * 68 >> 0])
+      this.randomAlias = randomChars.join('')
+    }, 300)
 
     addEventListener('online', () => {
       this.isOffline = false
