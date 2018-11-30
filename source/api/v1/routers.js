@@ -4,10 +4,6 @@ const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
 const logger = require('../../lib/logger')
 
-/**
- * todo: улучшить обработку и отправку ошибок
- */
-
 router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
 router.get('/aliases', controllers.getAliases)

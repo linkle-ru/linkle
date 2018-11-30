@@ -4,7 +4,6 @@ const httpError = require('http-errors')
 const logger = require('./lib/logger')
 const requireDir = require('require-dir')
 
-// todo: это надо в константы по-красоте чтобы не гадать коды
 const locales = requireDir('./i18n', { recurse: true })
 const bodyParser = require('body-parser')
 const cors = require('cors')

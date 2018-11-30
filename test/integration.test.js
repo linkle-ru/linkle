@@ -7,10 +7,6 @@ const mongoose = require('mongoose')
 const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
-/**
- * todo: улучшить покрытие до 95% и MSI до 70%
- */
-
 mongoose.Promise = Promise
 const mongooseOptions = {
   useMongoClient: true
@@ -350,7 +346,6 @@ describe('Несуществующая страница', () => {
   })
 })
 
-// todo: отрефакторить
 describe('Слишком частое сокращение ссылок', () => {
   for (let i = 0; i < 34; i++) {
     it(`на попытке №${i} успешно`, done => {
