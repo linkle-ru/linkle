@@ -203,9 +203,9 @@ describe('Добавление новой ссылки', () => {
 
   describe('с рандомным именем', () => {
     const hrefs = [
-      'https://www.pochta.ru/courier?utm_source=pochta_ru&utm_medium=banner&utm_campaign=carousel&utm_content=courier',
-      'http://www.pochta.ru/courier?utm_source=pochta_ru&utm_medium=banner&utm_campaign=carousel&utm_content=courier',
       'http://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
+      'https://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
+      'news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
       'https://taxnuke.ru',
       'https://bing.com',
       'yandex.kz',
@@ -356,7 +356,7 @@ describe('Слишком частое сокращение ссылок', () => 
     it(`на попытке №${i} успешно`, done => {
       supertest(app)
         .post('/api/v1/aliases')
-        .send({ href: 'https://ya.ru' })
+        .send({ href: 'https://linkle.ru' })
         .expect(200)
         .end(done)
     })
