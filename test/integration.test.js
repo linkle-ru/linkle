@@ -102,7 +102,7 @@ describe('Добавление новой ссылки', () => {
           .post('/api/v1/aliases')
           .send({
             'name': 'loop',
-            'href': 'https://short.taxnuke.ru/loop'
+            'href': 'https://linkle.ru/loop'
           })
           .expect(400, {
             status: 'error',
