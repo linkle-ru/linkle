@@ -1,5 +1,3 @@
-const logger = require('./logger')
-
 function sendOk(req, res, next) {
   res.status(200).json({
     status: 'ok',
@@ -8,6 +6,8 @@ function sendOk(req, res, next) {
 }
 
 function sendErr(err, req, res, next) {
+  const logger = require('./logger')
+
   const resBody = {
     status: 'error'
   }

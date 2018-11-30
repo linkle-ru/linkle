@@ -1,5 +1,4 @@
 const logger = require('./logger')
-const axios = require('axios')
 
 let credentials = {
   telegramCO: {
@@ -9,6 +8,8 @@ let credentials = {
 }
 
 const notify = function (message) {
+  const axios = require('axios')
+
   axios
     .post(credentials.telegramCO.botToken, {
       chat_id: credentials.telegramCO.chatId,

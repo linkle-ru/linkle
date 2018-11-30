@@ -1,8 +1,5 @@
 const aliasHelper = require('../../lib/alias')
-const hookHandler = require('../../lib/hook-handler')
 const constants = require('../../i18n/error-codes')
-const Alias = require('../../models/alias')
-const request = require('request')
 
 const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
@@ -20,7 +17,7 @@ const getAliases = function (req, res, next) {
   } else {
     const list = req.query.list.split(',')
 
-    Alias.find({
+    require('../../models/alias').find({
       '_id': { $in: list }
     })
       .then(links => {
@@ -59,7 +56,7 @@ const newAlias = function (req, res, next) {
         title: null
       }
 
-      request(alias.href, (e, response, body) => {
+      require('request')(alias.href, (e, response, body) => {
         if (e) {
           next(new Error(constants.LINK_BROKEN))
 
@@ -72,7 +69,7 @@ const newAlias = function (req, res, next) {
           res.locals.payload.title = title
         }
 
-        hookHandler()
+        require('../../lib/hook-handler')()
 
         next()
       })

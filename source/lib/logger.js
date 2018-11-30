@@ -1,27 +1,16 @@
-const pino = require('pino')
-
-const realLogger = pino({
-  prettyPrint: true
-})
-
+const realLogger = require('pino')({ prettyPrint: true })
 const mockedLogger = {
   info() {
-    realLogger.info('log() called')
+    realLogger.info('log() called with args: ' + JSON.stringify(arguments))
   },
   warn() {
-
+    realLogger.info('warn() called with args: ' + JSON.stringify(arguments))
   },
   error() {
-    realLogger.info('error() called')
+    realLogger.info('error() called with args: ' + JSON.stringify(arguments))
   }
 }
 
-let logger
-
-if (process.env.NODE_ENV === 'testing') {
-  logger = mockedLogger
-} else {
-  logger = realLogger
-}
+const logger = process.env.NODE_ENV === 'testing' ? mockedLogger : realLogger
 
 module.exports = logger

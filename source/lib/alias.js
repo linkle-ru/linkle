@@ -1,5 +1,4 @@
 const Alias = require('../models/alias')
-const _ = require('underscore')
 const constants = require('../i18n/error-codes')
 
 module.exports.find = function (name) {
@@ -16,6 +15,8 @@ module.exports.find = function (name) {
 }
 
 module.exports.create = function (name, href) {
+  const _ = require('underscore')
+
   return new Promise((resolve, reject) => {
     Alias.create(
       _.omit({
