@@ -182,6 +182,7 @@ export default {
       return binding
     }
   },
+
   watch: {
     links() {
       localStorage.linkHistory = JSON.stringify(this.links)
