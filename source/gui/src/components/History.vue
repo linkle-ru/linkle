@@ -9,14 +9,14 @@
       column-
     >
       <v-flex
-        v-if="source.length"
+        v-if="links.length"
         xs12
         lg10
         xl8
       >
         <v-card>
           <v-list two-line>
-            <template v-for="(link, index) in source">
+            <template v-for="(link, index) in links">
               <v-list-tile
                 :key="link.name"
                 avatar
@@ -88,7 +88,7 @@
                 </v-list-tile-action>
               </v-list-tile>
               <v-divider
-                v-if="index + 1 < source.length"
+                v-if="index + 1 < links.length"
                 :key="index"
               />
             </template>
@@ -115,6 +115,7 @@
 <script>
 import {shared} from '../main'
 import cbCopy from 'copy-to-clipboard'
+import axios from 'axios'
 
 export default {
   filters: {
@@ -127,31 +128,63 @@ export default {
 
       let followed = analytics.followed
 
-      if (followed > 1000 && followed < 1000000) {
-        followed = `${(followed / 1000).toFixed()} K`
-      } else if (followed > 1000000) {
-        followed = `${(followed / 1000000).toFixed()} M`
+      if (followed > 1e3 && followed < 1e6) {
+        followed = `${(followed / 1e3).toFixed()} K`
+      } else if (followed > 1e6) {
+        followed = `${(followed / 1e6).toFixed()} M`
       }
 
       return followed
     }
   },
-  props: {
-    source: {
-      type: Array,
-      required: true
-    }
-  },
   data: () => ({
+    links: null,
     shared
   }),
+  created() {
+    this.$root.$on('shortened', this.addLink)
+
+    try {
+      this.links = JSON.parse(localStorage.linkHistory)
+
+      if (this.links.length) {
+        axios
+          .get(`${shared.origin}/api/v1/aliases?lang=ru&list=${this.links
+            .map(link => link.name)}`)
+          .then(response => {
+            if (response.data.status === 'ok') {
+              for (const link of response.data.payload) {
+                for (let i = 0; i < this.links.length; i++) {
+                  if (this.links[i].name === link.name) {
+                    this.$set(this.links[i], 'analytics', link.analytics)
+                    break
+                  }
+                }
+              }
+            } else {
+              this.$root.$emit('alert', response.data.reason)
+            }
+          })
+      }
+
+      localStorage.linkHistory = JSON.stringify(this.links)
+    } catch (e) {
+      this.$root.$emit('alert', 'err')
+    }
+  },
   methods: {
+    addLink(link) {
+      this.links.unshift(link)
+      localStorage.linkHistory = JSON.stringify(this.links)
+    },
     followLink(link) {
       window.open(link.href, '_blank')
     },
     deleteLink(link) {
-      const index = this.source.indexOf(link)
-      confirm('Вы уверены? Это действие необратимо!') && this.source.splice(index, 1)
+      const index = this.links.indexOf(link)
+      if (confirm('Вы уверены? Это действие необратимо!')) {
+        this.links.splice(index, 1)
+      }
     },
     cbCopy
   }

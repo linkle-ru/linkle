@@ -58,12 +58,12 @@ module.exports = {
       }
     ],
     'max-lines': [
-      'error',
-      300
+      'warn',
+      200
     ],
     'max-lines-per-function': [
       'warn', {
-        'max': 25,
+        'max': 35,
         'skipComments': true
       }
     ],
