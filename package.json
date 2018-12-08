@@ -16,7 +16,9 @@
     "mutate": "cross-env NODE_ENV=testing stryker run",
     "show-coverage": "open ./reports/coverage/lcov-report/index.html",
     "show-msi": "open ./reports/mutation/html/index.html",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.vue source"
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.vue source",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "husky": {
     "hooks": {
