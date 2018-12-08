@@ -30,7 +30,7 @@
           prepend-icon="link"
           :placeholder="randomAlias"
           prefix="linkle.ru/"
-          messages="Короткая ссылка"
+          messages="Псевдоним"
           @keyup.enter="shorten()"
         />
         <span>
