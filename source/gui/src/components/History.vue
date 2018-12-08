@@ -156,6 +156,7 @@ export default {
               for (const link of response.data.payload) {
                 for (let i = 0; i < this.links.length; i++) {
                   if (this.links[i].name === link.name) {
+                    // чтобы триггернуть перерисовку таблицы
                     this.$set(this.links[i], 'analytics', link.analytics)
                     break
                   }
@@ -185,6 +186,8 @@ export default {
       if (confirm('Вы уверены? Это действие необратимо!')) {
         this.links.splice(index, 1)
       }
+
+      localStorage.linkHistory = JSON.stringify(this.links)
     },
     cbCopy
   }
