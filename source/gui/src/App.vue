@@ -12,7 +12,7 @@
       <h1 class="blue--text display-2 font-weight-black text-uppercase">
         Linkle.ru
         <span class="font-italic text-lowercase headline font-weight-light">
-          beta
+          v{{ packageJson.version }}
         </span>
       </h1>
       <h2 class="font-weight-thin blue--text display-1">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import packageJson from '../../../package.json'
 import History from './components/History'
 import Connection from './components/Connection'
 import Legal from './components/Legal'
@@ -35,6 +36,7 @@ import LinkForm from './components/LinkForm'
 export default {
   components: { Legal, History, Connection, LinkForm },
   data: () => ({
+    packageJson,
     alert: {
       show: false,
       message: null

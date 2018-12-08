@@ -19,9 +19,10 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// Мимикрируем под PHP
 app.use((req, res, next) => {
+  // Мимикрируем под PHP
   res.set('X-Powered-By', 'PHP/5.1.6')
+  res.set('API-Version', require('../package.json').version)
 
   next()
 })

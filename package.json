@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev:server": "vagrant up && pm2 startOrReload ecosystem.config.js --update-env --no-daemon",
     "dev:client": "cross-env NODE_ENV=development API_PORT=8000 webpack-dev-server --hot --open",
