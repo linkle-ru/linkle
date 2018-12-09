@@ -7,7 +7,8 @@ module.exports = function(config) {
       'source/i18n/**/*',
       'source/models/*',
       'source/app.js',
-      'test/*.test.js'
+      'test/*.test.js',
+      'package.json'
     ],
     mutate: [
       'source/api/**/*.js',
