@@ -1,14 +1,14 @@
 <template>
-  <v-app id="app">
-    <v-snackbar
+  <VApp id="app">
+    <VSnackbar
       v-model="alert.show"
       :timeout="2000"
       :top="true"
       color="error"
     >
       {{ alert.message }}
-    </v-snackbar>
-    <v-container>
+    </VSnackbar>
+    <VContainer>
       <h1 class="blue--text display-2 font-weight-black text-uppercase">
         Linkle.ru
         <span class="font-italic text-lowercase headline font-weight-light">
@@ -18,12 +18,12 @@
       <h2 class="font-weight-thin blue--text display-1">
         Сервис укорачивания ссылок
       </h2>
-      <connection />
-      <link-form />
-      <history />
-    </v-container>
-    <legal />
-  </v-app>
+      <Connection />
+      <LinkForm />
+      <History />
+    </VContainer>
+    <Legal />
+  </VApp>
 </template>
 
 <script>

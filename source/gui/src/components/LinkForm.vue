@@ -1,14 +1,14 @@
 <template>
-  <v-layout
+  <VLayout
     v-bind="binding"
     justify-space-around
   >
-    <v-flex
+    <VFlex
       xs12
       sm4
       md6
     >
-      <v-text-field
+      <VTextField
         v-model="form.href"
         clearable
         autofocus
@@ -17,14 +17,14 @@
         placeholder="https://example.link"
         @keyup.enter="shorten()"
       />
-    </v-flex>
-    <v-flex
+    </VFlex>
+    <VFlex
       xs12
       sm4
       md3
     >
-      <v-tooltip top>
-        <v-text-field
+      <VTooltip top>
+        <VTextField
           slot="activator"
           v-model="form.alias"
           prepend-icon="link"
@@ -36,45 +36,46 @@
         <span>
           Латиница, кириллица, 0-9 и _ - @ $
         </span>
-      </v-tooltip>
-    </v-flex>
-    <v-flex
+      </VTooltip>
+    </VFlex>
+    <VFlex
       xs12
       sm2
       md2
     >
       <div class="text-xs-center">
-        <v-btn
+        <VBtn
           :disabled="progress"
           depressed
           color="primary"
           @click="shorten()"
-        >Сократить
-        </v-btn>
+        >
+          Сократить
+        </VBtn>
       </div>
-    </v-flex>
-    <v-dialog
+    </VFlex>
+    <VDialog
       v-model="progress"
       hide-overlay
       persistent
       width="300"
     >
-      <v-card
+      <VCard
         color="primary"
         dark
       >
-        <v-card-text>
+        <VCardText>
           Запрос обрабатывается
-          <v-progress-linear
+          <VProgressLinear
             indeterminate
             color="white"
             class="mb-0"
           />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <result-dialog />
-  </v-layout>
+        </VCardText>
+      </VCard>
+    </VDialog>
+    <ResultDialog />
+  </VLayout>
 </template>
 
 <script>

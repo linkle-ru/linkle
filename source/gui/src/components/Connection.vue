@@ -1,14 +1,14 @@
 <template>
-  <v-slide-y-transition>
-    <v-alert
+  <VSlideYTransition>
+    <VAlert
       v-show="isOffline"
       value="true"
       color="warning"
       icon="wifi_off"
     >
       Соединение с Интернетом потеряно
-    </v-alert>
-  </v-slide-y-transition>
+    </VAlert>
+  </VSlideYTransition>
 </template>
 
 <script>

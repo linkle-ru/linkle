@@ -1,41 +1,41 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog
+    <VDialog
       v-model="isShown"
       width="500"
     >
-      <v-card>
-        <v-card-title
+      <VCard>
+        <VCardTitle
           class="headline grey lighten-2"
           primary-title
         >
           Ваша сокращенная ссылка
-        </v-card-title>
-        <v-card-text>
+        </VCardTitle>
+        <VCardText>
           <p class="title font-weight-light">
             {{ finalLink }}
           </p>
-        </v-card-text>
-        <v-divider />
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
+        </VCardText>
+        <VDivider />
+        <VCardActions>
+          <VSpacer />
+          <VBtn
             color="primary"
             flat
             @click="copyToClipboard(finalLink)"
           >
             скопировать
-          </v-btn>
-          <v-btn
+          </VBtn>
+          <VBtn
             color="red darken-1"
             flat
             @click="isShown = false"
           >
             закрыть
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
   </div>
 </template>
 

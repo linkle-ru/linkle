@@ -3,112 +3,115 @@
     <p class="subheading font-weight-thin text-xs-center text-uppercase mt-4">
       История
     </p>
-    <v-layout
+    <VLayout
       align-center
       justify-center
       column-
     >
-      <v-flex
+      <VFlex
         v-if="links.length"
         xs12
         lg10
         xl8
       >
-        <v-card>
-          <v-list two-line>
+        <VCard>
+          <VList two-line>
             <template v-for="(link, index) in links">
-              <v-list-tile
+              <VListTile
                 :key="link.name"
                 avatar
                 @click="followLink(link)"
               >
-                <v-list-tile-avatar>
-                  <v-layout
+                <VListTileAvatar>
+                  <VLayout
                     align-center
                     justify-center
                     column
                     fill-height
                   >
-                    <v-tooltip top>
-                      <v-flex
+                    <VTooltip top>
+                      <VFlex
                         slot="activator"
                         class="body-2"
                       >
                         {{ link | visitsFormatter }}
-                      </v-flex>
+                      </VFlex>
                       <span>Переходы по ссылке</span>
-                    </v-tooltip>
-                    <v-icon
+                    </VTooltip>
+                    <VIcon
                       small
                       color="grey lighten-1"
                     >
                       visibility
-                    </v-icon>
+                    </VIcon>
+                  </VLayout>
+                </VListTileAvatar>
 
-                  </v-layout>
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>
+                <VListTileContent>
+                  <VListTileTitle>
                     {{ $sanitize(link.title || "Без заголовка") }}
-                  </v-list-tile-title>
-                  <v-list-tile-sub-title>
+                  </VListTileTitle>
+                  <VListTileSubTitle>
                     <a
                       class="subheading"
                       onclick="return false"
                       :href="link.name"
-                    >{{ link.name }}</a>
+                    >
+                      {{ link.name }}
+                    </a>
                     &mdash;
-                    <span class="font-weight-thin">{{ link.href }}</span>
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-btn
+                    <span class="font-weight-thin">
+                      {{ link.href }}
+                    </span>
+                  </VListTileSubTitle>
+                </VListTileContent>
+                <VListTileAction>
+                  <VBtn
                     icon
                     ripple
                     @click.stop="cbCopy(`${shared.origin}/${link.name}`)"
                   >
-                    <v-icon
+                    <VIcon
                       color="blue lighten-2"
                     >
                       file_copy
-                    </v-icon>
-                  </v-btn>
-                  <v-btn
+                    </VIcon>
+                  </VBtn>
+                  <VBtn
                     icon
                     ripple
                     @click.stop="deleteLink(link)"
                   >
-                    <v-icon
+                    <VIcon
                       color="red lighten-2"
                     >
                       remove_circle
-                    </v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-              <v-divider
+                    </VIcon>
+                  </VBtn>
+                </VListTileAction>
+              </VListTile>
+              <VDivider
                 v-if="index + 1 < links.length"
                 :key="index"
               />
             </template>
-          </v-list>
-        </v-card>
-      </v-flex>
-      <v-flex
+          </VList>
+        </VCard>
+      </VFlex>
+      <VFlex
         v-else
         md6
       >
-        <v-alert
+        <VAlert
           :value="true"
           color="info"
           icon="content_cut"
           outline
         >
           У Вас пока нет сокращенных ссылок &#x1F614;
-        </v-alert>
-      </v-flex>
-    </v-layout>
+        </VAlert>
+      </VFlex>
+    </VLayout>
   </div>
 </template>
 
