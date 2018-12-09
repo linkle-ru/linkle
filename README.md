@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/linkle-ru/linkle.svg?branch=master)](https://travis-ci.org/linkle-ru/linkle)
-[![Maintainability](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/maintainability)](https://codeclimate.com/github/taxnuke/url-shortener/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/76293fe51f0b69fa5afe/test_coverage)](https://codeclimate.com/github/taxnuke/url-shortener/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bdd94e84e90b6f705518/maintainability)](https://codeclimate.com/github/linkle-ru/linkle/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/bdd94e84e90b6f705518/test_coverage)](https://codeclimate.com/github/linkle-ru/linkle/test_coverage)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/linkle-ru/linkle/master)](https://stryker-mutator.github.io)
 [![GitHub license](https://img.shields.io/github/license/linkle-ru/linkle.svg)](https://github.com/linkle-ru/linkle/blob/master/LICENSE)
 ---
