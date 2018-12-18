@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 host_name = "s.taxnuke.local"
-database_name = "url-shortener"
+database_name = "linkle"
 server_private_ip = "192.168.10.30"
 
 # Ресурсы для виртуалки
@@ -19,12 +19,12 @@ project_root = nginx_root + "/" + host_name
 Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
   config.vm.box = "generic/debian9"
-  config.vm.hostname = "url-shortener-ubuntu"
+  config.vm.hostname = "linkle-ubuntu"
   config.vm.synced_folder ".", project_root, nfs: true
 
   if ARGV[0] == "up" || ARGV[0] == "provision" || ARGV[0] == "reload"
     # Пробрасываем порты в хост из виртуалки
-    config.vm.network "forwarded_port", guest: 80, host: 8080 # webserver
+    config.vm.network "forwarded_port", guest: 80, host: 8090 # webserver
     # для mongodb обязательно нужно, чтобы порты совпадали иначе авторизацию не пройти снаружи
     config.vm.network "forwarded_port", guest: 27017, host: 28017 # mongodb
 
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider :virtualbox do |vb|
-    vb.name = "url-shortener-ubuntu"
+    vb.name = "linkle-ubuntu"
     vb.customize ["modifyvm", :id, "--cpus", vm_cpus_count]
     vb.customize ["modifyvm", :id, "--memory", vm_ram_size]
     vb.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
