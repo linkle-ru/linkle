@@ -48,9 +48,7 @@
                 </VListTileAvatar>
 
                 <VListTileContent>
-                  <VListTileTitle>
-                    {{ $sanitize(link.title || "Без заголовка") }}
-                  </VListTileTitle>
+                  <VListTileTitle>{{ $sanitize(link.title || "Без заголовка") }}</VListTileTitle>
                   <VListTileSubTitle>
                     <a
                       class="subheading"
@@ -71,9 +69,7 @@
                     ripple
                     @click.stop="cbCopy(`${shared.origin}/${link.name}`)"
                   >
-                    <VIcon
-                      color="blue lighten-2"
-                    >
+                    <VIcon color="blue lighten-2">
                       file_copy
                     </VIcon>
                   </VBtn>
@@ -82,9 +78,7 @@
                     ripple
                     @click.stop="deleteLink(link)"
                   >
-                    <VIcon
-                      color="red lighten-2"
-                    >
+                    <VIcon color="red lighten-2">
                       remove_circle
                     </VIcon>
                   </VBtn>
@@ -141,11 +135,15 @@ export default {
     }
   },
   data: () => ({
-    links: null,
+    links: [],
     shared
   }),
   created() {
     this.$root.$on('shortened', this.addLink)
+
+    if (!localStorage.getItem('linkHistory')) {
+      localStorage.setItem('linkHistory', JSON.stringify(this.links))
+    }
 
     try {
       this.links = JSON.parse(localStorage.linkHistory)
@@ -170,8 +168,6 @@ export default {
             }
           })
       }
-
-      localStorage.linkHistory = JSON.stringify(this.links)
     } catch (e) {
       this.$root.$emit('alert', 'err')
     }
