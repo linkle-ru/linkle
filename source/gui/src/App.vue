@@ -18,9 +18,6 @@
       <h2 class="font-weight-thin blue--text display-1">
         Сервис укорачивания ссылок
       </h2>
-      <h3 class="headline font-weight-thin green--text">
-        С Новым Годом!🎄
-      </h3>
       <Connection />
       <LinkForm />
       <History />
