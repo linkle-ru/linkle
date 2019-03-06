@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.gstatic.com https://fonts.googleapis.com; connect-src 'self' https://mc.yandex.ru; script-src 'self' https://mc.yandex.ru; font-src https://fonts.gstatic.com https://fonts.googleapis.com; img-src 'self' https://mc.yandex.ru;">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.gstatic.com https://fonts.googleapis.com; connect-src 'self' https://mc.yandex.ru https://browser.sentry-cdn.com; script-src 'self' https://mc.yandex.ru https://browser.sentry-cdn.com; font-src https://fonts.gstatic.com https://fonts.googleapis.com; img-src 'self' https://mc.yandex.ru;">
   <title>Linkle - Укорачиватель ссылок</title>
 </head>
+
 <body>
-<div id="app"></div>
-<script src="/dist/build.js"></script>
+  <div id="app"></div>
+  <script src="https://browser.sentry-cdn.com/4.6.4/bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    Sentry.init({ dsn: 'https://66edcc5a04734a39a23978595e18f3f7@sentry.io/1408791' })
+  </script>
+  <script src="/dist/build.js"></script>
 </body>
+
 </html>
