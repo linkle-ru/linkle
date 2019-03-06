@@ -18,6 +18,10 @@ export const shared = new Vue({
   }
 })
 
+Sentry.init({
+  dsn: 'https://66edcc5a04734a39a23978595e18f3f7@sentry.io/1408791'
+})
+
 new Vue({
   el: '#app',
   render: h => h(App)
