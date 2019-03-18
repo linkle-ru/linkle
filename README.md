@@ -11,19 +11,19 @@
 
 #### Перейти по короткой ссылке (далее _"алиасу"_)
 
-##### `GET` [https://short.taxnuke.ru/<алиас>](#)
+##### `GET` [https://linkle.ru/<алиас>](#)
 
 #### Получить содержимое алиаса
 
-##### `GET` [https://short.taxnuke.ru/api/v1/aliases/<алиас>](#)
+##### `GET` [https://linkle.ru/api/v1/aliases/<алиас>](#)
 
 #### Получить содержимое списка алиасов
 
-##### `GET` [https://short.taxnuke.ru/api/v1/aliases?list=<алиас>[, <алиас> ...]](#)
+##### `GET` [https://linkle.ru/api/v1/aliases?list=<алиас>[, <алиас> ...]](#)
 
 #### Создать алиас
 
-##### `POST` [https://short.taxnuke.ru/api/v1/aliases](#)
+##### `POST` [https://linkle.ru/api/v1/aliases](#)
 
 Параметры:
 
@@ -33,7 +33,7 @@
 
 ###### Пример
 > Запрос:
-`curl -d "name=гугл" -d "href=google.com" https://short.taxnuke.ru/api/v1/aliases`
+`curl -d "name=гугл" -d "href=google.com" https://linkle.ru/api/v1/aliases`
 
 > Тело ответа:
 ```json
