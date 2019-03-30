@@ -4,7 +4,7 @@ module.exports = {
     script: './source/server.js',
     env: {
       watch: 'source',
-      ignore_watch : 'source/gui',
+      ignore_watch: 'source/gui',
       NODE_ENV: 'development',
       MONGO_PORT: 28017,
       API_PORT: 8000
@@ -25,8 +25,8 @@ module.exports = {
       'repo': 'git@github.com:taxnuke/url-shortener.git',
       'path': '/var/www/short.taxnuke.ru',
       'post-deploy':
-        'npm i && npm run build && pm2 startOrReload ecosystem.config.js \
-        --update-env --env production'
+        'npm i && npm run build && pm2 startOrReload ecosystem.config.js' +
+        '--update-env --env production'
     }
   }
 }

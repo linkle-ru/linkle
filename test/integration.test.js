@@ -9,6 +9,13 @@ const mongoose = require('mongoose')
 const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
+const nock = require('nock')
+
+nock('http://news.yandex.ru')
+  .persist()
+  .get(/.*/)
+  .reply(200, '<title>test</title>')
+
 mongoose.Promise = Promise
 const mongooseOptions = {
   useMongoClient: true
@@ -200,11 +207,7 @@ describe('Добавление новой ссылки', () => {
   })
 
   describe('с рандомным именем', () => {
-    const hrefs = [
-      'http://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
-      'https://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
-      'news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
-    ]
+    const hrefs = require('./resources.json').hrefs
 
     for (const href of hrefs) {
       it(`разрешено, если сжимаемая ссылка валидная (${href.substr(0, 30)}...)`, done => {
