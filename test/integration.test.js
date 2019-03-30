@@ -11,10 +11,10 @@ const mockgoose = new Mockgoose(mongoose)
 
 const nock = require('nock')
 
-nock('http://news.yandex.ru')
+nock(/^https?.+test/)
   .persist()
-  .get(/.*/)
-  .reply(200, '<title>test</title>')
+  .get(/./)
+  .reply(200, 'test<title>test</title>test')
 
 mongoose.Promise = Promise
 const mongooseOptions = {
