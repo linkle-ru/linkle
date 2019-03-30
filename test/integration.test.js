@@ -204,13 +204,6 @@ describe('Добавление новой ссылки', () => {
       'http://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
       'https://news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
       'news.yandex.ru/story/Premer_Armenii_Pashinyan_podal_v_otstavku--8b9e544d264bdadc826c431de1432bd9?lang=ru&from=main_portal&stid=4deZ1Yk2ogtVd-kiDzAL&t=1539715988&lr=2&msid=1539716539.78271.139886.4723&mlid=1539715988.glob_225.8b9e544d',
-      'https://taxnuke.ru',
-      'https://bing.com',
-      'yandex.kz',
-      'vk.com',
-      'http://repl.it',
-      'twitter.com',
-      'http://wikipedia.org',
     ]
 
     for (const href of hrefs) {
@@ -348,23 +341,33 @@ describe('Несуществующая страница', () => {
   })
 })
 
-describe('Слишком частое сокращение ссылок', () => {
-  for (let i = 0; i < 34; i++) {
-    it(`на попытке №${i} успешно`, done => {
-      supertest(app)
-        .post('/api/v1/aliases')
-        .send({ href: 'https://linkle.ru' })
-        .expect(200)
-        .end(done)
-    })
-  }
+describe('Рейтлимитер', () => {
+  it('отрабатывает', done => {
+    const promises = []
 
-  it(`далее запрещено`, done => {
-    supertest(app)
-      .post('/api/v1/aliases')
-      .send({ href: 'https://ya.ru' })
-      .expect(429)
-      .end(done)
+    for (let i = 0; i < 50; i++) {
+      promises.push(new Promise((resolve, reject) => {
+        supertest(app)
+          .post('/api/v1/aliases')
+          .send({ href: 'https://linkle.ru' })
+          .expect(200)
+          .end(e => {
+            if (e) {
+              reject(e)
+            } else {
+              resolve()
+            }
+          })
+      }))
+    }
+
+    Promise.all(promises)
+      .then(() => {
+        done(new Error())
+      })
+      .catch(() => {
+        done()
+      })
   })
 })
 
