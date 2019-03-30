@@ -1,7 +1,12 @@
-const redis = require('redis')
 const logger = require('./logger')
 const cacheEnabled = process.env.NODE_ENV === 'production'
-const redisClient = redis.createClient()
+
+if (cacheEnabled) {
+  var redis = require('redis')
+  var redisClient = redis.createClient()
+} else {
+  logger.warn('Redis is disabled...')
+}
 
 module.exports = {
   middleware: function (req, res, next) {
