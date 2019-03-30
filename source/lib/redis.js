@@ -1,5 +1,5 @@
 const logger = require('./logger')
-const cacheEnabled = process.env.NODE_ENV === 'production'
+const cacheEnabled = (process.env.NODE_ENV === 'production')
 
 if (cacheEnabled) {
   var redis = require('redis')
@@ -10,6 +10,12 @@ if (cacheEnabled) {
 
 module.exports = {
   middleware: function (req, res, next) {
+    if (!cacheEnabled) {
+      next()
+
+      return
+    }
+
     const alias = req.params.alias
 
     redisClient.get(alias, (err, href) => {
