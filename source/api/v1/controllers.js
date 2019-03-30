@@ -36,7 +36,10 @@ const follow = function (req, res, next) {
       alias.analytics.followed++
       alias.markModified('analytics')
       alias.save()
-      redis.client.setex(alias._id, 60, alias.href)
+
+      if (redis.client) {
+        redis.client.setex(alias._id, 60, alias.href)
+      }
 
       res.status(301).redirect(alias.href)
     })
