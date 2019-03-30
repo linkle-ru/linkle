@@ -38,8 +38,6 @@ const follow = function (req, res, next) {
       alias.save()
 
       if (redis.client) {
-        console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
-
         redis.client.setex(alias._id, 60, alias.href)
       }
 
