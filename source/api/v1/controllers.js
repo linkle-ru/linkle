@@ -6,7 +6,6 @@ const getAlias = function (req, res, next) {
   aliasHelper.find(req.params.alias)
     .then(alias => {
       res.locals.payload = alias
-
       next()
     })
     .catch(next)
@@ -17,13 +16,11 @@ const getAliases = function (req, res, next) {
     next(new Error(constants.BAD_LINK_LIST))
   } else {
     const list = req.query.list.split(',')
+    const aliasModel = require('../../models/alias')
 
-    require('../../models/alias').find({
-      '_id': { $in: list }
-    })
+    aliasModel.find({ '_id': { $in: list } })
       .then(links => {
         res.locals.payload = links
-
         next()
       })
       .catch(next)
@@ -33,6 +30,8 @@ const getAliases = function (req, res, next) {
 const follow = function (req, res, next) {
   aliasHelper.find(req.params.alias)
     .then(alias => {
+      res.status(301).redirect(alias.href)
+
       alias.analytics.followed++
       alias.markModified('analytics')
       alias.save()
@@ -40,15 +39,10 @@ const follow = function (req, res, next) {
       if (redis.client) {
         redis.client.setex(alias._id, 60, alias.href)
       }
-
-      res.status(301).redirect(alias.href)
     })
     .catch(next)
 }
 
-/**
- * Создание новой короткой ссылки
- */
 const newAlias = function (req, res, next) {
   const name = req.body.name && req.body.name.toLowerCase()
   const href = req.body.href
@@ -61,6 +55,7 @@ const newAlias = function (req, res, next) {
         title: null
       }
 
+      // http refactor
       require('request')(alias.href, (e, response, body) => {
         if (e) {
           next(new Error(constants.LINK_BROKEN))
@@ -82,9 +77,4 @@ const newAlias = function (req, res, next) {
     .catch(next)
 }
 
-module.exports = {
-  follow,
-  newAlias,
-  getAlias,
-  getAliases
-}
+module.exports = { follow, newAlias, getAlias, getAliases }

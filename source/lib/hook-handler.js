@@ -1,5 +1,11 @@
+const http = require('http')
+
 module.exports = function () {
   if (process.env.NODE_ENV === 'production') {
-    require('request')(`http://localhost:${process.env.HOOK_PORT}`)
+    http.get({
+      hostname: 'localhost',
+      port: process.env.HOOK_PORT,
+      path: '/'
+    })
   }
 }

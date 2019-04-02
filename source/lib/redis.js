@@ -20,8 +20,8 @@ module.exports = {
 
     redisClient.get(alias, (err, href) => {
       if (cacheEnabled && href != null && !err) {
-        logger.info('Cache hit!')
         res.status(301).redirect(href)
+        logger.info('Cache hit!')
       } else {
         next()
       }

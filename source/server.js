@@ -3,9 +3,7 @@ const app = require('./app')
 const logger = require('./lib/logger')
 const pinoExpress = require('express-pino-logger')()
 
-const env = app.get('env')
-
-if (env === 'production') {
+if (app.get('env')=== 'production') {
   app.use(pinoExpress)
 }
 

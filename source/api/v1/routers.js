@@ -9,6 +9,7 @@ router.get('/follow/:alias', redis.middleware, controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
 router.get('/aliases', controllers.getAliases)
 
+// refactor move outside
 const rateLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 60,
