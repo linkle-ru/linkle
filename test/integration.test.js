@@ -9,6 +9,12 @@ const mongoose = require('mongoose')
 const Mockgoose = require('mockgoose').Mockgoose
 const mockgoose = new Mockgoose(mongoose)
 
+global.pino = {
+    info() {},
+    warn() {},
+    error() {}
+  }
+
 const nock = require('nock')
 
 nock(/^https?.+test/)

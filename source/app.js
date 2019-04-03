@@ -1,10 +1,11 @@
 const express = require('express')
 const fallback = require('./lib/fallback')
 const httpError = require('http-errors')
-const logger = require('./lib/logger')
 const requireDir = require('require-dir')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
+global.pino = require('pino')({ prettyPrint: true })
 
 // refactor?
 const locales = requireDir('./i18n', { recurse: true })
@@ -12,7 +13,7 @@ const locales = requireDir('./i18n', { recurse: true })
 const env = process.env.NODE_ENV || 'production'
 const app = express()
 app.set('env', env)
-logger.info(`Node environment is set to "${env}"`)
+pino.info(`Node environment is set to "${env}"`)
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.message.includes('JSON')) {
-    logger.warn(`Invalid JSON received: "${err.body}"`)
+    pino.warn(`Invalid JSON received: "${err.body}"`)
     res.status(400).send('Invalid JSON')
   } else {
     next(err)

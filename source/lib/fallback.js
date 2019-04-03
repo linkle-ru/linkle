@@ -1,5 +1,3 @@
-const logger = require('./logger')
-
 let credentials = {
   telegramCO: {
     botToken: process.env.TELEGRAM_TOKEN,
@@ -16,11 +14,11 @@ const notify = function (message) {
       parse_mode: 'Markdown',
       text: message
     })
-    .catch(logger.error)
+    .catch(pino.error)
 }
 
 module.exports = (err, req, res, next) => {
-  logger.error(err)
+  pino.error(err)
 
   res.locals.message = err.message
   res.locals.error = process.env.NODE_ENV === 'development' ? err : {}

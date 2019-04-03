@@ -2,7 +2,6 @@ const router = require('express').Router()
 const controllers = require('./controllers')
 const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
-const logger = require('../../lib/logger')
 const redis = require('../../lib/redis')
 
 router.get('/follow/:alias', redis.middleware, controllers.follow)
@@ -14,7 +13,7 @@ const rateLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 60,
   handler: (req, res, next) => {
-    logger.error('Rate limiter triggered')
+    pino.error('Rate limiter triggered')
     next(httpError.TooManyRequests())
   }
 })

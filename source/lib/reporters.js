@@ -6,8 +6,6 @@ function sendOk(req, res, next) {
 }
 
 function sendErr(err, req, res, next) {
-  const logger = require('./logger')
-
   const resBody = {
     status: 'error'
   }
@@ -17,9 +15,9 @@ function sendErr(err, req, res, next) {
   try {
     resBody.code = errorCode
     resBody.reason = res.locals.lang.errors[errorCode[0]][errorCode.substr(1)]
-    logger.warn(resBody.reason || err)
+    pino.warn(resBody.reason || err)
   } catch (e) {
-    logger.error(err)
+    pino.error(err)
     resBody.code = 'err'
   }
 
