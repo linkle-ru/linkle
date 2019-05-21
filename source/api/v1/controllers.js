@@ -1,5 +1,4 @@
 const aliasHelper = require('../../lib/alias')
-const redis = require('../../lib/redis')
 const constants = require('../../i18n/error-codes')
 
 const getAlias = function (req, res, next) {
@@ -35,10 +34,6 @@ const follow = function (req, res, next) {
       alias.analytics.followed++
       alias.markModified('analytics')
       alias.save()
-
-      if (redis.client) {
-        redis.client.setex(alias._id, 60, alias.href)
-      }
     })
     .catch(next)
 }

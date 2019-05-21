@@ -2,9 +2,8 @@ const router = require('express').Router()
 const controllers = require('./controllers')
 const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
-const redis = require('../../lib/redis')
 
-router.get('/follow/:alias', redis.middleware, controllers.follow)
+router.get('/follow/:alias', controllers.follow)
 router.get('/aliases/:alias', controllers.getAlias)
 router.get('/aliases', controllers.getAliases)
 
