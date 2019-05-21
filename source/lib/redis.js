@@ -1,4 +1,6 @@
-const cacheEnabled = (process.env.NODE_ENV === 'production')
+// const cacheEnabled = (process.env.NODE_ENV === 'production')
+// todo: investigate
+const cacheEnabled = false
 
 if (cacheEnabled) {
   var redis = require('redis')
