@@ -25,6 +25,13 @@
       "pre-commit": "npm run lint -- --fix"
     }
   },
+  "postcss": {
+    "plugins": {
+      "postcss-import": {},
+      "postcss-url": {},
+      "autoprefixer": {}
+    }
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.17.2",
