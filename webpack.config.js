@@ -45,6 +45,7 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    host: '0.0.0.0', // для Docker
     historyApiFallback: true,
     compress: true,
     disableHostCheck: true,
@@ -52,7 +53,7 @@ module.exports = {
     noInfo: false,
     proxy: [{
       context: ['/api'],
-      target: `http://localhost:${process.env.API_PORT}`,
+      target: `http://backend:${process.env.API_PORT}`,
       changeOrigin: true
     }],
     overlay: true
@@ -69,6 +70,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
+        // ?хммм
         NODE_ENV: '"production"'
       }
     }),

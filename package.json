@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev:server": "vagrant up && pm2 startOrReload ecosystem.config.js --update-env --no-daemon",
-    "dev:client": "cross-env NODE_ENV=development API_PORT=8000 webpack-dev-server --hot --open",
+    "dev:client": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "start": "node source/server",
     "deploy": "pm2 deploy production",

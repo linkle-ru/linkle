@@ -1,0 +1,40 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: dev-frontend.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: development
+      API_PORT: 8000
+    volumes:
+      - "./source:/var/www/linkle.ru/source"
+    links:
+      - backend
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.mongo:/data/db
+
+  backend:
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      WAIT_HOSTS: mongo:27017
+      NODE_ENV: development
+      API_PORT: 8000
+    build:
+      context: .
+      dockerfile: dev-backend.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./source:/source
+    links:
+      - mongo
