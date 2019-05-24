@@ -6,5 +6,5 @@ RUN npm install
 COPY . .
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
 RUN chmod +x /wait
-CMD /wait && nodemon source/server.js
 EXPOSE 8000
+CMD /wait && nodemon --watch source source/server.js

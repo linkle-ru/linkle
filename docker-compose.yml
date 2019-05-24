@@ -1,5 +1,16 @@
 version: "3"
 services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./source/gui:/var/www/linkle.ru/source/gui:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - "80:80"
+    links:
+      - backend
+      - frontend
+
   frontend:
     build:
       context: .
@@ -10,7 +21,7 @@ services:
       NODE_ENV: development
       API_PORT: 8000
     volumes:
-      - "./source:/var/www/linkle.ru/source"
+      - ./source:/var/www/linkle.ru/source
     links:
       - backend
 
@@ -35,6 +46,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./source:/source
+      - ./source:/var/www/linkle.ru/source
     links:
       - mongo
