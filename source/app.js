@@ -1,5 +1,4 @@
 const express = require('express')
-const fallback = require('./lib/fallback')
 const httpError = require('http-errors')
 const requireDir = require('require-dir')
 const bodyParser = require('body-parser')
@@ -47,7 +46,5 @@ app.use('*', (req, res, next) => {
 })
 
 require('./lib/reporters')(app)
-
-app.use(fallback)
 
 module.exports = app

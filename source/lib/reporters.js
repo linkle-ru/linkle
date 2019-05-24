@@ -19,7 +19,7 @@ function sendErr(err, req, res, next) {
     resBody.reason = res.locals.lang.errors[errorType][errorNumber]
     pino.warn(resBody.reason || err)
   } catch (e) {
-    pino.error(err)
+    pino.error(err + e)
     resBody.code = 'err'
   }
 

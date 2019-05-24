@@ -64,8 +64,6 @@ const newAlias = function (req, res, next) {
           res.locals.payload.title = title
         }
 
-        require('../../lib/hook-handler')()
-
         next()
       })
     })
