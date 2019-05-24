@@ -7,4 +7,4 @@ COPY . .
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
 RUN chmod +x /wait
 EXPOSE 8000
-CMD /wait && nodemon --watch source source/server.js
+CMD /wait && nodemon --inspect=0.0.0.0 --watch source source/server.js

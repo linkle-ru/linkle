@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to nodemon in Docker",
+        "address": "localhost",
+        "restart": true,
+        "sourceMaps": false,
+        "port": 9999,
+        "localRoot": "${workspaceFolder}/source",
+        "remoteRoot": "/var/www/linkle.ru/source"
+      }
+    ]
+}

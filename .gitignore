@@ -1,7 +1,7 @@
 .DS_Store
 .stryker-tmp
 node_modules
-.vscode
+.vscode/settings.json
 reports
 *.vagrant
 logs

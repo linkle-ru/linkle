@@ -10,11 +10,13 @@ function sendErr(err, req, res, next) {
     status: 'error'
   }
 
-  const errorCode = err.message
+  const fullErrorCode = err.message
 
   try {
-    resBody.code = errorCode
-    resBody.reason = res.locals.lang.errors[errorCode[0]][errorCode.substr(1)]
+    resBody.code = fullErrorCode
+    const errorType = fullErrorCode[0]
+    const errorNumber = fullErrorCode.substr(1)
+    resBody.reason = res.locals.lang.errors[errorType][errorNumber]
     pino.warn(resBody.reason || err)
   } catch (e) {
     pino.error(err)
@@ -25,7 +27,7 @@ function sendErr(err, req, res, next) {
 
   if (err.status) {
     resStatus = err.status
-  } else if (errorCode) {
+  } else if (fullErrorCode) {
     resStatus = 400
   }
 

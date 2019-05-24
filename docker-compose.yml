@@ -45,6 +45,7 @@ services:
       dockerfile: dev-backend.Dockerfile
     ports:
       - "8000:8000"
+      - "9999:9229"
     volumes:
       - ./source:/var/www/linkle.ru/source
     links:
