@@ -21,7 +21,6 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {}
-          // other vue-loader options go here
         }
       },
       {
@@ -50,12 +49,8 @@ module.exports = {
     compress: true,
     disableHostCheck: true,
     contentBase: './source/gui',
+    openPage: '', // https://stackoverflow.com/questions/44924263/webpack-dev-server-opens-localhost8080-undefined
     noInfo: false,
-    proxy: [{
-      context: ['/api'],
-      target: `http://backend:${process.env.API_PORT}`,
-      changeOrigin: true
-    }],
     overlay: true
   },
   performance: {
@@ -66,7 +61,6 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
