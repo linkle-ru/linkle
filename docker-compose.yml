@@ -4,7 +4,7 @@ services:
     image: nginx
     volumes:
       - ./source/gui:/var/www/linkle.ru/source/gui:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx:/etc/nginx/conf.d:ro
     ports:
       - "80:80"
     links:
