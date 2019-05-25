@@ -350,36 +350,6 @@ describe('Несуществующая страница', () => {
   })
 })
 
-describe('Рейтлимитер', () => {
-  it('отрабатывает', done => {
-    const promises = []
-
-    for (let i = 0; i < 50; i++) {
-      promises.push(new Promise((resolve, reject) => {
-        supertest(app)
-          .post('/api/v1/aliases')
-          .send({ href: 'https://linkle.ru' })
-          .expect(200)
-          .end(e => {
-            if (e) {
-              reject(e)
-            } else {
-              resolve()
-            }
-          })
-      }))
-    }
-
-    Promise.all(promises)
-      .then(() => {
-        done(new Error())
-      })
-      .catch(() => {
-        done()
-      })
-  })
-})
-
 describe('Запрос данных', () => {
   describe('с пустым списком', () => {
     it('валится', done => {
