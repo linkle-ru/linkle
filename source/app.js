@@ -2,11 +2,10 @@ const express = require('express')
 const httpError = require('http-errors')
 const requireDir = require('require-dir')
 const bodyParser = require('body-parser')
-const cors = require('cors')
 
 global.pino = require('pino')({ prettyPrint: true })
 
-// refactor?
+// ?refactor
 const locales = requireDir('./i18n', { recurse: true })
 
 const env = process.env.NODE_ENV || 'production'
@@ -14,7 +13,6 @@ const app = express()
 app.set('env', env)
 pino.info(`Node environment is set to "${env}"`)
 
-app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -25,11 +23,13 @@ app.use((req, res, next) => {
   next()
 })
 
+// todo: в middleware вынести
 app.use((req, res, next) => {
   res.locals.lang = (locales[req.query.lang] || locales.en)
   next()
 })
 
+// todo: вынести
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.message.includes('JSON')) {
     pino.warn(`Invalid JSON received: "${err.body}"`)

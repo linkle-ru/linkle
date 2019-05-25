@@ -2,8 +2,11 @@ const router = require('express').Router()
 const controllers = require('./controllers')
 const httpError = require('http-errors')
 const rateLimit = require('express-rate-limit')
+const cors = require('cors')
 
 router.get('/follow/:alias', controllers.follow)
+
+router.use(cors())
 router.get('/aliases/:alias', controllers.getAlias)
 router.get('/aliases', controllers.getAliases)
 
