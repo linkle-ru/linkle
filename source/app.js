@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 })
 
 // todo: вынести
-app.use((err, req, res, next) => {
+app.use((err, _req, res, next) => {
   if (err instanceof SyntaxError && err.message.includes('JSON')) {
     pino.warn(`Invalid JSON received: "${err.body}"`)
     res.status(400).send('Invalid JSON')
@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 
 app.use('/api/v1', require('./api/v1/routers'))
 
-app.use('*', (req, res, next) => {
+app.use('*', (_req, _res, next) => {
   next(httpError.NotFound())
 })
 

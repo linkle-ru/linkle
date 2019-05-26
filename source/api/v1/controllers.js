@@ -54,13 +54,10 @@ const newAlias = function (req, res, next) {
       fetchTitle(alias.href, (e, title) => {
         if (e) {
           next(new Error(constants.LINK_BROKEN))
-
-          return
+        } else {
+          res.locals.payload.title = title
+          next()
         }
-
-        res.locals.payload.title = title
-
-        next()
       })
     })
     .catch(next)
