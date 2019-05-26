@@ -1,11 +1,11 @@
-function sendOk(req, res, next) {
+function sendOk(_req, res, _next) {
   res.status(200).json({
     status: 'ok',
     payload: res.locals.payload
   })
 }
 
-function sendErr(err, req, res, next) {
+function sendErr(err, _req, res, _next) {
   const resBody = {
     status: 'error'
   }
