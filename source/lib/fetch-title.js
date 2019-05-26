@@ -3,11 +3,10 @@ const https = require('https')
 
 // eslint-disable-next-line max-lines-per-function
 module.exports = function fetchTitle(href, cb, redirects = 0) {
-  console.time('title-fetch')
-
   const client = href.startsWith('http:') ? http : https
   const req = client.get(href, res => {
     const { headers, statusCode } = res
+    let chunks = ''
 
     if (statusCode !== 200) {
       req.abort()
@@ -21,20 +20,20 @@ module.exports = function fetchTitle(href, cb, redirects = 0) {
       }
     }
 
-    res.on('error', console.error)
+    res.on('error', cb)
     res.on('data', chunk => {
-      const htmlData = chunk.toString()
-      const title = htmlData.match(/<title.*?>(.+)<\/title>/i)[1].trim()
+      chunks += chunk.toString()
 
-      if (title && title.length) {
-        console.timeEnd('title-fetch')
+      const matches = chunks.match(/<title.*?>(.+)<\/title>/i)
+
+      if (matches) {
+        const title = matches[1].trim()
+
+        cb(null, title || 'No title')
         req.abort()
-        cb(null, title)
       }
-
-      req.abort()
     })
   })
 
-  req.on('error', console.error)
+  req.on('error', cb)
 }
