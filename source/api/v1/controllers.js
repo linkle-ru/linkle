@@ -1,4 +1,5 @@
 const aliasHelper = require('../../lib/alias')
+const fetchTitle = require('../../lib/fetch-title')
 const constants = require('../../i18n/error-codes')
 
 const getAlias = function (req, res, next) {
@@ -27,7 +28,7 @@ const getAliases = function (req, res, next) {
 }
 
 const follow = function (req, res, next) {
-  aliasHelper.find(req.params.alias)
+  aliasHelper.find(req.params.alias.toLowerCase())
     .then(alias => {
       res.status(301).redirect(alias.href)
 
@@ -50,19 +51,14 @@ const newAlias = function (req, res, next) {
         title: null
       }
 
-      // http refactor
-      require('request')(alias.href, (e, response, body) => {
+      fetchTitle(alias.href, (e, title) => {
         if (e) {
           next(new Error(constants.LINK_BROKEN))
 
           return
         }
 
-        const title = body.match(/<title.*?>[\s\S]*?(\D*?)<\/title>/i)[1].trim()
-
-        if (title && title.length) {
-          res.locals.payload.title = title
-        }
+        res.locals.payload.title = title
 
         next()
       })
