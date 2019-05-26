@@ -30,7 +30,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./.mongo:/data/db
+      - ~/docker_volumes/linkle_mongo:/data/db
 
   backend:
     restart: always
