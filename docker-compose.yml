@@ -37,7 +37,6 @@ services:
     depends_on:
       - mongo
     environment:
-      WAIT_HOSTS: mongo:27017
       NODE_ENV: development
       API_PORT: 8000
     build:

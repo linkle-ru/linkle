@@ -8,14 +8,19 @@ if (app.get('env') === 'production') {
 
 const mongoUri = 'mongodb://mongo:27017/url-shortener'
 const mongooseOptions = { useMongoClient: true }
-mongoose.Promise = Promise
-mongoose.connect(mongoUri, mongooseOptions)
-  .then(() => {
-    pino.info('Successfully connected to MongoBD!')
-  }, err => {
-    throw new Error(`MongoDB connection error: ${err}`)
-  })
-
 const port = process.env.API_PORT
-app.listen(port, '0.0.0.0')
-pino.info(`Listening on port ${port}`)
+mongoose.Promise = Promise
+tryMongo()
+
+function tryMongo() {
+  mongoose.connect(mongoUri, mongooseOptions)
+    .then(() => {
+      pino.info('Successfully connected to MongoBD!')
+      app.listen(port, '0.0.0.0')
+      pino.info(`Listening on port ${port}`)
+    })
+    .catch(err => {
+      setTimeout(tryMongo, 5000)
+      pino.info(`MongoDB connection error: ${err}`)
+    })
+}
