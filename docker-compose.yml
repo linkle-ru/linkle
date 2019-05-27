@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   nginx:
     image: nginx
@@ -14,9 +14,11 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: dev-frontend.Dockerfile
+      dockerfile: Dockerfile
+      target: base
     ports:
       - "8080:8080"
+    command: "npm run dev:client"
     environment:
       NODE_ENV: development
       API_PORT: 8000
@@ -33,7 +35,6 @@ services:
       - ~/docker_volumes/linkle_mongo:/data/db
 
   backend:
-    restart: always
     depends_on:
       - mongo
     environment:
@@ -41,7 +42,8 @@ services:
       API_PORT: 8000
     build:
       context: .
-      dockerfile: dev-backend.Dockerfile
+      dockerfile: Dockerfile
+      target: inspect
     ports:
       - "8000:8000"
       - "9999:9229"
