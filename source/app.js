@@ -1,35 +1,16 @@
-const express = require('express')
-const httpError = require('http-errors')
-const requireDir = require('require-dir')
-const bodyParser = require('body-parser')
-
 global.pino = require('pino')({ prettyPrint: true })
 
-// ?refactor
-const locales = requireDir('./i18n', { recurse: true })
-
-const env = process.env.NODE_ENV || 'production'
+const express = require('express')
+const httpError = require('http-errors')
+const setHeaders = require('./lib/middleware/set-headers')
+const setLang = require('./lib/middleware/set-lang')
 const app = express()
-app.set('env', env)
-pino.info(`Node environment is set to "${env}"`)
+pino.info(`Node environment is set to "${process.env.NODE_ENV}"`)
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(setHeaders)
+app.use(setLang)
 
-app.use((req, res, next) => {
-  // Мимикрируем под PHP
-  res.set('X-Powered-By', 'PHP/5.1.6')
-  res.set('API-Version', require('../package.json').version)
-  next()
-})
-
-// todo: в middleware вынести
-app.use((req, res, next) => {
-  res.locals.lang = (locales[req.query.lang] || locales.en)
-  next()
-})
-
-// todo: вынести
+// todo: вынести в middleware
 app.use((err, _req, res, next) => {
   if (err instanceof SyntaxError && err.message.includes('JSON')) {
     pino.warn(`Invalid JSON received: "${err.body}"`)
