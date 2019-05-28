@@ -1,8 +1,10 @@
+/* eslint-disable max-lines-per-function */
 const http = require('http')
 const https = require('https')
 const zlib = require('zlib')
 const { Unzip } = zlib
 
+// todo: refactor
 module.exports = function fetchTitle(href, cb, redirects = 0) {
   const client = href.startsWith('http:') ? http : https
   const req = client.get(href, res => {
