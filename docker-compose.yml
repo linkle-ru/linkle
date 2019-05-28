@@ -9,8 +9,6 @@ services:
       - "8080:8080"
     environment:
       NODE_ENV: development
-      # todo: сменить на API_HOST
-      API_PORT: 8000
     volumes:
       - ./source/gui:/var/www/linkle.ru/source/gui
     links:
@@ -21,6 +19,7 @@ services:
       - mongo
     environment:
       NODE_ENV: development
+      MONGO_URI: "mongodb://mongo:27017/linkle"
       API_PORT: 8000
     build:
       context: .

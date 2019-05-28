@@ -2,18 +2,9 @@ module.exports = {
   apps: [{
     name: 'URL-ShortenerAPI',
     script: './source/server.js',
-    env: {
-      watch: 'source',
-      ignore_watch: 'source/gui',
-      NODE_ENV: 'development',
-      MONGO_PORT: 28017,
-      API_PORT: 8000
-    },
     env_production: {
       watch: false,
       NODE_ENV: 'production',
-      HOOK_PORT: 8813,
-      MONGO_PORT: 27017,
       API_PORT: 8080
     }
   }],

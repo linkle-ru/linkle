@@ -6,7 +6,9 @@ if (app.get('env') === 'production') {
   app.use(pinoExpress)
 }
 
-const mongoUri = 'mongodb://mongo:27017/url-shortener'
+const mongoUri = process.env.MONGO_URI ?
+  process.env.MONGO_URI : 'mongodb://localhost:27017/url-shortener'
+
 const mongooseOptions = { useMongoClient: true }
 const port = process.env.API_PORT
 mongoose.Promise = Promise
