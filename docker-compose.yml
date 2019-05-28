@@ -1,38 +1,20 @@
 version: "3.7"
 services:
-  nginx:
-    image: nginx
-    volumes:
-      - ./source/gui:/var/www/linkle.ru/source/gui:ro
-      - ./nginx:/etc/nginx/conf.d:ro
-    ports:
-      - "80:80"
-    links:
-      - backend
-      - frontend
-
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile
       target: base
+    command: "npm run dev:client"
     ports:
       - "8080:8080"
-    command: "npm run dev:client"
     environment:
       NODE_ENV: development
+      # todo: сменить на API_HOST
       API_PORT: 8000
     volumes:
-      - ./source:/var/www/linkle.ru/source
+      - ./source/gui:/var/www/linkle.ru/source/gui
     links:
       - backend
-
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - ~/docker_volumes/linkle_mongo:/data/db
 
   backend:
     depends_on:
@@ -42,7 +24,6 @@ services:
       API_PORT: 8000
     build:
       context: .
-      dockerfile: Dockerfile
       target: inspect
     ports:
       - "8000:8000"
@@ -51,3 +32,20 @@ services:
       - ./source:/var/www/linkle.ru/source
     links:
       - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/docker_volumes/linkle_mongo:/data/db
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+    links:
+      - backend
+      - frontend
